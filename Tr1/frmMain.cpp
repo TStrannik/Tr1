@@ -178,17 +178,15 @@ void RANDOMIZER() {
 	using namespace std;
 
 	srand(time(NULL));
-	int a, b, c;
-	a = rand() % 100;		cout << a << endl;		// [  0..100]
-	b = rand() % 80 + 20;	cout << b << endl;		// [ 20..80 ]
-	c = rand() % 55 + 50;	cout << c << endl;		// [-50..1  ]
-	cout << endl;
-	// not work
 
+	int a, b, c;
+	a = rand() % 100;					  cout << a << endl;		// [  0..100]
+	b = rand() % (80 - 20 + 1) + 20;	  cout << b << endl;		// [ 20..80 ]
+	c = rand() % (0 - (-50) + 1) + (-50); cout << c << endl;		// [-50..0  ]
+	cout << endl;
 
 
 	/// D E A C T I V A T I O N   O F   T H E   C A B I N A !
-
 	int const SIZE = 20;
 	int arr[SIZE] = { -1 };
 	int condidate = 0;
@@ -282,8 +280,8 @@ int main(array<String^>^ args) {
 // ( ) STL: 
 // (+) VS: Debugger
 // (+) sizeof
-// ( ) randomizer & diapasons
-// ( ) array without repeat
+// (+) randomizer & diapasons
+// (+) array without repeat
 // (+) try-catch
 // ( ) try-catch, throw, cerr << e.what();
 //
