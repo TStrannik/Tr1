@@ -54,7 +54,6 @@ void STL_VECTORS() {
 #pragma endregion ar1
 
 
-
 #pragma region ar2
 	vector <int> ar2({ 10, 20, 30, 40 });
 	for each (int i in ar2) cout << i << " ";
@@ -187,53 +186,40 @@ void RANDOMIZER() {
 	// not work
 
 
+
 	/// D E A C T I V A T I O N   O F   T H E   C A B I N A !
 
-	int const SIZE = 10;
+	int const SIZE = 20;
 	int arr[SIZE] = { -1 };
-	int con = 0;
+	int condidate = 0;
 
 
-	/// ROUND 1
-	/// FIGHT!
+	/// ROUND 1 FIGHT!
 
 	int counter = 0;
-	bool cont = false;
+	bool cond = false;
 	while (counter < SIZE) {
-		cont = false;
-		con = rand() % 10 + 1;
-
-		for (int j = 0; j <= counter; j++) {
-			if (arr[j] == con) { cont = true; break; }
-		}
-		if (cont) continue;
-
-		arr[counter] = con;
-		counter++;
+		cond = false;
+		condidate = rand() % SIZE + 1;
+		for (int j = 0; j < counter; j++) if (arr[j] == condidate) { cond = true; break; }		
+		if (!cond) { arr[counter] = condidate; counter++; }		
 	}
-
 	for each (int i in arr) cout << i << " ";
 	cout << endl;
 
 
-	/// ROUND 2
-	/// FIGHT!
+
+	/// ROUND 2 FIGHT!
 
 	for (int i = 0; i < SIZE; i++) {
-back:	// cheting
-		con = rand() % 10 + 1;
-
-		for (int j = 0; j <= i; j++) {
-			if (arr[j] == con) goto back;
-		}
-
-		arr[i] = con;
+back:	
+		condidate = rand() % SIZE + 1;
+		for (int j = 0; j < i; j++) if (arr[j] == condidate) goto back;
+		arr[i] = condidate;
 	}
-
-
-
 	for each (int i in arr) cout << i << " ";
 	cout << endl;
+
 }
 
 
@@ -292,12 +278,14 @@ int main(array<String^>^ args) {
 // -------------------
 // ( ) STL: Vectors
 // -------------------
+// ( ) STL: 
+// ( ) STL: 
 // (+) VS: Debugger
 // (+) sizeof
-// ( ) randomizer
+// ( ) randomizer & diapasons
+// ( ) array without repeat
 // (+) try-catch
 // ( ) try-catch, throw, cerr << e.what();
-// ( ) STL: 
 //
 //
 /// BUGS:
