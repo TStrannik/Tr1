@@ -5,7 +5,7 @@
 
 
 #include <vector>
-
+#include <ctime>
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -22,7 +22,7 @@ int Sum(int a, int b) {
 
 
 
-void CONSOLE() {
+void CONSOLE_EXP() {
 	Console::SetWindowPosition(0, 0);
 
 	Console::WriteLine();
@@ -137,8 +137,104 @@ void VS_DEBUGGER() {
 	cout << "step 5" << endl;
 	
 }
+void SIZEOF_ARRAY() {
+	using namespace std;
+
+	cout << "int: \t\t" << sizeof(int) << " byte\n";
+	cout << "float: \t\t" << sizeof(float) << " byte\n";
+	cout << "double: \t" << sizeof(double) << " byte\n";
+	cout << "char: \t\t" << sizeof(char) << " byte\n";
+	cout << "String^: \t" << sizeof(String^) << " byte\n";
+	cout << endl;
+
+	int a;
+	cout << "int a: \t\t" << sizeof(a) << " byte\n";
+	cout << endl;
 
 
+
+	const int SIZE = 10;
+	int arr1[SIZE];
+	cout << sizeof(arr1) << " byte\n";
+	cout << endl;
+
+
+
+	int arr2[]{ 10, 20, 30, 40 };
+
+	// first cicle
+	for each (int i in arr2) cout << i << " ";
+	cout << endl;
+
+	// second cicle
+	for (int i = 0; i < sizeof(arr2) / sizeof(int); i++) cout << arr2[i] << " ";
+	cout << endl;
+
+	// third cicle
+	for (int i = 0; i < sizeof(arr2) / sizeof(arr2[0]); i++) cout << arr2[i] << " ";
+	cout << endl;
+
+}
+void RANDOMIZER() {
+	using namespace std;
+
+	srand(time(NULL));
+	int a, b, c;
+	a = rand() % 100;		cout << a << endl;		// [  0..100]
+	b = rand() % 80 + 20;	cout << b << endl;		// [ 20..80 ]
+	c = rand() % 55 + 50;	cout << c << endl;		// [-50..1  ]
+	cout << endl;
+	// not work
+
+
+	/// D E A C T I V A T I O N   O F   T H E   C A B I N A
+
+	int const SIZE = 10;
+	int arr[SIZE] = { -1 };
+	int con = 0;
+
+
+	/// ROUND 1
+	/// FIGHT!
+
+	int counter = 0;
+	bool cont = false;
+	while (counter < SIZE) {
+		cont = false;
+		con = rand() % 10 + 1;
+
+		for (int j = 0; j <= counter; j++) {
+			if (arr[j] == con) { cont = true; break; }
+		}
+		if (cont) continue;
+
+		arr[counter] = con;
+		counter++;
+	}
+
+	for each (int i in arr) cout << i << " ";
+	cout << endl;
+
+
+	/// ROUND 2
+	/// FIGHT!
+
+	for (int i = 0; i < SIZE; i++) {
+back:	// cheting
+		con = rand() % 10 + 1;
+
+		for (int j = 0; j <= i; j++) {
+			if (arr[j] == con) goto back;
+		}
+
+		arr[i] = con;
+	}
+
+
+
+	for each (int i in arr) cout << i << " ";
+	cout << endl;
+}
 
 
 
@@ -150,11 +246,15 @@ void APPLICATION_START() {
 	std::cout << "\tStatistic:\n\n";
 
 
-	//STL_VECTORS();
-	//CONSOLE();
-	//VS_DEBUGGER();
+	if (0) {
+		STL_VECTORS();
+		CONSOLE_EXP();
+		VS_DEBUGGER();
+		SIZEOF_ARRAY();
+	}
+	RANDOMIZER();
 
-
+	
 
 
 
@@ -193,6 +293,8 @@ int main(array<String^>^ args) {
 // ( ) STL: Vectors
 // -------------------
 // (+) VS: Debugger
+// (+) sizeof
+// ( ) randomizer
 // (+) try-catch
 // ( ) try-catch, throw, cerr << e.what();
 // ( ) STL: 
