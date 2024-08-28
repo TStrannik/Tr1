@@ -333,7 +333,8 @@ int main(array<String^>^ args) {
 // (+) array without repeat
 // (+) try-catch
 // (+) try-catch, throw, cerr << e.what();
-// ( ) Pointers
+// (+) Pointers
+// ( ) Stack: <stack> (link in WA)
 // 
 //
 //
