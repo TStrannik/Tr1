@@ -118,6 +118,9 @@ void STL_VECTORS() {
 #pragma endregion ar4
 
 }
+void STL_VECTORS2() {
+	//
+}
 void VS_DEBUGGER() {
 	using namespace std;
 
@@ -219,6 +222,52 @@ back:
 	cout << endl;
 
 }
+void TRY_CATCH() {
+	using namespace std;
+
+	float a = 2.0, b = 0.0, c;
+
+	cout << "Write the b variable \n" << endl;
+	cin >> b;
+
+	try {
+		if (b == 0) throw std::exception("Divide by zero!!!");
+		c = a / b;
+		cout << c << endl;
+	} catch (const std::exception& e){
+		cout << e.what() << endl;
+		cout << "AAAaaaaaa!!1\n" << endl;
+	}
+
+}
+void POINTERS() {
+	using namespace std;
+
+	int a = 5;
+	int *pa = &a;
+	int *px = new int(a);
+	cout << "adress pa: " << pa << endl;
+	cout << "value pa: " << *pa << endl;
+	cout << "adress px: " << px << endl;
+	cout << "value px: " << *px << endl;
+
+	px = nullptr;
+	delete px;
+
+	cout << endl << endl;
+
+
+
+	int   b = 8;
+	int* py = &b;
+	int* pz = &b;
+	cout << "value py: " << *py << endl;
+	cout << "value b: " << b << endl;
+
+	*py = 10;
+	cout << "value py: " << *py << endl;
+	cout << "value b: " << b << endl;
+}
 
 
 
@@ -235,9 +284,11 @@ void APPLICATION_START() {
 		CONSOLE_EXP();
 		VS_DEBUGGER();
 		SIZEOF_ARRAY();
+		RANDOMIZER();
+		TRY_CATCH();
 	}
-	RANDOMIZER();
-
+	STL_VECTORS2();
+	POINTERS();
 	
 
 
@@ -273,17 +324,17 @@ int main(array<String^>^ args) {
 // (+) GIT Make "Develop" branch
 // 
 // (+) CONSOLE
-// -------------------
-// ( ) STL: Vectors
-// -------------------
-// ( ) STL: 
+// (+) STL: Vectors 1
+// ( ) STL: Vectors 2
 // ( ) STL: 
 // (+) VS: Debugger
 // (+) sizeof
 // (+) randomizer & diapasons
 // (+) array without repeat
 // (+) try-catch
-// ( ) try-catch, throw, cerr << e.what();
+// (+) try-catch, throw, cerr << e.what();
+// ( ) Pointers
+// 
 //
 //
 /// BUGS:
