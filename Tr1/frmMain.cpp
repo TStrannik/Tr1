@@ -187,7 +187,7 @@ void RANDOMIZER() {
 	// not work
 
 
-	/// D E A C T I V A T I O N   O F   T H E   C A B I N A
+	/// D E A C T I V A T I O N   O F   T H E   C A B I N A !
 
 	int const SIZE = 10;
 	int arr[SIZE] = { -1 };
