@@ -11,6 +11,11 @@
 #include <deque>
 #include <stack>
 
+//#include <hash_set>
+#include <unordered_map>
+#include <unordered_set>
+
+
 using namespace System;
 using namespace System::Windows::Forms;
 
@@ -58,10 +63,19 @@ void STL_VECTORS0() {
 	std::vector<int> v14{ 5, 2 };	  // v14: [5][2]
 
 
-	for each (int i in v5) cout << i << " ";
+	vector <int> v = v5;
+	for each (int i in v) cout << i << " ";
 	cout << endl;
 
-	cout << v5.size() << endl << v5.capacity() << endl;
+	cout << v.size()     << endl 
+		 << v.capacity() << endl;
+
+
+
+	vector <int> sv = { 10, 20, 30, 40, 50 };
+	cout << sv.front() << endl;
+	cout << sv.back() << endl;
+
 
 }
 void STL_VECTORS1() {
@@ -71,6 +85,8 @@ void STL_VECTORS1() {
 	vector <int> ar1 = { 10, 20, 30, 40, 50 };
 	ar1.push_back(60);
 	ar1.push_back(70);
+	ar1.emplace(ar1.begin() + 3, 35);
+	ar1.emplace_back(75);
 	
 	for each (int i in ar1) cout << i << " ";
 	cout << endl << endl;
@@ -83,12 +99,12 @@ void STL_VECTORS1() {
 
 #pragma region ar2
 	vector <int> ar2({ 10, 20, 30, 40 });
-	for each (int i in ar2) cout << i << " ";
+	cout << "ar2: "; for each (int i in ar2) cout << i << " ";
 	cout << endl << endl;
 
 	ar2[2] = 100;
 
-	for each (int i in ar2) cout << i << " ";
+	cout << "ar2: "; for each (int i in ar2) cout << i << " ";
 	cout << endl;
 
 	cout << ar2[2] << endl;
@@ -133,20 +149,24 @@ void STL_VECTORS1() {
 
 #pragma region ar4
 	vector <int> ar4(10, 1337);
-	for each (int i in ar4) cout << i << " ";
+	cout << "ar4: "; for each (int i in ar4) cout << i << " ";
 	cout << endl << endl;
 
 	ar4.resize(15);
-	for each (int i in ar4) cout << i << " ";
+	cout << "ar4: "; for each (int i in ar4) cout << i << " ";
 	cout << endl << endl;
 
 	cout << ar4.empty() << endl; ar4.clear(); cout << ar4.empty() << endl;
 	cout << endl;
 #pragma endregion ar4
 
-}
-void STL_VECTORS2() {
-	//
+
+
+#pragma region ar5
+	vector <int> ar5 = { 10, 20, 30, 40, 50 }; 
+	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
+#pragma endregion ar5
+	
 }
 void VS_DEBUGGER() {
 	using namespace std;
@@ -203,6 +223,8 @@ void SIZEOF_ARRAY() {
 	for (int i = 0; i < sizeof(arr2) / sizeof(arr2[0]); i++) cout << arr2[i] << " ";
 	cout << endl;
 
+
+	cout << endl;
 }
 void RANDOMIZER() {
 	using namespace std;
@@ -248,6 +270,8 @@ back:
 	for each (int i in arr) cout << i << " ";
 	cout << endl;
 
+
+	cout << endl;
 }
 void TRY_CATCH() {
 	using namespace std;
@@ -266,6 +290,8 @@ void TRY_CATCH() {
 		cout << "AAAaaaaaa!!1\n" << endl;
 	}
 
+
+	cout << endl;
 }
 void POINTERS() {
 	using namespace std;
@@ -294,6 +320,9 @@ void POINTERS() {
 	*py = 10;
 	cout << "value py: " << *py << endl;
 	cout << "value b: " << b << endl;
+
+
+	cout << endl;
 }
 void STACK() {
 	using namespace std;
@@ -306,7 +335,6 @@ void STACK() {
 	st.push(30);
 	st.emplace(35);
 	st.push(40);
-
 
 
 	auto a = st._Get_container();
@@ -347,6 +375,8 @@ void STACK() {
 	//cout << b[2] << endl;				// Err
 	auto c = st3._Get_container();
 	cout << c[2] << endl;
+
+	cout << endl;
 }
 void DEQUE() {
 	using namespace std;
@@ -357,6 +387,123 @@ void DEQUE() {
 
 
 }
+void ITERATORS() {
+	using namespace std;
+
+	list <int> ::iterator iL;
+
+	vector <int> V = { 10, 20, 30, 40, 50 };
+	vector <int> ::iterator iV = V.begin();
+	vector <int> ::iterator iVe = V.end();
+
+	cout << *iV << endl;
+	++iV;    cout << *iV << endl;
+	--iV;    cout << *iV << endl;
+	iV += 2; cout << *iV << endl;
+	iV -= 2; cout << *iV << endl;
+	cout << *(iV + 2) << endl;
+
+	if (iV != iVe) cout << "not equal" << endl;
+	if (iV < iVe)  cout << "less than" << endl;
+	cout << endl;
+
+
+
+
+
+
+	vector <int> numbers{ 10, 20, 30, 40 };
+	auto iter{ numbers.begin() };
+
+	while (iter != numbers.end()) { cout << *iter << " "; ++iter; }
+	cout << endl;
+											//f.e., ... .end() - 2;...
+	for (auto start{ numbers.begin() }; start != numbers.end(); start++) cout << *start << " ";
+	cout << endl;
+
+	for each (auto i in numbers) cout << i << " ";
+	cout << endl;
+	cout << endl;
+
+
+
+
+
+	const vector <int> vNums{ 10, 20, 30, 40, 50 };
+	for (auto it{ vNums.begin() }; it != vNums.end(); ++it) cout << *it << " ";
+	cout << endl;
+
+	const vector <int> vNums2{ 10, 20, 30, 40, 50 };
+	for (auto it{ vNums2.cbegin() }; it != vNums2.cend(); ++it) cout << *it << " ";
+	cout << endl;
+
+
+
+	vector <int> vR{ 10, 20, 30, 40, 50 };
+	//vector <int> ::reverse_iterator iR = vR.rend();
+
+	for (auto iR{ vR.rbegin() }; iR != vR.rend(); ++iR) cout << *iR << " ";
+	cout << endl;
+
+
+
+	const vector <int> crV{ 10, 20, 30, 40, 50 };
+	for (auto it{ crV.crbegin() }; it != crV.crend(); ++it) cout << *it << " ";
+	cout << endl;
+
+
+	
+	int data[]{ 40, 50, 60, 80, 80 };
+	auto itr  = begin(data);
+	auto iend = end(data);
+	for (auto it{ begin(data) }; it != end(data); ++it) cout << *it << " ";
+	cout << endl;
+
+
+
+	int alpha[]{ 40, 50, 60, 70, 80, 90 };
+	vector <int> bravo{ 10, 20, 30, 40 };
+
+	bravo.insert(bravo.begin(), begin(alpha) + 1, end(alpha) - 2);
+	for (auto it{ begin(bravo) }; it != end(bravo); ++it) cout << *it << " ";
+	cout << endl;
+
+	int charlie[]{ 100, 200, 300 };
+	bravo.insert(bravo.end(), begin(charlie), end(charlie));
+
+	for (auto it{ begin(bravo) }; it != end(bravo); ++it) cout << *it << " ";
+	cout << endl;
+
+	bravo.insert(bravo.end() - bravo.size() / 2, 777);							/// insert in the middle of the vector
+	for (auto it{ begin(bravo) }; it != end(bravo); ++it) cout << *it << " ";
+	cout << endl;
+
+
+
+	cout << endl;
+}
+void SET_MAP() {
+	using namespace std;
+
+
+	// red-black trees
+		//https://www.youtube.com/watch?v=UKZzEYJ5nWM
+
+	
+
+	unordered_set<int> US{ 5 , 2 ,4 ,4 ,4 , 4, 4, 47823 };
+
+	for (auto& i : US) cout << i << " ";
+
+
+
+
+	//hash_set<String^> HS;
+
+	
+}
+
+
 
 
 
@@ -368,23 +515,24 @@ void APPLICATION_START() {
 
 
 	if (0) {
+		ITERATORS();
+		STL_VECTORS0();
 		STL_VECTORS1();
-
-		STL_VECTORS2();
-
+		POINTERS();
+		STACK();
 		CONSOLE_EXP();
 		VS_DEBUGGER();
 		SIZEOF_ARRAY();
 		RANDOMIZER();
 		TRY_CATCH();
-		POINTERS();
-		STACK();
-
-		DEQUE();
 	}
-	STL_VECTORS0();
 	
+	STL_VECTORS1();
 
+	//DEQUE();
+
+	
+	//SET_MAP();
 
 
 
@@ -419,10 +567,19 @@ int main(array<String^>^ args) {
 // (+) GIT Make "Develop" branch
 // 
 // (+) CONSOLE
-// ( ) STL: Vectors 0
+// (+) STL: Vectors 0
 // (+) STL: Vectors 1
-// ( ) STL: Vectors 2
-// ( ) STL: 
+// ----------------------------------------
+// ( ) STL: Iterators
+// ----------------------------------------
+// (+) STL: Stack: <stack> (link in WA)
+// ( ) STL: Deque
+// ( ) STL: List
+// ( ) STL: Map\Multimap
+// ( ) STL: Set\Multiset
+// ( ) hash-tables
+// ( ) metanint.com Chapter 9. Containers
+// 
 // (+) VS: Debugger
 // (+) sizeof
 // (+) randomizer & diapasons
@@ -430,11 +587,9 @@ int main(array<String^>^ args) {
 // (+) try-catch
 // (+) try-catch, throw, cerr << e.what();
 // (+) Pointers
-// (+) Stack: <stack> (link in WA)
-// ( ) Deque
-// ( ) List
+
 // ( ) Threads (lnk WA)
-// ( ) metanint.com Chapter 9. Containers
+
 // 
 // ( ) Pro level: https://www.youtube.com/watch?v=4ZyOqCT494w&t=51s
 // 
