@@ -4,9 +4,10 @@
 #include <iostream>
 
 
-#include <vector>
 #include <ctime>
 
+#include <vector>
+#include <array>
 #include <list>
 #include <deque>
 #include <stack>
@@ -163,10 +164,87 @@ void STL_VECTORS1() {
 
 
 #pragma region ar5
-	vector <int> ar5 = { 10, 20, 30, 40, 50 }; 
+	vector <int> ar5 = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 }; 
 	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
+
+	ar5.insert(ar5.end() - ar5.size() / 2, 777);
+	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
+
+	ar5.pop_back();
+	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
+
+	ar5.erase(ar5.begin() + 2);
+	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
+
+	ar5.erase(ar5.begin() + 2, ar5.end());
+	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
+
+	ar5.assign(4, 77);
+	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
+	cout << endl;
+
+	vector <int> arA;
+	arA.swap(ar5);
+	cout << "arA: "; for each (int i in arA) cout << i << " ";  cout << endl;
+	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
+
 #pragma endregion ar5
 	
+	/*
+#pragma region C A B I N A ¹1
+	cout << endl << "\t\t C A B I N A #1\n";
+	vector <int> V;
+
+	cout << "Enter size of vector <int>\n";
+	int N; cin >> N; int n;
+
+	cout << "Enter elements of this vector\n";
+	for (int i = 0; i < N; i++) { cin >> n; V.push_back(n); }
+
+	cout << "V: "; for (auto i{ V.rbegin()}; i != V.rend(); ++i) cout << *i << " ";
+
+#pragma endregion
+*/
+	
+
+
+
+#pragma region C A B I N A ¹2
+	cout << endl << "\t\t C A B I N A #2\n";
+	vector <int> V2;
+
+	cout << "Enter size of vector <int>\n";
+	int N; cin >> N;
+
+	//unique_ptr <int> ptr;		// What?
+	//make_unique
+
+	for (int i = 0; i < N; i++) V2.push_back(i * i);
+	cout << "V2: "; for each (int i in V2) cout << i << " ";
+	cout << endl;
+
+	int Sum = 0;
+	for each (int i in V2) Sum += i;
+	cout << Sum;
+
+
+
+	
+
+#pragma endregion
+	
+
+
+
+
+
+
+
+
+
+
+
+	cout << endl;
 }
 void VS_DEBUGGER() {
 	using namespace std;
@@ -527,7 +605,7 @@ void APPLICATION_START() {
 		TRY_CATCH();
 	}
 	
-	STL_VECTORS1();
+	
 
 	//DEQUE();
 
@@ -569,10 +647,11 @@ int main(array<String^>^ args) {
 // (+) CONSOLE
 // (+) STL: Vectors 0
 // (+) STL: Vectors 1
-// ----------------------------------------
-// ( ) STL: Iterators
-// ----------------------------------------
+// (+) STL: Iterators
 // (+) STL: Stack: <stack> (link in WA)
+// ----------------------------------------
+// ( ) STL: Array
+// ----------------------------------------
 // ( ) STL: Deque
 // ( ) STL: List
 // ( ) STL: Map\Multimap
