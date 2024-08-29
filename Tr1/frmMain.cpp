@@ -580,7 +580,16 @@ void SET_MAP() {
 
 	
 }
+void ARRAY() {
+	using namespace std;
 
+
+
+
+
+
+	cout << endl;
+}
 
 
 
@@ -604,7 +613,7 @@ void APPLICATION_START() {
 		RANDOMIZER();
 		TRY_CATCH();
 	}
-	
+	ARRAY();
 	
 
 	//DEQUE();
