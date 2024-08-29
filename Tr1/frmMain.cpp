@@ -41,7 +41,30 @@ void CONSOLE_EXP() {
 	Console::SetWindowSize(100, 55);
 	Console::Title = "C++\\CLI training.";
 }
-void STL_VECTORS() {
+void STL_VECTORS0() {
+	using namespace std;
+
+	vector <int> v1;				  // v1: NULL
+	vector <int> v2(v1);			  // v2: == v1: NULL
+	vector <int> v3 = v1;			  // v3: == v1: NULL
+	vector <int> v4(5);				  // v4:  [0][0][0][0][0]
+	vector <int> v5(5, 2);			  // v5:  [2][2][2][2][2]
+	vector <int> v6{ 1, 2, 4, 5 };    // v6:  [1][2][4][5]
+	vector <int> v7 = { 1, 2, 3, 5 }; // v7:  [1][2][3][5]
+
+	vector <int> v11(5);			  // v11: [0][0][0][0][0]
+	vector <int> v12{ 5 };			  // v12: [5]
+	std::vector<int> v13(5, 2);		  // v13: [2][2][2][2][2]
+	std::vector<int> v14{ 5, 2 };	  // v14: [5][2]
+
+
+	for each (int i in v5) cout << i << " ";
+	cout << endl;
+
+	cout << v5.size() << endl << v5.capacity() << endl;
+
+}
+void STL_VECTORS1() {
 	using namespace std;
 
 #pragma region ar1
@@ -326,6 +349,12 @@ void STACK() {
 	cout << c[2] << endl;
 }
 void DEQUE() {
+	using namespace std;
+
+
+
+
+
 
 }
 
@@ -339,7 +368,10 @@ void APPLICATION_START() {
 
 
 	if (0) {
-		STL_VECTORS();
+		STL_VECTORS1();
+
+		STL_VECTORS2();
+
 		CONSOLE_EXP();
 		VS_DEBUGGER();
 		SIZEOF_ARRAY();
@@ -347,10 +379,12 @@ void APPLICATION_START() {
 		TRY_CATCH();
 		POINTERS();
 		STACK();
+
+		DEQUE();
 	}
-	STL_VECTORS2();
-	DEQUE();
+	STL_VECTORS0();
 	
+
 
 
 
@@ -385,6 +419,7 @@ int main(array<String^>^ args) {
 // (+) GIT Make "Develop" branch
 // 
 // (+) CONSOLE
+// ( ) STL: Vectors 0
 // (+) STL: Vectors 1
 // ( ) STL: Vectors 2
 // ( ) STL: 
@@ -399,6 +434,11 @@ int main(array<String^>^ args) {
 // ( ) Deque
 // ( ) List
 // ( ) Threads (lnk WA)
+// ( ) metanint.com Chapter 9. Containers
+// 
+// ( ) Pro level: https://www.youtube.com/watch?v=4ZyOqCT494w&t=51s
+// 
+// ( ) Codestyle
 //
 /// BUGS:
 //
