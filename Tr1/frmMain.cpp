@@ -7,6 +7,10 @@
 #include <vector>
 #include <ctime>
 
+#include <list>
+#include <deque>
+#include <stack>
+
 using namespace System;
 using namespace System::Windows::Forms;
 
@@ -268,7 +272,62 @@ void POINTERS() {
 	cout << "value py: " << *py << endl;
 	cout << "value b: " << b << endl;
 }
+void STACK() {
+	using namespace std;
 
+
+
+	stack <int> st;
+	st.push(10);
+	st.push(20);
+	st.push(30);
+	st.emplace(35);
+	st.push(40);
+
+
+
+	auto a = st._Get_container();
+
+	cout << "stack size: " << st.size() << endl;
+	cout << "stack size: " << a.size() << endl;
+	cout << endl;
+	
+	cout << a[2] << endl << endl;
+
+
+
+	cout << st.top() << endl;
+	st.pop();
+	cout << st.top() << endl;
+	cout << endl;
+
+
+
+	while (!st.empty()) {
+		cout << st.top() << endl;
+		st.pop();
+	}
+	cout << endl << endl;
+
+
+
+	stack <int, list <int> > st2;
+	stack <int, vector <int> > st3;
+
+	st3.push(10);
+	st3.push(20);
+	st3.push(30);
+	st3.emplace(35);;
+	st3.push(40);
+
+	auto b = st2._Get_container();
+	//cout << b[2] << endl;				// Err
+	auto c = st3._Get_container();
+	cout << c[2] << endl;
+}
+void DEQUE() {
+
+}
 
 
 
@@ -286,9 +345,11 @@ void APPLICATION_START() {
 		SIZEOF_ARRAY();
 		RANDOMIZER();
 		TRY_CATCH();
+		POINTERS();
+		STACK();
 	}
 	STL_VECTORS2();
-	POINTERS();
+	DEQUE();
 	
 
 
@@ -334,9 +395,10 @@ int main(array<String^>^ args) {
 // (+) try-catch
 // (+) try-catch, throw, cerr << e.what();
 // (+) Pointers
-// ( ) Stack: <stack> (link in WA)
-// 
-//
+// (+) Stack: <stack> (link in WA)
+// ( ) Deque
+// ( ) List
+// ( ) Threads (lnk WA)
 //
 /// BUGS:
 //
