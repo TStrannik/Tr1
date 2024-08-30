@@ -9,6 +9,7 @@
 #include <vector>
 #include <array>
 #include <list>
+#include <forward_list>
 #include <deque>
 #include <stack>
 
@@ -397,6 +398,209 @@ void STL_VECTORS1() {
 
 	cout << endl;
 }
+void STL_ARRAY() {
+	using namespace std;
+
+
+	array <int, 5> ar1 = {};
+	cout << "ar1: "; for (int i = 0; i < 5; i++) cout << ar1[i] << " "; cout << endl;
+
+	array <int, 5> ar2 = { 10, 20, 30 };
+	cout << "ar2: "; for (int i = 0; i < 5; i++) cout << ar2[i] << " "; cout << endl;
+
+	array ar3{ 10, 20, 30 };											// for C++ 17 &>
+	cout << "ar3: ";
+	//for (auto i = 0; i < ar3.size(); i++) cout << ar3[i] << " ";
+	for each (auto i in ar3) cout << i << " ";
+	cout << endl;
+
+	array < array <int, 5>, 3 > ar4 = { 0 };
+	cout << "ar4: " << endl;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 5; j++) {
+			ar4[i][j] = i * 10 + j;
+			cout << ar4[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	cout << endl;
+
+
+
+
+
+	const unsigned n = 5;
+	array<string, n> people{ "Tom", "Alice", "Kate", "Bob", "Sam" };
+
+	for (int i{}; i < n; i++) cout << people[i] << endl; cout << endl;     // обращение через индексы
+
+	for (auto person : people) cout << person << endl;					  // перебор последовательности
+	cout << endl;
+
+	array dungeon{ "Dungeon", "master", "Van", "Darkholme" };
+	for (auto i : dungeon) cout << i << " ";
+	cout << endl;
+
+	array gym{ "Boss", "of", "the", "gym", "-", "Billy", "Herringhton" };
+	for (auto i : gym) cout << i << " ";
+	cout << endl << endl;
+
+
+
+	array exp1{ 10, 20, 30, 40, 50, 60, 70, 80 };
+	cout << exp1.size() << endl;
+	cout << exp1.at(5) << endl;
+	cout << exp1.front() << endl;
+	cout << exp1.back() << endl;
+	exp1.fill(10);
+	for (auto i : exp1) cout << i << " ";
+	cout << endl;
+
+
+
+	array exp2 = exp1;
+	for (auto i : exp2) cout << i << " ";
+	cout << endl;
+
+
+
+	cout << (exp1 == exp2) << endl;						// 1
+	cout << boolalpha << (exp1 == exp2) << endl;		// true
+
+
+
+	cout << endl;
+}
+void STL_LIST() {
+	using namespace std;
+
+
+
+	list <int> list1;
+	list <int> list2(5);
+	list <int> list3(5, 2);
+	list <int> list4{ 10, 20, 30, 40, 50 };
+	list <int> list5 = { 10, 20, 30, 40, 50 };
+	list <int> list6(list4);
+	list <int> list7 = list4;
+
+
+
+	for (int i : list4) cout << i << " "; cout << endl;
+	for (auto it = list4.begin(); it != list4.end(); ++it) cout << *it << " "; cout << endl;
+	cout << endl;
+
+
+
+	list <int> l1{ 10, 20, 30, 40, 50 }; cout << l1.size() << endl; cout << boolalpha << l1.empty() << endl; cout << endl;
+	l1.clear();						     cout << l1.size() << endl; cout << boolalpha << l1.empty() << endl; cout << endl;
+
+
+
+	l1.resize(4);				 		 for (auto i : l1) cout << i << " "; cout << endl;
+	l1.resize(8, 10);			 		 for (auto i : l1) cout << i << " "; cout << endl;
+	l1.resize(5, 3);			 		 for (auto i : l1) cout << i << " "; cout << endl;
+	l1.assign({ 100, 200, 300 });		 for (auto i : l1) cout << i << " "; cout << endl;
+	l1.assign(10, 4);			 		 for (auto i : l1) cout << i << " "; cout << endl;
+
+
+
+	l1.assign(1, 1);		      		 for (auto i = 2; i <= 10; i++) l1.push_back(i);
+	auto start = l1.begin();	  		 for (auto i = 1; i < 5; i++) ++start;
+	l1.assign(start, l1.end());   		 for (auto i : l1) cout << i << " "; cout << endl;
+	cout << endl;
+
+
+
+	list <int> l2(5, 0);		 		 for (auto i : l2) cout << i << " "; cout << endl;
+	l1.swap(l2);				 		 for (auto i : l2) cout << i << " "; cout << endl;
+	cout << endl;
+
+
+
+	list <int> l3(1, 50);		 		 for (auto i : l3) cout << i << " "; cout << endl;
+	l3.push_back(60);			 		 for (auto i : l3) cout << i << " "; cout << endl;
+	l3.push_front(40);           		 for (auto i : l3) cout << i << " "; cout << endl;
+	l3.emplace_back(70);         		 for (auto i : l3) cout << i << " "; cout << endl;
+	l3.emplace_front(30);        		 for (auto i : l3) cout << i << " "; cout << endl;
+
+
+	auto it3s = l3.begin(); 			 for (auto i = 1; i <= 4; i++) ++it3s;
+	l3.insert(it3s, 65);        	     for (auto i : l3) cout << i << " "; cout << endl;
+
+	it3s = l3.begin();				  	 for (auto i = 1; i <= 2; i++) ++it3s;
+	l3.insert(it3s, 3, 44);			     for (auto i : l3) cout << i << " "; cout << endl;
+
+	auto pos = l3.begin();				 for (auto i = 1; i <= 2; i++) ++pos;
+	l3.insert(pos, { 41, 42, 43 });       for (auto i : l3) cout << i << " "; cout << endl;
+
+
+	list l4{ 10, 20, 30, 40 };
+	list l5{ 50, 60, 70, 80 };
+	l5.insert(
+		l5.cbegin(),
+		l4.begin(),
+		l4.end()
+	);									 for (auto i : l5) cout << i << " "; cout << endl;
+
+
+
+	l3.pop_back();						 for (auto i : l3) cout << i << " "; cout << endl;
+	l3.pop_front();						 for (auto i : l3) cout << i << " "; cout << endl;
+	auto p = l3.begin(); p++; p++; p++;
+	l3.erase(p);						 for (auto i : l3) cout << i << " "; cout << endl;
+
+	auto pb = l3.begin(), pe = l3.end();
+	pb++; pb++; pb++; pb++; pe--; pe--; pe--;
+	l3.erase(pb, pe);					 for (auto i : l3) cout << i << " "; cout << endl;
+
+	l3.clear();							 for (auto i : l3) cout << i << " "; cout << endl;
+
+
+
+	cout << endl;
+}
+void STL_FORWARD_LIST() {
+	using namespace std;
+
+
+
+	forward_list <int> fl1;
+
+	fl1 = { 10, 20, 30, 40, 50, 60 };
+	cout << fl1.front() << endl;
+
+	auto it = fl1.begin();
+	it++;
+	for (int i = 2; i < 5; i++) it++;
+	cout << *it << endl;
+
+	for (auto i : fl1) cout << i << " ";
+	cout << endl;
+
+
+
+	forward_list <int> fl2{ 10, 20, 30, 40, 50 };
+	auto prev = fl2.before_begin();
+	auto end = fl2.end();
+
+	while (++prev != end) cout << *prev << " ";
+	cout << endl;
+
+
+
+	cout << endl;
+}
+void STL_DEQUE() {
+	using namespace std;
+
+	deque <int> dq1 = { 10, 20, 30, 40 };
+	deque dq2{ 60, 70, 80, 90 };
+	dq1.push_back(45);
+	for (auto i : dq1) cout << i << endl;
+
+	cout << endl;
+}
 void STL_STACK() {
 	using namespace std;
 
@@ -450,15 +654,6 @@ void STL_STACK() {
 	cout << c[2] << endl;
 
 	cout << endl;
-}
-void STL_DEQUE() {
-	using namespace std;
-
-
-
-
-
-
 }
 void STL_ITERATORS() {
 	using namespace std;
@@ -578,38 +773,9 @@ void STL_SET_MAP() {
 #pragma endregion void STL_
 
 
-
-void STL_ARRAY() {
+void SPEED_OF_PROGRAM() {
 	using namespace std;
 
-
-
-
-
-	array <int, 5> ar1 = {};
-	cout << "ar1: "; for (int i = 0; i < 5; i++) cout << ar1[i] << " "; cout << endl;
-
-	array <int, 5> ar2 = { 10, 20, 30 };
-	cout << "ar2: "; for (int i = 0; i < 5; i++) cout << ar2[i] << " "; cout << endl;
-
-	
-	array ar3 { 10, 20, 30 }; // for C++ 17
-	//cout << "ar2: "; for (int i = 0; i < 5; i++) cout << ar2[i] << " "; cout << endl;
-
-	array < array <int, 5>, 3 > ar4 = { 0 };
-	cout << "ar4: " << endl;
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 5; j++) {
-			ar4[i][j] = i * 10 + j;
-			cout << ar4[i][j] << "\t";
-		}
-		cout << endl;
-	}
-	cout << endl;
-
-
-
-	//array <, 5> ar3;
 
 
 
@@ -653,6 +819,10 @@ void APPLICATION_START() {
 		STL_ITERATORS();
 		STL_VECTORS0();
 		STL_VECTORS1();
+		STL_ARRAY();
+		STL_LIST();
+		STL_FORWARD_LIST();
+		STL_DEQUE();
 		STL_STACK();
 
 		POINTERS();
@@ -660,11 +830,10 @@ void APPLICATION_START() {
 		RANDOMIZER();
 		TRY_CATCH();
 	}
-	STL_ARRAY();
+	
+	SPEED_OF_PROGRAM();
 
 
-
-	//STL_DEQUE();
 	//STL_SET_MAP();
 
 
@@ -704,11 +873,9 @@ int main(array<String^>^ args) {
 // (+) STL: Vectors 1
 // (+) STL: Iterators
 // (+) STL: Stack: <stack> (link in WA)
-// ----------------------------------------
-// (?) STL: Stack
-// ( ) STL: Array
-// ----------------------------------------
-// ( ) STL: Deque
+// ( ? ) STL: Stack
+// (+) STL: Array
+// (+) STL: Deque
 // ( ) STL: List
 // ( ) STL: Map\Multimap
 // ( ) STL: Set\Multiset
