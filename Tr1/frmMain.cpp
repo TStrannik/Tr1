@@ -16,7 +16,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-
+//using namespace std;
 using namespace System;
 using namespace System::Windows::Forms;
 
@@ -30,8 +30,7 @@ int Sum(int a, int b) {
 	return g; 
 }
 
-
-
+#pragma region void 
 void CONSOLE_EXP() {
 	Console::SetWindowPosition(0, 0);
 
@@ -42,202 +41,10 @@ void CONSOLE_EXP() {
 
 	Console::Beep();
 	Console::Beep(1000, 50);
-	
+
 	Console::WindowHeight = 50;
 	Console::SetWindowSize(100, 55);
 	Console::Title = "C++\\CLI training.";
-}
-void STL_VECTORS0() {
-	using namespace std;
-
-	vector <int> v1;				  // v1: NULL
-	vector <int> v2(v1);			  // v2: == v1: NULL
-	vector <int> v3 = v1;			  // v3: == v1: NULL
-	vector <int> v4(5);				  // v4:  [0][0][0][0][0]
-	vector <int> v5(5, 2);			  // v5:  [2][2][2][2][2]
-	vector <int> v6{ 1, 2, 4, 5 };    // v6:  [1][2][4][5]
-	vector <int> v7 = { 1, 2, 3, 5 }; // v7:  [1][2][3][5]
-
-	vector <int> v11(5);			  // v11: [0][0][0][0][0]
-	vector <int> v12{ 5 };			  // v12: [5]
-	vector <int> v13(5, 2);			  // v13: [2][2][2][2][2]
-	vector <int> v14{ 5, 2 };		  // v14: [5][2]
-
-
-	vector <int> v = v5;
-	for each (int i in v) cout << i << " ";
-	cout << endl;
-
-	cout << v.size()     << endl 
-		 << v.capacity() << endl;
-
-
-
-	vector <int> sv = { 10, 20, 30, 40, 50 };
-	cout << sv.front() << endl;
-	cout << sv.back()  << endl;
-
-
-}
-void STL_VECTORS1() {
-	using namespace std;
-
-#pragma region ar1
-	vector <int> ar1 = { 10, 20, 30,  40, 50 };//<--
-							     // ^			    |
-	ar1.push_back(60);	         // |			    |
-	ar1.push_back(70);		     // |			    |
-			ar1.emplace(ar1.begin() + 3, 35);	 // |
-							ar1.emplace_back(75);// |
-	
-	for each (auto i in ar1) cout << i << " "; cout << endl << endl;
-
-	cout << ar1.size() << endl;
-	cout << ar1[4] << endl;
-	cout << endl;
-#pragma endregion ar1
-
-
-#pragma region ar2
-	vector <int> ar2({ 10, 20, 30, 40 });
-	cout << "ar2: "; for each (auto i in ar2) cout << i << " ";
-	cout << endl << endl;
-
-	ar2[2] = 100;
-
-	cout << "ar2: "; for each (auto i in ar2) cout << i << " "; cout << endl;
-
-	cout << ar2[2] << endl;
-	cout << ar2.at(2) << endl;
-	cout << endl;
-	
-	try									 { cout << ar2.at(4) << endl; }
-	catch (const std::out_of_range & ex) { cout << ex.what() << endl; }
-	cout << endl;
-
-	cout << ar2.size() << endl;
-	ar2.clear();
-	cout << ar2.size() << endl;
-	cout << endl;
-#pragma endregion ar2
-
-
-
-#pragma region ar3
-	vector <int> ar3 = { 1, 2, 3, 4, 5, 6, 7, 8 };  // ar3 [1][2][3][4][5][6][7][8]
-	cout << "Size: " << ar3.size() << endl;
-	cout << "Capacity: " << ar3.capacity() << endl;
-	cout << endl;
-
-	ar3.reserve(15);								// ar3 [1][2][3][4][5][6][7][8][N][N][N][N][N][N][N]
-
-	ar3.push_back(9);
-	ar3.push_back(10);
-	ar3.push_back(11);
-	ar3.push_back(12);
-	ar3.push_back(13);								// ar3 [1][2][3][4][5][6][7][8][9][10][11][12][13][][]
-
-	cout << "Size: " << ar3.size() << endl;
-	cout << "Capacity: " << ar3.capacity() << endl;
-	cout << endl;
-
-	ar3.shrink_to_fit();							// ar3 [1][2][3][4][5][6][7][8][9][10][11][12][13]
-	cout << "Size: " << ar3.size() << endl;
-	cout << "Capacity: " << ar3.capacity() << endl;
-	cout << endl;
-#pragma endregion ar3
-
-
-
-#pragma region ar4
-	vector <int> ar4(10, 1337);
-	cout << "ar4: "; for each (int i in ar4) cout << i << " "; cout << endl << endl;
-
-	ar4.resize(15);
-	cout << "ar4: "; for each (int i in ar4) cout << i << " "; cout << endl << endl;
-
-	cout << ar4.empty() << endl;
-	ar4.clear();
-	cout << ar4.empty() << endl;
-	cout << endl;
-#pragma endregion ar4
-
-
-
-#pragma region ar5
-	vector <int> ar5 = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 }; 
-	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
-
-	ar5.insert(ar5.end() - ar5.size() / 2, 777);
-	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
-
-	ar5.pop_back();
-	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
-
-	ar5.erase(ar5.begin() + 2);
-	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
-
-	ar5.erase(ar5.begin() + 2, ar5.end());
-	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
-
-	ar5.assign(4, 77);
-	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
-	cout << endl;
-
-	vector <int> arA;
-	arA.swap(ar5);
-	cout << "arA: "; for each (int i in arA) cout << i << " ";  cout << endl;
-	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
-
-#pragma endregion ar5
-	
-	/*
-#pragma region C A B I N A ¹1
-	cout << endl << "\t\t C A B I N A #1\n";
-	vector <int> V;
-
-	cout << "Enter size of vector <int>\n";
-	int N; cin >> N; int n;
-
-	cout << "Enter elements of this vector\n";
-	for (int i = 0; i < N; i++) { cin >> n; V.push_back(n); }
-
-	cout << "V: "; for (auto i{ V.rbegin()}; i != V.rend(); ++i) cout << *i << " ";
-
-#pragma endregion
-*/
-	
-
-
-
-#pragma region C A B I N A ¹2
-	cout << endl << "\t\t C A B I N A #2\n";
-	vector <int> V2;
-
-	cout << "Enter size of vector <int>\n";
-	int N; cin >> N;
-
-	//unique_ptr <int> ptr;		// What?
-	//make_unique
-
-	for (int i = 0; i < N; i++) V2.push_back(i * i);
-	cout << "V2: "; for each (int i in V2) cout << i << " ";
-	cout << endl;
-
-	int Sum = 0;
-	for each (int i in V2) Sum += i;
-	cout << Sum;
-
-
-
-	
-
-#pragma endregion
-	
-
-
-
-	cout << endl;
 }
 void VS_DEBUGGER() {
 	using namespace std;
@@ -255,8 +62,9 @@ void VS_DEBUGGER() {
 	cout << "step 3" << endl;
 	cout << "step 4" << endl;
 	cout << "step 5" << endl;
-	
+
 }
+
 void SIZEOF_ARRAY() {
 	using namespace std;
 
@@ -319,8 +127,8 @@ void RANDOMIZER() {
 	while (counter < SIZE) {
 		cond = false;
 		candidate = rand() % SIZE + 1;
-		for (int j = 0; j < counter; j++) if (arr[j] == candidate) { cond = true; break; }		
-		if (!cond) { arr[counter] = candidate; counter++; }		
+		for (int j = 0; j < counter; j++) if (arr[j] == candidate) { cond = true; break; }
+		if (!cond) { arr[counter] = candidate; counter++; }
 	}
 	for each (int i in arr) cout << i << " ";
 	cout << endl;
@@ -330,7 +138,7 @@ void RANDOMIZER() {
 	/// ROUND 2 FIGHT!
 
 	for (int i = 0; i < SIZE; i++) {
-back:	
+	back:
 		candidate = rand() % SIZE + 1;
 		for (int j = 0; j < i; j++) if (arr[j] == candidate) goto back;
 		arr[i] = candidate;
@@ -353,7 +161,8 @@ void TRY_CATCH() {
 		if (b == 0) throw std::exception("Divide by zero!!!");
 		c = a / b;
 		cout << c << endl;
-	} catch (const std::exception& e){
+	}
+	catch (const std::exception& e) {
 		cout << e.what() << endl;
 		cout << "AAAaaaaaa!!1\n" << endl;
 	}
@@ -361,12 +170,13 @@ void TRY_CATCH() {
 
 	cout << endl;
 }
+
 void POINTERS() {
 	using namespace std;
 
 	int a = 5;
-	int *pa = &a;
-	int *px = new int(a);
+	int* pa = &a;
+	int* px = new int(a);
 	cout << "adress pa: " << pa << endl;
 	cout << "value pa: " << *pa << endl;
 	cout << "adress px: " << px << endl;
@@ -392,7 +202,202 @@ void POINTERS() {
 
 	cout << endl;
 }
-void STACK() {
+#pragma endregion void 
+
+#pragma region void STL_
+void STL_VECTORS0() {
+	using namespace std;
+
+	vector <int> v1;				  // v1: NULL
+	vector <int> v2(v1);			  // v2: == v1: NULL
+	vector <int> v3 = v1;			  // v3: == v1: NULL
+	vector <int> v4(5);				  // v4:  [0][0][0][0][0]
+	vector <int> v5(5, 2);			  // v5:  [2][2][2][2][2]
+	vector <int> v6{ 1, 2, 4, 5 };    // v6:  [1][2][4][5]
+	vector <int> v7 = { 1, 2, 3, 5 }; // v7:  [1][2][3][5]
+
+	vector <int> v11(5);			  // v11: [0][0][0][0][0]
+	vector <int> v12{ 5 };			  // v12: [5]
+	vector <int> v13(5, 2);			  // v13: [2][2][2][2][2]
+	vector <int> v14{ 5, 2 };		  // v14: [5][2]
+
+
+	vector <int> v = v5;
+	for each (int i in v) cout << i << " ";
+	cout << endl;
+
+	cout << v.size() << endl
+		<< v.capacity() << endl;
+
+
+
+	vector <int> sv = { 10, 20, 30, 40, 50 };
+	cout << sv.front() << endl;
+	cout << sv.back() << endl;
+
+
+}
+void STL_VECTORS1() {
+	using namespace std;
+
+#pragma region ar1
+	vector <int> ar1 = { 10, 20, 30,  40, 50 };//<--
+	// ^			    |
+	ar1.push_back(60);	         // |			    |
+	ar1.push_back(70);		     // |			    |
+	ar1.emplace(ar1.begin() + 3, 35);	 // |
+	ar1.emplace_back(75);// |
+
+	for each (auto i in ar1) cout << i << " "; cout << endl << endl;
+
+	cout << ar1.size() << endl;
+	cout << ar1[4] << endl;
+	cout << endl;
+#pragma endregion ar1
+
+
+#pragma region ar2
+	vector <int> ar2({ 10, 20, 30, 40 });
+	cout << "ar2: "; for each (auto i in ar2) cout << i << " ";
+	cout << endl << endl;
+
+	ar2[2] = 100;
+
+	cout << "ar2: "; for each (auto i in ar2) cout << i << " "; cout << endl;
+
+	cout << ar2[2] << endl;
+	cout << ar2.at(2) << endl;
+	cout << endl;
+
+	try { cout << ar2.at(4) << endl; }
+	catch (const std::out_of_range& ex) { cout << ex.what() << endl; }
+	cout << endl;
+
+	cout << ar2.size() << endl;
+	ar2.clear();
+	cout << ar2.size() << endl;
+	cout << endl;
+#pragma endregion ar2
+
+
+
+#pragma region ar3
+	vector <int> ar3 = { 1, 2, 3, 4, 5, 6, 7, 8 };  // ar3 [1][2][3][4][5][6][7][8]
+	cout << "Size: " << ar3.size() << endl;
+	cout << "Capacity: " << ar3.capacity() << endl;
+	cout << endl;
+
+	ar3.reserve(15);								// ar3 [1][2][3][4][5][6][7][8][N][N][N][N][N][N][N]
+
+	ar3.push_back(9);
+	ar3.push_back(10);
+	ar3.push_back(11);
+	ar3.push_back(12);
+	ar3.push_back(13);								// ar3 [1][2][3][4][5][6][7][8][9][10][11][12][13][][]
+
+	cout << "Size: " << ar3.size() << endl;
+	cout << "Capacity: " << ar3.capacity() << endl;
+	cout << endl;
+
+	ar3.shrink_to_fit();							// ar3 [1][2][3][4][5][6][7][8][9][10][11][12][13]
+	cout << "Size: " << ar3.size() << endl;
+	cout << "Capacity: " << ar3.capacity() << endl;
+	cout << endl;
+#pragma endregion ar3
+
+
+
+#pragma region ar4
+	vector <int> ar4(10, 1337);
+	cout << "ar4: "; for each (int i in ar4) cout << i << " "; cout << endl << endl;
+
+	ar4.resize(15);
+	cout << "ar4: "; for each (int i in ar4) cout << i << " "; cout << endl << endl;
+
+	cout << ar4.empty() << endl;
+	ar4.clear();
+	cout << ar4.empty() << endl;
+	cout << endl;
+#pragma endregion ar4
+
+
+
+#pragma region ar5
+	vector <int> ar5 = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
+
+	ar5.insert(ar5.end() - ar5.size() / 2, 777);
+	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
+
+	ar5.pop_back();
+	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
+
+	ar5.erase(ar5.begin() + 2);
+	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
+
+	ar5.erase(ar5.begin() + 2, ar5.end());
+	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
+
+	ar5.assign(4, 77);
+	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
+	cout << endl;
+
+	vector <int> arA;
+	arA.swap(ar5);
+	cout << "arA: "; for each (int i in arA) cout << i << " ";  cout << endl;
+	cout << "ar5: "; for each (int i in ar5) cout << i << " ";  cout << endl;
+
+#pragma endregion ar5
+
+	/*
+#pragma region C A B I N A ¹1
+	cout << endl << "\t\t C A B I N A #1\n";
+	vector <int> V;
+
+	cout << "Enter size of vector <int>\n";
+	int N; cin >> N; int n;
+
+	cout << "Enter elements of this vector\n";
+	for (int i = 0; i < N; i++) { cin >> n; V.push_back(n); }
+
+	cout << "V: "; for (auto i{ V.rbegin()}; i != V.rend(); ++i) cout << *i << " ";
+
+#pragma endregion
+*/
+
+
+
+
+#pragma region C A B I N A ¹2
+	cout << endl << "\t\t C A B I N A #2\n";
+	vector <int> V2;
+
+	cout << "Enter size of vector <int>\n";
+	int N; cin >> N;
+
+	//unique_ptr <int> ptr;		// What?
+	//make_unique
+
+	for (int i = 0; i < N; i++) V2.push_back(i * i);
+	cout << "V2: "; for each (int i in V2) cout << i << " ";
+	cout << endl;
+
+	int Sum = 0;
+	for each (int i in V2) Sum += i;
+	cout << Sum;
+
+
+
+
+
+#pragma endregion
+
+
+
+
+	cout << endl;
+}
+void STL_STACK() {
 	using namespace std;
 
 
@@ -410,7 +415,7 @@ void STACK() {
 	cout << "stack size: " << st.size() << endl;
 	cout << "stack size: " << a.size() << endl;
 	cout << endl;
-	
+
 	cout << a[2] << endl << endl;
 
 
@@ -446,7 +451,7 @@ void STACK() {
 
 	cout << endl;
 }
-void DEQUE() {
+void STL_DEQUE() {
 	using namespace std;
 
 
@@ -455,7 +460,7 @@ void DEQUE() {
 
 
 }
-void ITERATORS() {
+void STL_ITERATORS() {
 	using namespace std;
 
 	list <int> ::iterator iL;
@@ -485,7 +490,7 @@ void ITERATORS() {
 
 	while (iter != numbers.end()) { cout << *iter << " "; ++iter; }
 	cout << endl;
-											//f.e., ... .end() - 2;...
+	//f.e., ... .end() - 2;...
 	for (auto start{ numbers.begin() }; start != numbers.end(); start++) cout << *start << " ";
 	cout << endl;
 
@@ -520,9 +525,9 @@ void ITERATORS() {
 	cout << endl;
 
 
-	
+
 	int data[]{ 40, 50, 60, 80, 80 };
-	auto itr  = begin(data);
+	auto itr = begin(data);
 	auto iend = end(data);
 	for (auto it{ begin(data) }; it != end(data); ++it) cout << *it << " ";
 	cout << endl;
@@ -550,14 +555,14 @@ void ITERATORS() {
 
 	cout << endl;
 }
-void SET_MAP() {
+void STL_SET_MAP() {
 	using namespace std;
 
 
 	// red-black trees
 		//https://www.youtube.com/watch?v=UKZzEYJ5nWM
 
-	
+
 
 	unordered_set<int> US{ 5 , 2 ,4 ,4 ,4 , 4, 4, 47823 };
 
@@ -568,12 +573,43 @@ void SET_MAP() {
 
 	//hash_set<String^> HS;
 
-	
+
 }
-void ARRAY() {
+#pragma endregion void STL_
+
+
+
+void STL_ARRAY() {
 	using namespace std;
 
 
+
+
+
+	array <int, 5> ar1 = {};
+	cout << "ar1: "; for (int i = 0; i < 5; i++) cout << ar1[i] << " "; cout << endl;
+
+	array <int, 5> ar2 = { 10, 20, 30 };
+	cout << "ar2: "; for (int i = 0; i < 5; i++) cout << ar2[i] << " "; cout << endl;
+
+	
+	array ar3 { 10, 20, 30 }; // for C++ 17
+	//cout << "ar2: "; for (int i = 0; i < 5; i++) cout << ar2[i] << " "; cout << endl;
+
+	array < array <int, 5>, 3 > ar4 = { 0 };
+	cout << "ar4: " << endl;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 5; j++) {
+			ar4[i][j] = i * 10 + j;
+			cout << ar4[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	cout << endl;
+
+
+
+	//array <, 5> ar3;
 
 
 
@@ -587,40 +623,49 @@ int fact(int x) {
 	return x * fact(x - 1);
 }
 
+
+
+
+
+
+
+
 void APPLICATION_START() {
 	setlocale(LC_ALL, "RU_ru");
+	Console::Title = L"C++\\CLI training";
 	system("color 70");
+
 
 	std::cout << "\n APPLICATION START\n\n";
 	std::cout << "\tStatistic:\n\n";
 
 
 
-	char str[] = "\tHello, world!";
-	std::cout << str << std::endl;
-
-	std::cout << "\t" << fact(6) << std::endl;
+	//char str[] = "\tHello, world!";
+	//std::cout << str << std::endl;
+	//std::cout << "\t" << fact(6) << std::endl;
 
 
 	if (0) {
-		ITERATORS();
-		STL_VECTORS0();
-		STL_VECTORS1();
-		POINTERS();
-		STACK();
 		CONSOLE_EXP();
 		VS_DEBUGGER();
+
+		STL_ITERATORS();
+		STL_VECTORS0();
+		STL_VECTORS1();
+		STL_STACK();
+
+		POINTERS();
 		SIZEOF_ARRAY();
 		RANDOMIZER();
 		TRY_CATCH();
 	}
-	ARRAY();
+	STL_ARRAY();
 
 
 
-	//DEQUE();
-
-	//SET_MAP();
+	//STL_DEQUE();
+	//STL_SET_MAP();
 
 
 	std::cout << "\n\n";
@@ -654,11 +699,13 @@ int main(array<String^>^ args) {
 // (+) GIT Make "Develop" branch
 // 
 // (+) CONSOLE
+// 
 // (+) STL: Vectors 0
 // (+) STL: Vectors 1
 // (+) STL: Iterators
 // (+) STL: Stack: <stack> (link in WA)
 // ----------------------------------------
+// (?) STL: Stack
 // ( ) STL: Array
 // ----------------------------------------
 // ( ) STL: Deque
@@ -667,6 +714,11 @@ int main(array<String^>^ args) {
 // ( ) STL: Set\Multiset
 // ( ) hash-tables
 // ( ) metanint.com Chapter 9. Containers
+// ( ) Macros ñ++
+// 
+// ( ) OOP: Classes
+// ( ) OOP: Inheritance
+// ( ) OOP: .... etc
 // 
 // (+) VS: Debugger
 // (+) sizeof
