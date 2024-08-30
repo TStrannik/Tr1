@@ -60,8 +60,8 @@ void STL_VECTORS0() {
 
 	vector <int> v11(5);			  // v11: [0][0][0][0][0]
 	vector <int> v12{ 5 };			  // v12: [5]
-	std::vector<int> v13(5, 2);		  // v13: [2][2][2][2][2]
-	std::vector<int> v14{ 5, 2 };	  // v14: [5][2]
+	vector <int> v13(5, 2);			  // v13: [2][2][2][2][2]
+	vector <int> v14{ 5, 2 };		  // v14: [5][2]
 
 
 	vector <int> v = v5;
@@ -75,7 +75,7 @@ void STL_VECTORS0() {
 
 	vector <int> sv = { 10, 20, 30, 40, 50 };
 	cout << sv.front() << endl;
-	cout << sv.back() << endl;
+	cout << sv.back()  << endl;
 
 
 }
@@ -83,14 +83,14 @@ void STL_VECTORS1() {
 	using namespace std;
 
 #pragma region ar1
-	vector <int> ar1 = { 10, 20, 30, 40, 50 };
-	ar1.push_back(60);
-	ar1.push_back(70);
-	ar1.emplace(ar1.begin() + 3, 35);
-	ar1.emplace_back(75);
+	vector <int> ar1 = { 10, 20, 30,  40, 50 };//<--
+							     // ^			    |
+	ar1.push_back(60);	         // |			    |
+	ar1.push_back(70);		     // |			    |
+			ar1.emplace(ar1.begin() + 3, 35);	 // |
+							ar1.emplace_back(75);// |
 	
-	for each (int i in ar1) cout << i << " ";
-	cout << endl << endl;
+	for each (auto i in ar1) cout << i << " "; cout << endl << endl;
 
 	cout << ar1.size() << endl;
 	cout << ar1[4] << endl;
@@ -100,13 +100,12 @@ void STL_VECTORS1() {
 
 #pragma region ar2
 	vector <int> ar2({ 10, 20, 30, 40 });
-	cout << "ar2: "; for each (int i in ar2) cout << i << " ";
+	cout << "ar2: "; for each (auto i in ar2) cout << i << " ";
 	cout << endl << endl;
 
 	ar2[2] = 100;
 
-	cout << "ar2: "; for each (int i in ar2) cout << i << " ";
-	cout << endl;
+	cout << "ar2: "; for each (auto i in ar2) cout << i << " "; cout << endl;
 
 	cout << ar2[2] << endl;
 	cout << ar2.at(2) << endl;
@@ -116,7 +115,9 @@ void STL_VECTORS1() {
 	catch (const std::out_of_range & ex) { cout << ex.what() << endl; }
 	cout << endl;
 
-	cout << ar2.size() << endl; ar2.clear(); cout << ar2.size() << endl;
+	cout << ar2.size() << endl;
+	ar2.clear();
+	cout << ar2.size() << endl;
 	cout << endl;
 #pragma endregion ar2
 
@@ -128,7 +129,7 @@ void STL_VECTORS1() {
 	cout << "Capacity: " << ar3.capacity() << endl;
 	cout << endl;
 
-	ar3.reserve(15);								// ar3 [1][2][3][4][5][6][7][8][][][][][][][]
+	ar3.reserve(15);								// ar3 [1][2][3][4][5][6][7][8][N][N][N][N][N][N][N]
 
 	ar3.push_back(9);
 	ar3.push_back(10);
@@ -150,14 +151,14 @@ void STL_VECTORS1() {
 
 #pragma region ar4
 	vector <int> ar4(10, 1337);
-	cout << "ar4: "; for each (int i in ar4) cout << i << " ";
-	cout << endl << endl;
+	cout << "ar4: "; for each (int i in ar4) cout << i << " "; cout << endl << endl;
 
 	ar4.resize(15);
-	cout << "ar4: "; for each (int i in ar4) cout << i << " ";
-	cout << endl << endl;
+	cout << "ar4: "; for each (int i in ar4) cout << i << " "; cout << endl << endl;
 
-	cout << ar4.empty() << endl; ar4.clear(); cout << ar4.empty() << endl;
+	cout << ar4.empty() << endl;
+	ar4.clear();
+	cout << ar4.empty() << endl;
 	cout << endl;
 #pragma endregion ar4
 
@@ -236,14 +237,6 @@ void STL_VECTORS1() {
 
 
 
-
-
-
-
-
-
-
-
 	cout << endl;
 }
 void VS_DEBUGGER() {
@@ -290,16 +283,13 @@ void SIZEOF_ARRAY() {
 	int arr2[]{ 10, 20, 30, 40 };
 
 	// first cicle
-	for each (int i in arr2) cout << i << " ";
-	cout << endl;
+	for each (int i in arr2) cout << i << " "; cout << endl;
 
 	// second cicle
-	for (int i = 0; i < sizeof(arr2) / sizeof(int); i++) cout << arr2[i] << " ";
-	cout << endl;
+	for (int i = 0; i < sizeof(arr2) / sizeof(int); i++) cout << arr2[i] << " "; cout << endl;
 
 	// third cicle
-	for (int i = 0; i < sizeof(arr2) / sizeof(arr2[0]); i++) cout << arr2[i] << " ";
-	cout << endl;
+	for (int i = 0; i < sizeof(arr2) / sizeof(arr2[0]); i++) cout << arr2[i] << " "; cout << endl;
 
 
 	cout << endl;
@@ -319,7 +309,7 @@ void RANDOMIZER() {
 	/// D E A C T I V A T I O N   O F   T H E   C A B I N A !
 	int const SIZE = 20;
 	int arr[SIZE] = { -1 };
-	int condidate = 0;
+	int candidate = 0;
 
 
 	/// ROUND 1 FIGHT!
@@ -328,9 +318,9 @@ void RANDOMIZER() {
 	bool cond = false;
 	while (counter < SIZE) {
 		cond = false;
-		condidate = rand() % SIZE + 1;
-		for (int j = 0; j < counter; j++) if (arr[j] == condidate) { cond = true; break; }		
-		if (!cond) { arr[counter] = condidate; counter++; }		
+		candidate = rand() % SIZE + 1;
+		for (int j = 0; j < counter; j++) if (arr[j] == candidate) { cond = true; break; }		
+		if (!cond) { arr[counter] = candidate; counter++; }		
 	}
 	for each (int i in arr) cout << i << " ";
 	cout << endl;
@@ -341,9 +331,9 @@ void RANDOMIZER() {
 
 	for (int i = 0; i < SIZE; i++) {
 back:	
-		condidate = rand() % SIZE + 1;
-		for (int j = 0; j < i; j++) if (arr[j] == condidate) goto back;
-		arr[i] = condidate;
+		candidate = rand() % SIZE + 1;
+		for (int j = 0; j < i; j++) if (arr[j] == candidate) goto back;
+		arr[i] = candidate;
 	}
 	for each (int i in arr) cout << i << " ";
 	cout << endl;
@@ -440,8 +430,8 @@ void STACK() {
 
 
 
-	stack <int, list <int> > st2;
-	stack <int, vector <int> > st3;
+	stack <int, list <int> > st2;						//?
+	stack <int, vector <int> > st3;						//?
 
 	st3.push(10);
 	st3.push(20);
@@ -592,13 +582,24 @@ void ARRAY() {
 }
 
 
-
+int fact(int x) {
+	if (x == 1) return 1;
+	return x * fact(x - 1);
+}
 
 void APPLICATION_START() {
 	setlocale(LC_ALL, "RU_ru");
 	system("color 70");
+
 	std::cout << "\n APPLICATION START\n\n";
 	std::cout << "\tStatistic:\n\n";
+
+
+
+	char str[] = "\tHello, world!";
+	std::cout << str << std::endl;
+
+	std::cout << "\t" << fact(6) << std::endl;
 
 
 	if (0) {
@@ -614,13 +615,12 @@ void APPLICATION_START() {
 		TRY_CATCH();
 	}
 	ARRAY();
-	
+
+
 
 	//DEQUE();
 
-	
 	//SET_MAP();
-
 
 
 	std::cout << "\n\n";
