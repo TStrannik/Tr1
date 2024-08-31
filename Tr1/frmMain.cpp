@@ -787,7 +787,73 @@ void STL_SETS() {
 
 	cout << endl;
 }
+void STL_MAPS() {
+	using namespace std;
 
+
+
+	map <string, unsigned> prod1
+	{
+		pair <string, unsigned> {"bread", 30}, pair{"milk", 80}, pair{"apple", 60}
+	};
+	map <string, unsigned> prod2
+	{
+		{ "bread", 30 },
+		{ "milk",  80 },
+		{ "apple", 60 }
+	};
+
+
+
+
+
+	map <string, unsigned> dungeon;
+	dungeon["F: fisting"] = 300;
+	dungeon["A: lockerroom wrestling"] = 750;
+	dungeon["Z: spanking"] = 100;
+
+
+	cout << "Stick your finger in my ass for \t" <<
+		dungeon["F: fisting"] << " bucks" << endl;
+	cout << "Buddy, you choose the wrong door \t" <<
+		dungeon["A: lockerroom wrestling"] << " bucks" << endl;
+	cout << endl;
+
+	for (const auto& [service, price] : dungeon) cout << service << ": \t\t" << price << endl;
+	cout << endl;
+
+	for (const auto& i : dungeon) cout << i.first << ": \t\t" << i.second << endl;
+	cout << endl;
+
+
+
+
+	map <unsigned, string> products;
+
+	products[2] = "Kogtic";
+	products[1] = "Gavka";
+	products[3] = "Babka";
+	products[4] = "Murchalka";
+
+	for (const auto i : products) cout << i.first << ":\t" << i.second << endl; cout << endl;
+
+	products.erase(3);					//  Delete only for KEY
+	for (const auto i : products) cout << i.first << ":\t" << i.second << endl; cout << endl;
+
+
+	unordered_map <unsigned, string> um1;
+	um1[1] = "Gavka";
+	um1[2] = "Kogtic";
+	um1[3] = "Babka";
+	um1[4] = "Murchalka";
+
+	unordered_map<unsigned, string>::const_iterator cium1 = um1.cbegin();
+	for (auto it = cium1; it != um1.end(); ++it) cout << it->second << endl; cout << endl;
+
+
+
+	cout << endl;
+}
 
 
 void STL_ITERATORS() {
@@ -897,62 +963,7 @@ void STL_SET_MAP() {
 #pragma endregion void STL_
 
 
-void STL_MAP() {
-	using namespace std;
 
-
-
-	map <string, unsigned> prod1
-	{
-		pair <string, unsigned> {"bread", 30}, pair{"milk", 80}, pair{"apple", 60}
-	};
-	map <string, unsigned> prod2
-	{
-		{ "bread", 30 },
-		{ "milk",  80 },
-		{ "apple", 60 }
-	};
-
-
-
-
-
-	map <string, unsigned> dungeon;
-	dungeon["F: fisting"]				= 300;
-	dungeon["A: lockerroom wrestling"] = 750;
-	dungeon["Z: spanking"]				= 100;
-
-
-	cout << "Stick your finger in my ass for \t" <<
-		dungeon["F: fisting"] << " bucks" << endl;
-	cout << "Buddy, you choose the wrong door \t" <<
-		dungeon["A: lockerroom wrestling"] << " bucks" << endl;
-	cout << endl;
-
-	for (const auto& [service, price] : dungeon) cout << service << ": \t\t" << price << endl;
-	cout << endl;
-
-	for (const auto& i : dungeon) cout << i.first << ": \t\t" << i.second << endl;
-	cout << endl;
-
-
-
-
-	map <unsigned, string> products;
-
-	products[1] = "Gavka";
-	products[2] = "Kogtic";
-	products[3] = "Babka";
-	products[4] = "Murchalka";
-
-	for (const auto i : products) cout << i.first << ":\t" << i.second << endl; cout << endl;
-
-	products.erase(3);					//  Delete only for KEY
-	for (const auto i : products) cout << i.first << ":\t" << i.second << endl; cout << endl;
-
-
-	cout << endl;
-}
 
 
 
@@ -1008,7 +1019,7 @@ void APPLICATION_START() {
 		STL_QUEUE();
 		STL_PRIORITY_QUEUE();
 		STL_SETS();
-		
+		STL_MAPS();
 
 		SPEED_OF_PROGRAM();
 
@@ -1019,7 +1030,7 @@ void APPLICATION_START() {
 		TRY_CATCH();
 	}
 	
-	STL_MAP();
+	
 	
 
 	//STL_SET_MAP();
