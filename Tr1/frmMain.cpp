@@ -1,4 +1,5 @@
 #include "frmMain.h"
+#include "SimpleTimer.h"
 
 #include <Windows.h>
 #include <iostream>
@@ -12,10 +13,21 @@
 #include <forward_list>
 #include <deque>
 #include <stack>
+#include <queue>
 
-//#include <hash_set>
-#include <unordered_map>
+#include <set>
 #include <unordered_set>
+#include <map>
+#include <unordered_map>
+//#include <hash_set>
+
+
+#include <chrono>
+#include <thread>
+
+
+
+
 
 //using namespace std;
 using namespace System;
@@ -24,11 +36,26 @@ using namespace System::Windows::Forms;
 [STAThreadAttribute]
 
 
+
 int Sum(int a, int b) {
 	int c = a + b; int d = c; int e = d;
 	int f = e;
 	int g = e;
 	return g; 
+}
+
+int tSum(int a, int b) {
+	using namespace std;
+
+	this_thread::sleep_for(chrono::milliseconds(2000));
+
+	cout << "thread ID: " << this_thread::get_id() << " =================\t Sum STARTED \t ================= " << endl;
+
+	this_thread::sleep_for(chrono::milliseconds(5000));
+
+	cout << "thread ID: " << this_thread::get_id() << " =================\t Sum STOPPED \t ================= " << endl;
+
+	return a + b;
 }
 
 #pragma region void 
@@ -199,6 +226,45 @@ void POINTERS() {
 	*py = 10;
 	cout << "value py: " << *py << endl;
 	cout << "value b: " << b << endl;
+
+
+	cout << endl;
+}
+
+
+void SPEED_OF_PROGRAM() {
+
+	SimpleTimer durator;
+
+	//auto start = std::chrono::high_resolution_clock::now();
+
+
+	using namespace std;
+
+	int result;
+
+	thread t([&result]() { result = tSum(2, 5);  });
+	//result = tSum(2, 5);
+
+
+
+	for (size_t i = 1; i <= 10; i++) {
+		cout << "thread ID: " << this_thread::get_id() << "\tmain works\t" << i << endl;
+		this_thread::sleep_for(chrono::milliseconds(500));
+	}
+
+
+
+
+	t.join();
+	cout << "tSum Result = " << result << endl;
+
+
+	/*auto end = chrono::high_resolution_clock::now();
+	chrono::duration<float> duration = end - start;
+	cout << "Duration: " << duration.count() << " sec" << endl;*/
+
+
 
 
 	cout << endl;
@@ -532,7 +598,7 @@ void STL_LIST() {
 	l3.insert(it3s, 3, 44);			     for (auto i : l3) cout << i << " "; cout << endl;
 
 	auto pos = l3.begin();				 for (auto i = 1; i <= 2; i++) ++pos;
-	l3.insert(pos, { 41, 42, 43 });       for (auto i : l3) cout << i << " "; cout << endl;
+	l3.insert(pos, { 41, 42, 43 });      for (auto i : l3) cout << i << " "; cout << endl;
 
 
 	list l4{ 10, 20, 30, 40 };
@@ -601,6 +667,22 @@ void STL_DEQUE() {
 
 	cout << endl;
 }
+void STL_QUEUE() {
+	using namespace std;
+
+	queue <int> q1;
+	q1.push(10); q1.push(20); q1.push(30); q1.push(40); q1.push(50);
+
+	cout << q1.front() << endl;
+
+	auto a = q1._Get_container();
+	cout << a.at(3) << endl;
+
+	while (!q1.empty()) { cout << q1.front() << " "; q1.pop(); }
+
+
+	cout << endl;
+}
 void STL_STACK() {
 	using namespace std;
 
@@ -655,6 +737,59 @@ void STL_STACK() {
 
 	cout << endl;
 }
+void STL_PRIORITY_QUEUE() {
+	using namespace std;
+
+
+	priority_queue <string> pq1;
+	pq1.push("Alpha");
+	pq1.push("Golph");
+	pq1.push("Charlie");
+	pq1.push("Hotel");
+	pq1.push("Bravo");
+
+	deque <string> casino(pq1.size());
+
+	while (!pq1.empty()) { casino.push_front(pq1.top()); pq1.pop(); }
+	for each (auto i in casino) cout << i << " ";
+	cout << endl;
+
+
+
+	cout << endl;
+}
+void STL_SETS() {
+	using namespace std;
+
+	set <int> s1;
+	set s2{ 10, 20, 30, 40, 50 };
+	set s3{ 40, 40, 10, 10, 10, 10, 50, 30 }; s3.insert(20);
+
+	for (auto i : s2) cout << i << " "; cout << endl;
+	for (auto i : s3) cout << i << " "; cout << endl;
+	cout << s3.size() << endl;
+	cout << endl;
+
+
+	cout << boolalpha << s2.count(10) << endl;
+	cout << boolalpha << s2.contains(10) << endl;
+	cout << boolalpha << s2.count(11) << endl;
+	cout << boolalpha << s2.contains(11) << endl;
+
+
+
+
+
+
+	unordered_set us1 = { 5, 2, 2, 2, 2, 2, 2, 40, 40, 19, 10 };
+	for (auto i : us1) cout << i << " "; cout << endl;
+
+
+	cout << endl;
+}
+
+
+
 void STL_ITERATORS() {
 	using namespace std;
 
@@ -758,30 +893,75 @@ void STL_SET_MAP() {
 		//https://www.youtube.com/watch?v=UKZzEYJ5nWM
 
 
-
-	unordered_set<int> US{ 5 , 2 ,4 ,4 ,4 , 4, 4, 47823 };
-
-	for (auto& i : US) cout << i << " ";
-
-
-
-
-	//hash_set<String^> HS;
-
-
 }
 #pragma endregion void STL_
 
 
-void SPEED_OF_PROGRAM() {
+void STL_MAP() {
 	using namespace std;
 
 
 
+	map <string, unsigned> prod1
+	{
+		pair <string, unsigned> {"bread", 30}, pair{"milk", 80}, pair{"apple", 60}
+	};
+	map <string, unsigned> prod2
+	{
+		{ "bread", 30 },
+		{ "milk",  80 },
+		{ "apple", 60 }
+	};
+
+
+
+
+
+	map <string, unsigned> dungeon;
+	dungeon["F: fisting"]				= 300;
+	dungeon["A: lockerroom wrestling"] = 750;
+	dungeon["Z: spanking"]				= 100;
+
+
+	cout << "Stick your finger in my ass for \t" <<
+		dungeon["F: fisting"] << " bucks" << endl;
+	cout << "Buddy, you choose the wrong door \t" <<
+		dungeon["A: lockerroom wrestling"] << " bucks" << endl;
+	cout << endl;
+
+	for (const auto& [service, price] : dungeon) cout << service << ": \t\t" << price << endl;
+	cout << endl;
+
+	for (const auto& i : dungeon) cout << i.first << ": \t\t" << i.second << endl;
+	cout << endl;
+
+
+
+
+	map <unsigned, string> products;
+
+	products[1] = "Gavka";
+	products[2] = "Kogtic";
+	products[3] = "Babka";
+	products[4] = "Murchalka";
+
+	for (const auto i : products) cout << i.first << ":\t" << i.second << endl; cout << endl;
+
+	products.erase(3);					//  Delete only for KEY
+	for (const auto i : products) cout << i.first << ":\t" << i.second << endl; cout << endl;
 
 
 	cout << endl;
 }
+
+
+
+
+
+
+
+
+
 
 
 int fact(int x) {
@@ -798,6 +978,7 @@ int fact(int x) {
 
 void APPLICATION_START() {
 	setlocale(LC_ALL, "RU_ru");
+	Console::SetWindowSize(60, 30);
 	Console::Title = L"C++\\CLI training";
 	system("color 70");
 
@@ -824,6 +1005,13 @@ void APPLICATION_START() {
 		STL_FORWARD_LIST();
 		STL_DEQUE();
 		STL_STACK();
+		STL_QUEUE();
+		STL_PRIORITY_QUEUE();
+		STL_SETS();
+		
+
+		SPEED_OF_PROGRAM();
+
 
 		POINTERS();
 		SIZEOF_ARRAY();
@@ -831,8 +1019,8 @@ void APPLICATION_START() {
 		TRY_CATCH();
 	}
 	
-	SPEED_OF_PROGRAM();
-
+	STL_MAP();
+	
 
 	//STL_SET_MAP();
 
@@ -872,11 +1060,13 @@ int main(array<String^>^ args) {
 // (+) STL: Vectors 0
 // (+) STL: Vectors 1
 // (+) STL: Iterators
-// (+) STL: Stack: <stack> (link in WA)
-// ( ? ) STL: Stack
+
 // (+) STL: Array
 // (+) STL: Deque
-// ( ) STL: List
+// (+) STL: List
+// ( ? ) STL: Stack
+// (+) STL: Queue
+// ( ) STL: Priority_queue 
 // ( ) STL: Map\Multimap
 // ( ) STL: Set\Multiset
 // ( ) hash-tables
@@ -895,7 +1085,9 @@ int main(array<String^>^ args) {
 // (+) try-catch, throw, cerr << e.what();
 // (+) Pointers
 
+// (+) Speed of progran
 // ( ) Threads (lnk WA)
+// ( ) anonimic function
 
 // 
 // ( ) Pro level: https://www.youtube.com/watch?v=4ZyOqCT494w&t=51s
@@ -906,3 +1098,4 @@ int main(array<String^>^ args) {
 //
 // ( ) Component: the essence of the problem
 // ( ) 
+
