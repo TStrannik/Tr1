@@ -15,7 +15,6 @@
 #include <deque>
 #include <stack>
 #include <queue>
-
 #include <set>
 #include <unordered_set>
 #include <map>
@@ -241,6 +240,22 @@ void POINTERS() {
 
 	cout << endl;
 }
+void POINTERS_ARITH() {
+	using namespace std;
+
+	const int SIZE = 5;
+	int arr[SIZE] = { 10, 20, 30, 40, 50 };
+
+	for (auto i : arr) cout << i << " "; cout << endl;
+	int* pArr = arr;
+	cout << *pArr << endl;
+	cout << *(pArr + 1) << endl;
+	//cout << *(pArr - 2) << endl;			// data from outside =\
+
+	cout << endl;
+}
+
+inline int INLINE(int a, int b) { return a + b; }
 
 
 void SPEED_OF_PROGRAM() {
@@ -996,6 +1011,56 @@ void STL_SET_MAP() {
 
 
 
+#pragma region THREADS_
+
+void th1Work() {
+	using namespace std;
+
+	cout << "START th1Work" << endl;
+
+	for (size_t i = 0; i < 10; i++) {
+		cout << "Thread ID: " << this_thread::get_id() << " \tth1Work" << endl;
+		this_thread::sleep_for(chrono::milliseconds(1000));
+	}
+
+	cout << "END th1Work" << endl;
+}
+
+void THREADS_1() {
+	using namespace std;
+	SimpleTimer Duration;
+
+
+
+	thread th(th1Work);
+	thread th2(th1Work);
+	//th.detach();				// thread will be autonomic and make work after destruction of THREADS_1()
+	
+
+	cout << "START THIS" << endl;
+
+	for (size_t i = 0; i < 10; i++) {
+		cout << "Thread ID: " << this_thread::get_id() << " \tTHREADS_1" << endl;
+		this_thread::sleep_for(chrono::milliseconds(500));
+	}
+
+	cout << "END THIS" << endl;
+
+
+	th.join();				// make work after nain logic
+	th2.join();
+
+	cout << endl;
+}
+
+
+
+
+
+#pragma endregion THREADS_
+
+
+
 
 
 
@@ -1023,6 +1088,7 @@ void APPLICATION_START() {
 	Console::Title = L"C++\\CLI training";
 	system("color 70");
 
+	SimpleTimer Duration;
 
 	std::cout << "\n APPLICATION START\n\n";
 	std::cout << "\tStatistic:\n\n";
@@ -1056,12 +1122,17 @@ void APPLICATION_START() {
 
 
 		POINTERS();
+		POINTERS_ARITH();
+		INLINE(2, 3);
+
 		SIZEOF_ARRAY();
 		RANDOMIZER();
 		TRY_CATCH();
 	}
 	
 	
+	THREADS_1();
+
 	
 
 	//STL_SET_MAP();
@@ -1113,13 +1184,16 @@ int main(array<String^>^ args) {
 // (+) STL: Set\Multiset
 // (+) STL: Span
 // 
-// --------------------------
-// ( ) Arithmetic of pointers https://www.youtube.com/watch?v=Weh6UoLkNUQ&t=297s
-// --------------------------
+// (+) Arithmetic of pointers 
 //
 // ( ) hash-tables
 // ( ) metanint.com Chapter 9. Containers
 // ( ) Macros ñ++
+// 
+// --------------------------
+// ( ) Threads: 
+// ( ) Threads: 
+// ( ) Threads: 
 // 
 // ( ) OOP: Classes
 // ( ) OOP: Inheritance
@@ -1136,6 +1210,7 @@ int main(array<String^>^ args) {
 // (+) Speed of progran
 // ( ) Threads (lnk WA)
 // ( ) anonimic function
+// ( ) atomic
 
 // 
 // ( ) Pro level: https://www.youtube.com/watch?v=4ZyOqCT494w&t=51s
