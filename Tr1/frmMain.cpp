@@ -7,6 +7,7 @@
 
 #include <ctime>
 
+#include <span>
 #include <vector>
 #include <array>
 #include <list>
@@ -56,6 +57,16 @@ int tSum(int a, int b) {
 	cout << "thread ID: " << this_thread::get_id() << " =================\t Sum STOPPED \t ================= " << endl;
 
 	return a + b;
+}
+
+int mmax(std::span<int> data)
+{
+	int result{ data[0] };
+	for (auto value : data)
+	{
+		if (result < value) result = value;
+	}
+	return result;
 }
 
 #pragma region void 
@@ -854,7 +865,26 @@ void STL_MAPS() {
 
 	cout << endl;
 }
+void STL_SPAN() {
+	using namespace std;
 
+
+	/*int mmax(const std::vector<int>&);
+	int mmax(const int[], size_t);*/
+
+	int mmax(span<int>);				// prototype
+
+
+	vector<int> nums1{ 1, 2, 3, 4, 5 };
+	cout << mmax(nums1) << endl;   // 5
+
+	int nums2[]{ 4, 5, 6, 7, 8 };
+	cout << mmax(nums2) << endl;   // 8
+
+
+
+	cout << endl;
+}
 
 void STL_ITERATORS() {
 	using namespace std;
@@ -1020,6 +1050,7 @@ void APPLICATION_START() {
 		STL_PRIORITY_QUEUE();
 		STL_SETS();
 		STL_MAPS();
+		STL_SPAN();
 
 		SPEED_OF_PROGRAM();
 
@@ -1077,9 +1108,15 @@ int main(array<String^>^ args) {
 // (+) STL: List
 // ( ? ) STL: Stack
 // (+) STL: Queue
-// ( ) STL: Priority_queue 
-// ( ) STL: Map\Multimap
-// ( ) STL: Set\Multiset
+// (+) STL: Priority_queue 
+// (+) STL: Map\Multimap
+// (+) STL: Set\Multiset
+// (+) STL: Span
+// 
+// --------------------------
+// ( ) Arithmetic of pointers https://www.youtube.com/watch?v=Weh6UoLkNUQ&t=297s
+// --------------------------
+//
 // ( ) hash-tables
 // ( ) metanint.com Chapter 9. Containers
 // ( ) Macros ñ++
