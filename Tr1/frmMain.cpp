@@ -1014,6 +1014,7 @@ void STL_SET_MAP() {
 #pragma region THREADS_
 
 void th1Work() {
+	SimpleTimer Duration("th1Work");
 	using namespace std;
 
 	cout << "START th1Work" << endl;
@@ -1028,13 +1029,13 @@ void th1Work() {
 
 void THREADS_1() {
 	using namespace std;
-	SimpleTimer Duration;
+	SimpleTimer Duration; Duration.Name = "THREADS_1";
 
 
 
 	thread th(th1Work);
-	thread th2(th1Work);
-	//th.detach();				// thread will be autonomic and make work after destruction of THREADS_1()
+	//thread th2(th1Work);
+	th.detach();				// thread will be autonomic and make work after destruction of THREADS_1()
 	
 
 	cout << "START THIS" << endl;
@@ -1047,8 +1048,8 @@ void THREADS_1() {
 	cout << "END THIS" << endl;
 
 
-	th.join();				// make work after nain logic
-	th2.join();
+	//th.join();				// make work after nain logic
+	//th2.join();
 
 	cout << endl;
 }
