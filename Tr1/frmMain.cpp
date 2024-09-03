@@ -1026,7 +1026,6 @@ void th1Work() {
 
 	cout << "END th1Work" << endl;
 }
-
 void THREADS_1() {
 	using namespace std;
 	SimpleTimer Duration; Duration.Name = "THREADS_1";
@@ -1034,9 +1033,9 @@ void THREADS_1() {
 
 
 	thread th(th1Work);
-	//thread th2(th1Work);
-	th.detach();				// thread will be autonomic and make work after destruction of THREADS_1()
-	
+	thread th2(th1Work);
+	//th.detach();				// thread will be autonomic and make work after destruction of THREADS_1()
+
 
 	cout << "START THIS" << endl;
 
@@ -1048,12 +1047,48 @@ void THREADS_1() {
 	cout << "END THIS" << endl;
 
 
-	//th.join();				// make work after nain logic
-	//th2.join();
+	th.join();				// make work after nain logic
+	th2.join();
 
 	cout << endl;
 }
 
+void th2Work(int a, int b) {
+	SimpleTimer Duration("th2work");
+	using namespace std;
+
+	this_thread::sleep_for(chrono::milliseconds(1000));
+	cout << "thread ID: " << this_thread::get_id() << " =================\t th2Work STARTED \t ================= " << endl;
+	this_thread::sleep_for(chrono::milliseconds(2000));
+	cout << "a + b = " << a + b << endl;
+	this_thread::sleep_for(chrono::milliseconds(1000));
+	cout << "thread ID: " << this_thread::get_id() << " =================\t th2Work STOPPED \t ================= " << endl;
+
+}
+
+
+void THREADS_2() {
+	SimpleTimer Duration("THREADS_2");
+	using namespace std;
+
+	thread th(th2Work, 10, 20);
+
+
+	cout << "START THREADS_2" << endl;
+
+	/*for (size_t i = 0; i < 10; i++) {*/
+	for (;;) {
+		cout << "Thread ID: " << this_thread::get_id() << " \tTHREADS_2" << endl;
+		this_thread::sleep_for(chrono::milliseconds(500));
+	}
+
+	cout << "END THREADS_2" << endl;
+
+	th.join();
+
+
+	cout << endl;
+}
 
 
 
@@ -1126,14 +1161,16 @@ void APPLICATION_START() {
 		POINTERS_ARITH();
 		INLINE(2, 3);
 
+		THREADS_1();
+
 		SIZEOF_ARRAY();
 		RANDOMIZER();
 		TRY_CATCH();
 	}
 	
 	
-	THREADS_1();
-
+	
+	THREADS_2();
 	
 
 	//STL_SET_MAP();
@@ -1191,9 +1228,10 @@ int main(array<String^>^ args) {
 // ( ) metanint.com Chapter 9. Containers
 // ( ) Macros ñ++
 // 
+// (+) Threads: 
 // --------------------------
-// ( ) Threads: 
-// ( ) Threads: 
+// ( ) Threads: th with paramethers
+// --------------------------
 // ( ) Threads: 
 // 
 // ( ) OOP: Classes
