@@ -4,7 +4,6 @@
 #include <Windows.h>
 #include <iostream>
 
-
 #include <ctime>
 
 #include <span>
@@ -24,6 +23,7 @@
 
 #include <chrono>
 #include <thread>
+
 
 
 
@@ -206,6 +206,8 @@ void TRY_CATCH() {
 	}
 
 
+
+
 	cout << endl;
 }
 
@@ -313,33 +315,40 @@ void STL_VECTORS0() {
 	vector <int> v12{ 5 };			  // v12: [5]
 	vector <int> v13(5, 2);			  // v13: [2][2][2][2][2]
 	vector <int> v14{ 5, 2 };		  // v14: [5][2]
+	vector v15{ 1, 2, 3, 4, 5};		  // v15: [1][2][3][4][5]		for C++ 17+ & >
 
+	vector gavka{ 10, 20, 30, 40, 50 };						// gavka:  [10][20][30][40][50]
+	vector kogtic(gavka.begin() + 1, gavka.end() - 2);		// kogtic: [20][30]
 
 	vector <int> v = v5;
 	for each (int i in v) cout << i << " ";
 	cout << endl;
 
 	cout << v.size() << endl
-		<< v.capacity() << endl;
+		 << v.capacity() << endl;
 
 
 
 	vector <int> sv = { 10, 20, 30, 40, 50 };
 	cout << sv.front() << endl;
 	cout << sv.back() << endl;
+	cout << endl;
 
 
+	for (auto i : v15) cout << i << " "; cout << endl;
+
+	cout << endl;
 }
 void STL_VECTORS1() {
 	using namespace std;
 
 #pragma region ar1
 	vector <int> ar1 = { 10, 20, 30,  40, 50 };//<--
-	// ^			    |
+								 // ^			    |
 	ar1.push_back(60);	         // |			    |
 	ar1.push_back(70);		     // |			    |
-	ar1.emplace(ar1.begin() + 3, 35);	 // |
-	ar1.emplace_back(75);// |
+	ar1.emplace(ar1.begin() + 3, 35);			 // |
+	ar1.emplace_back(75);						 // |	== .push_back(n);
 
 	for each (auto i in ar1) cout << i << " "; cout << endl << endl;
 
@@ -649,6 +658,7 @@ void STL_LIST() {
 	l3.clear();							 for (auto i : l3) cout << i << " "; cout << endl;
 
 
+	
 
 	cout << endl;
 }
@@ -1007,10 +1017,6 @@ void STL_SET_MAP() {
 }
 #pragma endregion void STL_
 
-
-
-
-
 #pragma region THREADS_
 
 void th1Work() {
@@ -1065,8 +1071,6 @@ void th2Work(int a, int b) {
 	cout << "thread ID: " << this_thread::get_id() << " =================\t th2Work STOPPED \t ================= " << endl;
 
 }
-
-
 void THREADS_2() {
 	SimpleTimer Duration("THREADS_2");
 	using namespace std;
@@ -1090,7 +1094,15 @@ void THREADS_2() {
 	cout << endl;
 }
 
+void THREADS_3() {
+	using namespace std;
 
+
+
+
+
+	cout << endl;
+}
 
 
 #pragma endregion THREADS_
@@ -1162,15 +1174,16 @@ void APPLICATION_START() {
 		INLINE(2, 3);
 
 		THREADS_1();
+		THREADS_2();
 
 		SIZEOF_ARRAY();
 		RANDOMIZER();
 		TRY_CATCH();
 	}
 	
+	THREADS_3();
 	
-	
-	THREADS_2();
+	STL_LIST();
 	
 
 	//STL_SET_MAP();
@@ -1199,7 +1212,6 @@ int main(array<String^>^ args) {
 
 
 
-
 /// TODO:
 // 
 // (+) MVP
@@ -1211,7 +1223,7 @@ int main(array<String^>^ args) {
 // (+) STL: Vectors 0
 // (+) STL: Vectors 1
 // (+) STL: Iterators
-
+//
 // (+) STL: Array
 // (+) STL: Deque
 // (+) STL: List
@@ -1224,14 +1236,14 @@ int main(array<String^>^ args) {
 // 
 // (+) Arithmetic of pointers 
 //
+// --------------------------
 // ( ) hash-tables
+// --------------------------
 // ( ) metanint.com Chapter 9. Containers
 // ( ) Macros ñ++
 // 
 // (+) Threads: 
-// --------------------------
-// ( ) Threads: th with paramethers
-// --------------------------
+// (+) Threads: th with paramethers
 // ( ) Threads: 
 // 
 // ( ) OOP: Classes
@@ -1250,9 +1262,10 @@ int main(array<String^>^ args) {
 // ( ) Threads (lnk WA)
 // ( ) anonimic function
 // ( ) atomic
-
+//
 // 
 // ( ) Pro level: https://www.youtube.com/watch?v=4ZyOqCT494w&t=51s
+// ( ) Bog-Imperator https://www.youtube.com/watch?v=3nlHe9mdkp4&t=1064s
 // 
 // ( ) Codestyle
 //
