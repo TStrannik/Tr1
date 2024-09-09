@@ -35,39 +35,6 @@ using namespace System::Windows::Forms;
 
 [STAThreadAttribute]
 
-
-
-int Sum(int a, int b) {
-	int c = a + b; int d = c; int e = d;
-	int f = e;
-	int g = e;
-	return g; 
-}
-
-int tSum(int a, int b) {
-	using namespace std;
-
-	this_thread::sleep_for(chrono::milliseconds(2000));
-
-	cout << "thread ID: " << this_thread::get_id() << " =================\t Sum STARTED \t ================= " << endl;
-
-	this_thread::sleep_for(chrono::milliseconds(5000));
-
-	cout << "thread ID: " << this_thread::get_id() << " =================\t Sum STOPPED \t ================= " << endl;
-
-	return a + b;
-}
-
-int mmax(std::span<int> data)
-{
-	int result{ data[0] };
-	for (auto value : data)
-	{
-		if (result < value) result = value;
-	}
-	return result;
-}
-
 #pragma region void 
 void CONSOLE_EXP() {
 	Console::SetWindowPosition(0, 0);
@@ -83,6 +50,13 @@ void CONSOLE_EXP() {
 	Console::WindowHeight = 50;
 	Console::SetWindowSize(100, 55);
 	Console::Title = "C++\\CLI training.";
+}
+
+int Sum(int a, int b) {
+	int c = a + b; int d = c; int e = d;
+	int f = e;
+	int g = e;
+	return g;
 }
 void VS_DEBUGGER() {
 	using namespace std;
@@ -259,7 +233,19 @@ void POINTERS_ARITH() {
 
 inline int INLINE(int a, int b) { return a + b; }
 
+int tSum(int a, int b) {
+	using namespace std;
 
+	this_thread::sleep_for(chrono::milliseconds(2000));
+
+	cout << "thread ID: " << this_thread::get_id() << " =================\t Sum STARTED \t ================= " << endl;
+
+	this_thread::sleep_for(chrono::milliseconds(5000));
+
+	cout << "thread ID: " << this_thread::get_id() << " =================\t Sum STOPPED \t ================= " << endl;
+
+	return a + b;
+}
 void SPEED_OF_PROGRAM() {
 
 	SimpleTimer durator;
@@ -297,9 +283,104 @@ void SPEED_OF_PROGRAM() {
 
 	cout << endl;
 }
+
+
+
+
+
+
+void MACROS() {
+	using namespace std;
+
+
+
+#define PI 3.14159			// write in the global region (f.e. begin of file)
+	//...
+	cout << PI << endl;
+
+
+
+	// PI = 3;				// don't
+	//int* pi = &PI;		// don't
+
+
+
+//#undef PI
+	cout << PI << endl;
+							
+#undef PI
+	//cout << PI << endl;
+	cout << endl;
+
+
+
+
+
+#define MAX(a, b) a >= b ? a : b
+	int m = MAX(10, 20); cout << m << endl;
+
+
+
+#define SWAP(type, a, b) type tmp = a; a = b; b = tmp;
+//	int num1 = 10, num2 = 20;		cout << num1 << " : " << num2 << endl;
+//	SWAP(int, num1, num2);			cout << num1 << " : " << num2 << endl;
+//	
+//	// SWAP(float, num1, num2);		cout << num1 << " : " << num2 << endl;	// we can't use SWAP one by one. Error
+#undef SWAP
+
+#define SWAP(type, a, b) \
+	type tmp = a;		 \
+	a = b;				 \
+	b = tmp;
+
+	int num1 = 10, num2 = 20;		cout << num1 << " : " << num2 << endl;
+	SWAP(int, num1, num2);			cout << num1 << " : " << num2 << endl;
+#undef SWAP
+
+
+
+
+#define PRINT_VALUE(_value) printf("Value of %s is %d \n", #_value, _value);
+	int x = 5;
+	PRINT_VALUE(x);
+#undef PRINT_VALUE
+
+#define PRINT_VALUE(_value) std::cout << "Value of " << #_value " is " << _value << endl;
+	int y = 5;
+	PRINT_VALUE(y);
+#undef PRINT_VALUE
+
+#define PRINT_VALUE (number) printf("%d", value_##number) \
+	int value_one = 10, value_two = 20;					  \
+	PRINT_VALUE(one)									  \
+	PRINT_VALUE(two) 
+
+
+	int z = 10;
+	PRINT_VALUE(z);
+
+#undef PRINT_VALUE
+
+
+
+	cout << endl;
+}
+
+
+
 #pragma endregion void 
 
 #pragma region void STL_
+int mmax(std::span<int> data)
+{
+	int result{ data[0] };
+	for (auto value : data)
+	{
+		if (result < value) result = value;
+	}
+	return result;
+}
+
 void STL_VECTORS0() {
 	using namespace std;
 
@@ -910,7 +991,6 @@ void STL_SPAN() {
 
 	cout << endl;
 }
-
 void STL_ITERATORS() {
 	using namespace std;
 
@@ -1017,7 +1097,7 @@ void STL_SET_MAP() {
 }
 #pragma endregion void STL_
 
-#pragma region THREADS_
+#pragma region void THREADS_
 
 void th1Work() {
 	SimpleTimer Duration("th1Work");
@@ -1105,23 +1185,49 @@ void THREADS_3() {
 }
 
 
-#pragma endregion THREADS_
+#pragma endregion void THREADS_
 
 
-
-
-
-
-
-
-
-
-
-
+#pragma region void ALGORITHMS
 int fact(int x) {
 	if (x == 1) return 1;
 	return x * fact(x - 1);
 }
+
+void FIZZBUZZ() {
+	using namespace std;
+
+	for (auto i = 0; i <= 100; i++) {
+		if (i % 3 == 0 && i % 5 != 0) cout << "Fizz";
+		else if (i % 5 == 0 && i % 3 != 0) cout << "Buzz";
+		else if (i % 5 == 0 && i % 3 == 0) cout << "FizzBuzz";
+		else							   cout << i;
+		cout << "\t";
+
+		if (i % 20 == 0) cout << endl;
+	}
+	cout << endl;
+
+	cout << endl;
+}
+
+void FACTORIAL() {
+	char str[] = "\tHello, world!";
+	std::cout << str << std::endl;
+	std::cout << "\t" << fact(6) << std::endl;
+}
+
+#pragma endregion void ALGORITHMS
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1136,16 +1242,14 @@ void APPLICATION_START() {
 	Console::Title = L"C++\\CLI training";
 	system("color 70");
 
-	SimpleTimer Duration;
+	SimpleTimer Duration("main");
 
 	std::cout << "\n APPLICATION START\n\n";
 	std::cout << "\tStatistic:\n\n";
 
 
 
-	//char str[] = "\tHello, world!";
-	//std::cout << str << std::endl;
-	//std::cout << "\t" << fact(6) << std::endl;
+	
 
 
 	if (0) {
@@ -1179,13 +1283,17 @@ void APPLICATION_START() {
 		SIZEOF_ARRAY();
 		RANDOMIZER();
 		TRY_CATCH();
+
+		FACTORIAL();
+		FIZZBUZZ();
 	}
 	
 	THREADS_3();
 	
-	STL_LIST();
-	
 
+	MACROS();
+
+	//STL_LIST();
 	//STL_SET_MAP();
 
 
@@ -1233,14 +1341,16 @@ int main(array<String^>^ args) {
 // (+) STL: Map\Multimap
 // (+) STL: Set\Multiset
 // (+) STL: Span
+// (+) metanint.com Chapter 9. Containers
+// ( ) Hash-tables
+// ( ) Red-black trees
 // 
 // (+) Arithmetic of pointers 
 //
+// ( ) Preprocessor directives
 // --------------------------
-// ( ) hash-tables
+// ( ) Macros C++
 // --------------------------
-// ( ) metanint.com Chapter 9. Containers
-// ( ) Macros с++
 // 
 // (+) Threads: 
 // (+) Threads: th with paramethers
@@ -1257,20 +1367,24 @@ int main(array<String^>^ args) {
 // (+) try-catch
 // (+) try-catch, throw, cerr << e.what();
 // (+) Pointers
-
+//
 // (+) Speed of progran
 // ( ) Threads (lnk WA)
 // ( ) anonimic function
 // ( ) atomic
 //
 // 
-// ( ) Pro level: https://www.youtube.com/watch?v=4ZyOqCT494w&t=51s
+// ( ) Pro level:	 https://www.youtube.com/watch?v=4ZyOqCT494w&t=51s
 // ( ) Bog-Imperator https://www.youtube.com/watch?v=3nlHe9mdkp4&t=1064s
+// ( ) GRAPHIC!!!!   https://www.youtube.com/watch?v=z_WWQYh6Ewg
 // 
-// ( ) Codestyle
+// ( ) Codestyle	 https://habr.com/ru/articles/841552/
 //
 /// BUGS:
 //
 // ( ) Component: the essence of the problem
 // ( ) 
 
+
+/// Vocabulary
+// Токен — это минимальная единица синтаксиса языка программирования.
