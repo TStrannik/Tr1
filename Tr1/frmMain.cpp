@@ -357,7 +357,7 @@ void MACROS() {
 
 
 	int z = 10;
-	PRINT_VALUE(z);
+	//PRINT_VALUE(z);
 
 #undef PRINT_VALUE
 
