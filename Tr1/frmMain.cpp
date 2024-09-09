@@ -1,11 +1,34 @@
+
+#define DEF_SUM(type) type sum_##type (type a, type b) { \
+			type result = a + b;						 \
+			return result;								 \
+		}
+
+DEF_SUM(int);
+DEF_SUM(float);
+DEF_SUM(double);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #include "frmMain.h"
 #include "SimpleTimer.h"
-
 #include <Windows.h>
 #include <iostream>
-
 #include <ctime>
-
 #include <span>
 #include <vector>
 #include <array>
@@ -18,12 +41,9 @@
 #include <unordered_set>
 #include <map>
 #include <unordered_map>
-//#include <hash_set>
-
-
 #include <chrono>
 #include <thread>
-
+//#include <hash_set>
 
 
 
@@ -285,10 +305,6 @@ void SPEED_OF_PROGRAM() {
 }
 
 
-
-
-
-
 void MACROS() {
 	using namespace std;
 
@@ -322,10 +338,10 @@ void MACROS() {
 
 
 #define SWAP(type, a, b) type tmp = a; a = b; b = tmp;
-//	int num1 = 10, num2 = 20;		cout << num1 << " : " << num2 << endl;
-//	SWAP(int, num1, num2);			cout << num1 << " : " << num2 << endl;
-//	
-//	// SWAP(float, num1, num2);		cout << num1 << " : " << num2 << endl;	// we can't use SWAP one by one. Error
+	//int num1 = 10, num2 = 20;		cout << num1 << " : " << num2 << endl;
+	//SWAP(int, num1, num2);			cout << num1 << " : " << num2 << endl;
+	
+	 //SWAP(float, num1, num2);		cout << num1 << " : " << num2 << endl;	// we can't use SWAP one by one. Error
 #undef SWAP
 
 #define SWAP(type, a, b) \
@@ -333,8 +349,8 @@ void MACROS() {
 	a = b;				 \
 	b = tmp;
 
-	int num1 = 10, num2 = 20;		cout << num1 << " : " << num2 << endl;
-	SWAP(int, num1, num2);			cout << num1 << " : " << num2 << endl;
+	int num3 = 10, num4 = 20;		cout << num3 << " : " << num4 << endl;
+	SWAP(int, num3, num4);			cout << num3 << " : " << num4 << endl;
 #undef SWAP
 
 
@@ -350,16 +366,72 @@ void MACROS() {
 	PRINT_VALUE(y);
 #undef PRINT_VALUE
 
-#define PRINT_VALUE (number) printf("%d", value_##number) \
-	int value_one = 10, value_two = 20;					  \
-	PRINT_VALUE(one)									  \
-	PRINT_VALUE(two) 
+
+#define MACRO() do {			    \
+    cout << "Do Something" << endl;	\
+    cout << "Do 1 2 3 4 5" << endl; \
+  } while(0)
+
+	if (1) MACRO();
+#undef MACRO
 
 
-	int z = 10;
-	//PRINT_VALUE(z);
+	int a = sum_int(10, 30);
+	cout << a << endl;
+	cout << endl << endl << endl;
 
-#undef PRINT_VALUE
+
+
+
+
+
+
+
+#define DEBUG			// uncomment me
+
+
+
+#ifdef DEBUG
+	cout << "Cicle start" << endl;
+#endif // DEBUG	
+
+	for (auto i = 0; i < 10; i++) cout << i << " "; cout << endl;
+
+#ifdef DEBUG
+	cout << "Cicle finish" << endl;
+#endif // DEBUG
+	
+
+#ifdef DEBUG
+	cout << "Debug is set" << endl;
+#else
+	cout << "Debug is not set" << endl;
+#endif // DEBUG
+
+
+
+
+#define DEB 5
+
+
+
+#if DEB < 4
+	cout << "Gavka" << endl;
+#elif DEB == 5
+	cout << "Kogtic" << endl;
+#else
+	cout << "Babka" << endl;
+#endif // DEB
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -582,6 +654,7 @@ void STL_VECTORS1() {
 }
 void STL_ARRAY() {
 	using namespace std;
+
 
 
 	array <int, 5> ar1 = {};
@@ -1187,7 +1260,6 @@ void THREADS_3() {
 
 #pragma endregion void THREADS_
 
-
 #pragma region void ALGORITHMS
 int fact(int x) {
 	if (x == 1) return 1;
@@ -1216,6 +1288,41 @@ void FACTORIAL() {
 	std::cout << str << std::endl;
 	std::cout << "\t" << fact(6) << std::endl;
 }
+
+const int AR_SIZE = 8;
+int HOAR_PART(int arr[], int left, int right) {
+	using namespace std; 
+
+	int pivot = arr[(left + right) / 2];			
+	while (left <= right) {
+		while (arr[left] < pivot) left++; 
+		while (arr[right] > pivot) right--;
+		if (left <= right) {
+			cout << "l:" << arr[left] << " p:" << pivot << " r:" << arr[right] << endl << endl;
+
+
+			int temp = arr[left];
+			arr[left] = arr[right];
+			arr[right] = temp;
+
+			for (int i = 0; i < AR_SIZE; i++) cout << arr[i] << " "; cout << endl;
+
+			left++;
+			right--;
+		}
+	}
+	cout << left << endl;
+	return left;
+}
+
+void HOAR(int arr[], int start, int end) {
+	if (start >= end) return;
+	int rightStart = HOAR_PART(arr, start, end);
+	HOAR(arr, start, rightStart - 1);
+	HOAR(arr, rightStart, end);
+}
+
+void HOAR(int arr[]) { HOAR(arr, 0, AR_SIZE - 1); };
 
 #pragma endregion void ALGORITHMS
 
@@ -1249,7 +1356,10 @@ void APPLICATION_START() {
 
 
 
+
 	
+	
+
 
 
 	if (0) {
@@ -1284,8 +1394,14 @@ void APPLICATION_START() {
 		RANDOMIZER();
 		TRY_CATCH();
 
+
 		FACTORIAL();
 		FIZZBUZZ();
+
+		int Ar[] = { 2, 8, 1, 7, 6, 3, 5, 4 };
+		for (auto i = 0; i < AR_SIZE; i++) std::cout << Ar[i] << " ";
+		std::cout << std::endl;
+		HOAR(Ar);
 	}
 	
 	THREADS_3();
@@ -1293,7 +1409,11 @@ void APPLICATION_START() {
 
 	MACROS();
 
+
+
+
 	//STL_LIST();
+	
 	//STL_SET_MAP();
 
 
@@ -1332,7 +1452,7 @@ int main(array<String^>^ args) {
 // (+) STL: Vectors 1
 // (+) STL: Iterators
 //
-// (+) STL: Array
+// (+) STL: Array			// How we can post in function?
 // (+) STL: Deque
 // (+) STL: List
 // ( ? ) STL: Stack
@@ -1347,10 +1467,10 @@ int main(array<String^>^ args) {
 // 
 // (+) Arithmetic of pointers 
 //
+// --------------------------
 // ( ) Preprocessor directives
 // --------------------------
-// ( ) Macros C++
-// --------------------------
+// (+) Macros C++
 // 
 // (+) Threads: 
 // (+) Threads: th with paramethers
@@ -1388,3 +1508,4 @@ int main(array<String^>^ args) {
 
 /// Vocabulary
 // Токен — это минимальная единица синтаксиса языка программирования.
+// # - директивы препроцессора.
