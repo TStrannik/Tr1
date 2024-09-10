@@ -1,4 +1,4 @@
-
+#pragma region MACROS
 #define DEF_SUM(type) type sum_##type (type a, type b) { \
 			type result = a + b;						 \
 			return result;								 \
@@ -8,18 +8,7 @@ DEF_SUM(int);
 DEF_SUM(float);
 DEF_SUM(double);
 
-
-
-
-
-
-
-
-
-
-
-
-
+#pragma endregion MACROS
 
 
 
@@ -43,7 +32,6 @@ DEF_SUM(double);
 #include <unordered_map>
 #include <chrono>
 #include <thread>
-//#include <hash_set>
 
 
 
@@ -305,149 +293,6 @@ void SPEED_OF_PROGRAM() {
 }
 
 
-void MACROS() {
-	using namespace std;
-
-
-
-#define PI 3.14159			// write in the global region (f.e. begin of file)
-	//...
-	cout << PI << endl;
-
-
-
-	// PI = 3;				// don't
-	//int* pi = &PI;		// don't
-
-
-
-//#undef PI
-	cout << PI << endl;
-							
-#undef PI
-	//cout << PI << endl;
-	cout << endl;
-
-
-
-
-
-#define MAX(a, b) a >= b ? a : b
-	int m = MAX(10, 20); cout << m << endl;
-
-
-
-#define SWAP(type, a, b) type tmp = a; a = b; b = tmp;
-	//int num1 = 10, num2 = 20;		cout << num1 << " : " << num2 << endl;
-	//SWAP(int, num1, num2);			cout << num1 << " : " << num2 << endl;
-	
-	 //SWAP(float, num1, num2);		cout << num1 << " : " << num2 << endl;	// we can't use SWAP one by one. Error
-#undef SWAP
-
-#define SWAP(type, a, b) \
-	type tmp = a;		 \
-	a = b;				 \
-	b = tmp;
-
-	int num3 = 10, num4 = 20;		cout << num3 << " : " << num4 << endl;
-	SWAP(int, num3, num4);			cout << num3 << " : " << num4 << endl;
-#undef SWAP
-
-
-
-
-#define PRINT_VALUE(_value) printf("Value of %s is %d \n", #_value, _value);
-	int x = 5;
-	PRINT_VALUE(x);
-#undef PRINT_VALUE
-
-#define PRINT_VALUE(_value) std::cout << "Value of " << #_value " is " << _value << endl;
-	int y = 5;
-	PRINT_VALUE(y);
-#undef PRINT_VALUE
-
-
-#define MACRO() do {			    \
-    cout << "Do Something" << endl;	\
-    cout << "Do 1 2 3 4 5" << endl; \
-  } while(0)
-
-	if (1) MACRO();
-#undef MACRO
-
-
-	int a = sum_int(10, 30);
-	cout << a << endl;
-	cout << endl << endl << endl;
-
-
-
-
-
-
-
-
-#define DEBUG			// uncomment me
-
-
-
-#ifdef DEBUG
-	cout << "Cicle start" << endl;
-#endif // DEBUG	
-
-	for (auto i = 0; i < 10; i++) cout << i << " "; cout << endl;
-
-#ifdef DEBUG
-	cout << "Cicle finish" << endl;
-#endif // DEBUG
-	
-
-#ifdef DEBUG
-	cout << "Debug is set" << endl;
-#else
-	cout << "Debug is not set" << endl;
-#endif // DEBUG
-
-
-
-
-#define DEB 5
-
-
-
-#if DEB < 4
-	cout << "Gavka" << endl;
-#elif DEB == 5
-	cout << "Kogtic" << endl;
-#else
-	cout << "Babka" << endl;
-#endif // DEB
-
-
-
-
-	/*
-		#include Ч вставл€ет текст из указанного файла
-		#define Ч задаЄт макроопределение (макрос) или символическую константу
-		#undef Ч отмен€ет предыдущее определение
-		#if Ч осуществл€ет условную компил€цию при истинности константного выражени€
-		#ifdef Ч осуществл€ет условную компил€цию при определЄнности символической константы
-		#ifndef Ч осуществл€ет условную компил€цию при неопределЄнности символической константы
-		#else Ч ветка условной компил€ции при ложности выражени€
-		#elif Ч ветка условной компил€ции, образуема€ сли€нием else и if
-		#endif Ч конец ветки условной компил€ции
-		#line Ч препроцессор измен€ет номер текущей строки и им€ компилируемого файла
-		#error Ч выдача диагностического сообщени€
-		#pragma Ч действие, завис€щее от конкретной реализации компил€тора.
-	*/
-
-
-
-
-
-
-	cout << endl;
-}
 
 
 
@@ -1339,6 +1184,80 @@ void HOAR(int arr[]) { HOAR(arr, 0, AR_SIZE - 1); };
 
 
 
+void MACROS() {
+	using namespace std;
+
+
+
+#define PI 3.14159			// write in the global region (f.e. begin of file)
+	//...
+	cout << PI << endl;
+
+
+
+	// PI = 3;				// don't
+	//int* pi = &PI;		// don't
+
+
+
+//#undef PI
+	cout << PI << endl;
+
+#undef PI
+	//cout << PI << endl;
+	cout << endl;
+
+
+
+
+
+#define MAX(a, b) a >= b ? a : b
+	int m = MAX(10, 20); cout << m << endl;
+
+
+
+#define SWAP(type, a, b) type tmp = a; a = b; b = tmp;
+	//int num1 = 10, num2 = 20;		cout << num1 << " : " << num2 << endl;
+	//SWAP(int, num1, num2);			cout << num1 << " : " << num2 << endl;
+
+	 //SWAP(float, num1, num2);		cout << num1 << " : " << num2 << endl;	// we can't use SWAP one by one. Error
+#undef SWAP
+
+#define SWAP(type, a, b) \
+	type tmp = a;		 \
+	a = b;				 \
+	b = tmp;
+
+	int num3 = 10, num4 = 20;		cout << num3 << " : " << num4 << endl;
+	SWAP(int, num3, num4);			cout << num3 << " : " << num4 << endl;
+#undef SWAP
+
+
+
+
+#define PRINT_VALUE(_value) printf("Value of %s is %d \n", #_value, _value);
+	int x = 5;
+	PRINT_VALUE(x);
+#undef PRINT_VALUE
+
+#define PRINT_VALUE(_value) std::cout << "Value of " << #_value " is " << _value << endl;
+	int y = 5;
+	PRINT_VALUE(y);
+#undef PRINT_VALUE
+
+
+#define MACRO() do {			    \
+    cout << "Do Something" << endl;	\
+    cout << "Do 1 2 3 4 5" << endl; \
+  } while(0)
+
+	if (1) MACRO();
+#undef MACRO
+
+
+	int a = sum_int(10, 30);
+	cout << a << endl;
+	cout << endl << endl << endl;
 
 
 
@@ -1347,8 +1266,115 @@ void HOAR(int arr[]) { HOAR(arr, 0, AR_SIZE - 1); };
 
 
 
+#define DEBUG			// uncomment me
 
 
+
+#ifdef DEBUG
+	cout << "Cicle start" << endl;
+#endif // DEBUG	
+
+	for (auto i = 0; i < 10; i++) cout << i << " "; cout << endl;
+
+#ifdef DEBUG
+	cout << "Cicle finish" << endl;
+#endif // DEBUG
+
+
+#ifdef DEBUG
+	cout << "Debug is set" << endl;
+#else
+	cout << "Debug is not set" << endl;
+#endif // DEBUG
+
+
+
+
+#define DEB 5
+
+
+
+#if DEB < 4
+	cout << "Gavka" << endl;
+#elif DEB == 5
+	cout << "Kogtic" << endl;
+#else
+	cout << "Babka" << endl;
+#endif // DEB
+
+
+
+
+	/*
+		#include Ч вставл€ет текст из указанного файла
+		#define Ч задаЄт макроопределение (макрос) или символическую константу
+		#undef Ч отмен€ет предыдущее определение
+		#if Ч осуществл€ет условную компил€цию при истинности константного выражени€
+		#ifdef Ч осуществл€ет условную компил€цию при определЄнности символической константы
+		#ifndef Ч осуществл€ет условную компил€цию при неопределЄнности символической константы
+		#else Ч ветка условной компил€ции при ложности выражени€
+		#elif Ч ветка условной компил€ции, образуема€ сли€нием else и if
+		#endif Ч конец ветки условной компил€ции
+		#line Ч препроцессор измен€ет номер текущей строки и им€ компилируемого файла
+		#error Ч выдача диагностического сообщени€
+		#pragma Ч действие, завис€щее от конкретной реализации компил€тора.
+
+		#define  #error   #import   #pragma
+		#elif	 #if	  #include  #undef
+		#else 	 #ifdef	  #line	    #using
+		#endif	 #ifndef
+
+
+	*/
+
+
+
+
+	cout << endl;
+}
+
+void DATA_TYPES() {
+	using namespace std;
+
+	Decimal dec = -15;				Console::WriteLine(dec);
+	short shr = -32765;				Console::WriteLine(shr);
+	unsigned short ushr = 10;		Console::WriteLine(ushr);
+
+	cout << endl;
+
+
+	/// from std::
+	std::byte bt;
+	std::optional <int> opt;
+	std::array <int, 4> ara = { 10, 20, 30, 40 };
+
+	uint8_t ui8t;
+	uint16_t ui16t;
+	uint32_t ui32t;		uint_fast32_t chev;
+	uint64_t ui64t;		uint_fast64_t kavo;
+
+	UINT8  ui8;
+	UInt16 ui16;
+	UINT32 ui32;
+
+	unsigned long long ull{ 4096ULL };
+
+	int a{ 10 };
+	UINT64 av{ 1'234'567'890 };				cout << av << endl;		// C++14
+	
+
+	int hex = 0x0A;			cout << hex << endl;
+	int bin = 0b0000;		cout << bin << endl;
+		bin = 0b0001;		cout << bin << endl;
+		bin = 0b0010;		cout << bin << endl;
+		bin = 0b0011;		cout << bin << endl;
+		bin = 0b0100;		cout << bin << endl;
+		bin = 0b0101;		cout << bin << endl;
+		
+
+
+	cout << endl;
+}
 
 
 
@@ -1364,13 +1390,6 @@ void APPLICATION_START() {
 
 	std::cout << "\n APPLICATION START\n\n";
 	std::cout << "\tStatistic:\n\n";
-
-
-
-
-	
-	
-
 
 
 	if (0) {
@@ -1420,6 +1439,8 @@ void APPLICATION_START() {
 
 	MACROS();
 
+	DATA_TYPES();
+
 
 
 
@@ -1440,10 +1461,21 @@ void APPLICATION_END() {
 	std::cout << "\n APPLICATION END\n\n";
 	//system("pause");
 }
+void APPLICATION_START_PARAMS(int argc, char* argv[]) {
+	using namespace std;
+	cout << " PARAMETHERS:\n\t";
+	for (int i = 0; i < argc; i++) cout << argv[i] << endl;
+	cout << endl;
+}
+void APPLICATION_START_PARAMS(array<String^>^ args) {
+	for each (auto i in args) Console::WriteLine(" " + i + "\n");
+}
 
 /// ver 0.0.0
-int main(array<String^>^ args) {
-	APPLICATION_START();
+int main(array<String^>^ args) {	// int argc, char* argv[]
+	// APPLICATION_START_PARAMS(argc, argv);
+	APPLICATION_START_PARAMS(args);
+	APPLICATION_START();	
 	APPLICATION_FORM();
 	APPLICATION_END();
 	return 0;
@@ -1462,7 +1494,6 @@ int main(array<String^>^ args) {
 // (+) STL: Vectors 0
 // (+) STL: Vectors 1
 // (+) STL: Iterators
-//
 // (+) STL: Array			// How we can post in function?
 // (+) STL: Deque
 // (+) STL: List
@@ -1476,20 +1507,26 @@ int main(array<String^>^ args) {
 // ( ) Hash-tables
 // ( ) Red-black trees
 // 
+// 
 // (+) Arithmetic of pointers 
-//
 // --------------------------
 // ( ) Preprocessor directives
 // --------------------------
 // (+) Macros C++
+// ( ) Variable data types
 // 
-// (+) Threads: 
-// (+) Threads: th with paramethers
-// ( ) Threads: 
 // 
 // ( ) OOP: Classes
 // ( ) OOP: Inheritance
 // ( ) OOP: .... etc
+// 
+// 
+// (+) Speed of progran
+// ( ) Threads (lnk WA)
+// (+) Threads: 
+// (+) Threads: th with paramethers
+// ( ) Threads: 
+// 
 // 
 // (+) VS: Debugger
 // (+) sizeof
@@ -1499,17 +1536,22 @@ int main(array<String^>^ args) {
 // (+) try-catch, throw, cerr << e.what();
 // (+) Pointers
 //
-// (+) Speed of progran
-// ( ) Threads (lnk WA)
+// 
 // ( ) anonimic function
 // ( ) atomic
 //
+// 
+// ( ) ALGORITHMS: HOAR_SORT
+// ( ) ALGORITHMS: 
+// 
 // 
 // ( ) Pro level:	 https://www.youtube.com/watch?v=4ZyOqCT494w&t=51s
 // ( ) Bog-Imperator https://www.youtube.com/watch?v=3nlHe9mdkp4&t=1064s
 // ( ) GRAPHIC!!!!   https://www.youtube.com/watch?v=z_WWQYh6Ewg
 // 
+// 
 // ( ) Codestyle	 https://habr.com/ru/articles/841552/
+//
 //
 /// BUGS:
 //
