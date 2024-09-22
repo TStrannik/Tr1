@@ -85,6 +85,65 @@ void VS_DEBUGGER() {
 
 }
 
+void DATA_TYPES() {
+	using namespace std;
+
+	//Decimal dec = -15;				Console::WriteLine(dec);
+	//short shr = -32765;				Console::WriteLine(shr);
+	//unsigned short ushr = 10;		Console::WriteLine(ushr);
+
+	//cout << endl;
+
+
+	///// from std::
+	//std::byte bt;
+	//std::optional <int> opt;
+	//std::array <int, 4> ara = { 10, 20, 30, 40 };
+
+	//uint8_t ui8t;
+	//uint16_t ui16t;
+	//uint32_t ui32t;		uint_fast32_t chev;
+	//uint64_t ui64t;		uint_fast64_t kavo;
+
+	//UINT8  ui8;
+	//UInt16 ui16;
+	//UINT32 ui32;
+
+	//unsigned long long ull{ 4096ULL };
+
+	//int a{ 10 };
+	//UINT64 av{ 1'234'567'890 };				cout << av << endl;		// C++14
+
+
+	//int hex = 0x0A;			cout << hex << endl;
+	//int bin = 0b0000;		cout << bin << endl;
+	//bin = 0b0001;		cout << bin << endl;
+	//bin = 0b0010;		cout << bin << endl;
+	//bin = 0b0011;		cout << bin << endl;
+	//bin = 0b0100;		cout << bin << endl;
+	//bin = 0b0101;		cout << bin << endl;
+
+
+	//cout << endl;
+	//cout << endl;
+	//cout << endl;
+
+
+
+	//double aa = 33.3;
+	//cout << (int)aa << endl;
+	//cout << (float)aa << endl;
+	//cout << (char)aa << endl;
+
+	//int b = 34.567;
+	//cout << b << endl;
+	//cout << (float)b << endl;
+
+	// all right, but warnings
+
+
+	cout << endl;
+}
 void SIZEOF_ARRAY() {
 	using namespace std;
 
@@ -189,6 +248,42 @@ void TRY_CATCH() {
 
 
 
+
+	cout << endl;
+}
+
+template <typename T>				  T	 tempSum(T a, T b) { return a + b; }
+template <typename T1, typename T2>   T1 tempSum2(T1 a, T2 b) { return a + b; }
+template <typename T1, typename T2> void tempSum3(T1 a, T2 b) { std::cout << a << " " << b << std::endl; }
+template <class T>					void tempSum4(T a) { std::cout << a << std::endl; }
+
+template <typename T1, typename T2> T1* tMax(T1* a, T2* b) { return *a > *b ? a : b; }
+template <typename T> const T* ttMax(const T* a, const T* b) { return *a > *b ? a : b; }
+template <typename T> const T* ttMax(const T data[], unsigned size) {
+	const T* result{};
+	for (unsigned i{}; i < size; i++) {
+		if (!result || data[i] > *result) result = &data[i];
+	}
+	return result;
+}
+void TEMPLATES() {
+	using namespace std;
+
+	cout << "sum " << tempSum(40, 1) << endl;
+	cout << "sum " << tempSum(40.5, 0.5) << endl;
+	//cout << "sum" << tempSum(40.5, 1) << endl;	// drop error
+	cout << "sum " << tempSum2(40.0, 1) << endl;	// work!
+
+	tempSum3("sum", 41);
+	tempSum4("sum 41");
+
+	int a = 20; int b = 41;
+	double c[]{ 3.4, 41.0, 6.1, 4.3 };
+
+	cout << "sum " << *tMax(&a, &b) << endl;
+
+	cout << "sum " << *ttMax(&a, &b) << endl;
+	cout << "sum " << *ttMax(&c, size(c)) << endl;
 
 	cout << endl;
 }
@@ -1333,50 +1428,6 @@ void MACROS() {
 	cout << endl;
 }
 
-void DATA_TYPES() {
-	using namespace std;
-
-	Decimal dec = -15;				Console::WriteLine(dec);
-	short shr = -32765;				Console::WriteLine(shr);
-	unsigned short ushr = 10;		Console::WriteLine(ushr);
-
-	cout << endl;
-
-
-	/// from std::
-	std::byte bt;
-	std::optional <int> opt;
-	std::array <int, 4> ara = { 10, 20, 30, 40 };
-
-	uint8_t ui8t;
-	uint16_t ui16t;
-	uint32_t ui32t;		uint_fast32_t chev;
-	uint64_t ui64t;		uint_fast64_t kavo;
-
-	UINT8  ui8;
-	UInt16 ui16;
-	UINT32 ui32;
-
-	unsigned long long ull{ 4096ULL };
-
-	int a{ 10 };
-	UINT64 av{ 1'234'567'890 };				cout << av << endl;		// C++14
-	
-
-	int hex = 0x0A;			cout << hex << endl;
-	int bin = 0b0000;		cout << bin << endl;
-		bin = 0b0001;		cout << bin << endl;
-		bin = 0b0010;		cout << bin << endl;
-		bin = 0b0011;		cout << bin << endl;
-		bin = 0b0100;		cout << bin << endl;
-		bin = 0b0101;		cout << bin << endl;
-		
-
-
-	cout << endl;
-}
-
-
 
 void MEMORY_1() {
 	SimpleTimer t ("MEMORY_1");
@@ -1385,6 +1436,9 @@ void MEMORY_1() {
 
 
 }
+
+
+
 
 
 
@@ -1414,10 +1468,13 @@ void CODE() {
 		POINTERS();
 		POINTERS_ARITH();
 		INLINE(2, 3);
+		TEMPLATES();
 
 		THREADS_1();
 		THREADS_2();
 
+
+		DATA_TYPES();
 		SIZEOF_ARRAY();
 		RANDOMIZER();
 		TRY_CATCH();
@@ -1435,12 +1492,12 @@ void CODE() {
 	THREADS_3();
 
 
-	//MACROS();
+	MACROS();
+	
+	
 
-	//DATA_TYPES();
 
-
-	MEMORY_1();
+	//MEMORY_1();
 
 
 	//STL_LIST();
@@ -1520,11 +1577,10 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 // 
 // 
 // (+) Arithmetic of pointers 
-// --------------------------
-// ( ) Preprocessor directives
-// --------------------------
+// (.) Preprocessor directives
 // (+) Macros C++
-// ( ) Variable data types
+// (+) Templates <typename T>
+// (+) Variable data types
 // 
 // 
 // ( ) OOP: Classes
@@ -1547,7 +1603,10 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 // (+) try-catch
 // (+) try-catch, throw, cerr << e.what();
 // (+) Pointers
-//
+// --------------------------
+// ( ) Lambda Functions
+// --------------------------
+// 
 // 
 // ( ) anonimic function
 // ( ) atomic
@@ -1564,6 +1623,9 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 // ( ) Double bufferized
 // 
 // ( ) Codestyle	 https://habr.com/ru/articles/841552/
+//
+//
+//
 //
 //
 /// BUGS:
