@@ -1378,20 +1378,18 @@ void DATA_TYPES() {
 
 
 
+void MEMORY_1() {
+	SimpleTimer t ("MEMORY_1");
+	using namespace std;	
 
 
-void APPLICATION_START() {
-	setlocale(LC_ALL, "RU_ru");
-	Console::SetWindowSize(60, 30);
-	Console::Title = L"C++\\CLI training";
-	system("color 70");
 
-	SimpleTimer Duration("main");
-
-	std::cout << "\n APPLICATION START\n\n";
-	std::cout << "\tStatistic:\n\n";
+}
 
 
+
+
+void CODE() {
 	if (0) {
 		CONSOLE_EXP();
 		VS_DEBUGGER();
@@ -1433,21 +1431,34 @@ void APPLICATION_START() {
 		std::cout << std::endl;
 		HOAR(Ar);
 	}
-	
+
 	THREADS_3();
-	
-
-	MACROS();
-
-	DATA_TYPES();
 
 
+	//MACROS();
+
+	//DATA_TYPES();
+
+
+	MEMORY_1();
 
 
 	//STL_LIST();
-	
-	//STL_SET_MAP();
 
+	//STL_SET_MAP();
+}
+void APPLICATION_START() {
+	setlocale(LC_ALL, "RU_ru");
+	Console::SetWindowSize(60, 30);
+	Console::Title = L"C++\\CLI training";
+	system("color 70");
+
+	SimpleTimer Duration("main");
+
+	std::cout << "\n APPLICATION START\n\n";
+	std::cout << "\tStatistic:\n\n";
+
+	CODE();
 
 	std::cout << "\n\n";
 }
@@ -1527,6 +1538,7 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 // (+) Threads: th with paramethers
 // ( ) Threads: 
 // 
+// ( ) MEMORY_1 https://www.youtube.com/watch?v=54zVRi3XWB4&t=796s
 // 
 // (+) VS: Debugger
 // (+) sizeof
@@ -1548,7 +1560,8 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 // ( ) Pro level:	 https://www.youtube.com/watch?v=4ZyOqCT494w&t=51s
 // ( ) Bog-Imperator https://www.youtube.com/watch?v=3nlHe9mdkp4&t=1064s
 // ( ) GRAPHIC!!!!   https://www.youtube.com/watch?v=z_WWQYh6Ewg
-// 
+// ( ) Selection of platform for GUI
+// ( ) Double bufferized
 // 
 // ( ) Codestyle	 https://habr.com/ru/articles/841552/
 //
