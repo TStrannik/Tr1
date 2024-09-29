@@ -32,7 +32,7 @@ DEF_SUM(double);
 #include <unordered_map>
 #include <chrono>
 #include <thread>
-
+#include <functional>
 
 
 
@@ -330,6 +330,35 @@ void POINTERS_ARITH() {
 	cout << *pArr << endl;
 	cout << *(pArr + 1) << endl;
 	//cout << *(pArr - 2) << endl;			// data from outside =\
+
+	cout << endl;
+}
+
+
+void mod5(int a) { if (a % 5 == 0)  std::cout << a << " "; }
+void mod3(int a) { if (a % 3 == 0)  std::cout << a << " "; }
+void mod10(int a) { if (a % 10 == 0) std::cout << a << " "; }
+void alkash(std::vector <int>& vec, std::function <void(int)> func)
+{
+	for (auto _ : vec) func(_);
+}
+void alkash(std::vector <int>& vec, std::vector < std::function <void(int)> > vecFunc)
+{
+	// for (auto v : vec) for (auto vf : vecFunc) vf(v);		// Elementwise
+
+	for (auto vf : vecFunc) {
+		for (auto v : vec) vf(v);
+		std::cout << std::endl;
+	}
+}
+void SIGNA() {
+	using namespace std;
+
+	vector vec{ 5, 10, 15, 20, 25, 30, 35, 40 };
+	vector <function <void(int)> > vecF = { mod5, mod3, mod10 };
+
+	alkash(vec, mod5);		cout << endl; cout << endl;
+	alkash(vec, vecF);		cout << endl;
 
 	cout << endl;
 }
@@ -1440,6 +1469,55 @@ void MEMORY_1() {
 
 
 
+using funct = std::function <void(int)>;									//// simply
+using vjlink = std::vector <int>&;											// rofl
+void lamMain(vjlink vc, funct f) { for (auto _ : vc) f(_); }
+
+void LAMBDA() {
+	using namespace std;
+
+
+
+	int p = 0;
+
+	[&p](int a) {
+		p = 5;
+	};
+
+
+
+	auto lf = [&p]() {			// C++14
+		p = 5;
+	};
+	lf();
+
+
+
+	auto lf2 = [&p](auto a) {
+		int res = a * p;
+		return res;
+	};
+
+	auto q = lf2(4);
+	cout << q << endl;
+
+
+
+	vector <int> vc{ 1, 51, 4, 10, 44, 98, 8, 12, 22, 29, 49 };
+	lamMain(vc, 
+		[](int a) {			
+			if (a % 2 == 0) {
+				cout << "Lambda " << a << endl;
+				
+			}
+		}
+	);
+
+
+	cout << endl;
+}
+
+
 
 
 
@@ -1469,6 +1547,10 @@ void CODE() {
 		POINTERS_ARITH();
 		INLINE(2, 3);
 		TEMPLATES();
+		MACROS();
+		SIGNA();
+
+
 
 		THREADS_1();
 		THREADS_2();
@@ -1492,7 +1574,9 @@ void CODE() {
 	THREADS_3();
 
 
-	MACROS();
+	
+	//LAMBDA();
+	LIMA();
 	
 	
 
@@ -1606,8 +1690,9 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 // --------------------------
 // ( ) Lambda Functions
 // --------------------------
-// 
-// 
+// ( ) Полиморфная обёртка от функции void DoWork (vector <int> & vc, function<void(int)> func)
+// ( ) Smart pointers _ptr
+// ( ) static function
 // ( ) anonimic function
 // ( ) atomic
 //
@@ -1637,3 +1722,18 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 /// Vocabulary
 // Токен — это минимальная единица синтаксиса языка программирования.
 // # - директивы препроцессора.
+
+
+
+
+
+
+
+
+
+
+//char __x_Y___Z___[]{ "rentgenoelectrographical" };
+//
+//for (unsigned _{ 0 }; __x_Y___Z___[_] != '\0'; _++) {
+//	cout << "<|" << __x_Y___Z___[_] << "|>";
+//}
