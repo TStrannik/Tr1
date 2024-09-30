@@ -1446,16 +1446,39 @@ void MEMORY_1() {
 
 
 
-using func  = std::function <void(int)>;
+using vfunc = std::vector <std::function <void(int)>>;
 using vlink = std::vector <int>&;
-void lfunc1() {}
-void lmain() {};
+void lfunc1(int a) { if (a % 3 == 0) std::cout << a << " "; }
+void lfunc2(int a) { if (a % 5 == 0) std::cout << a << " "; }
+void lmain(vlink v, vfunc f) {
+	for (auto _ : f) { 
+		for (auto __ : v) _(__);
+		std::cout << std::endl;
+	}
+}
 
 void LAMBDA() {
 	using namespace std;
 
 	vector echo{ 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 };
+	for (auto _ : echo) cout << _ << " "; cout << endl;
 
+
+	int K = 4; cin >> K;
+	auto lfunc3 =
+		[&K](int a) {
+			if (K == 0) return;
+			if (a % K == 0) cout << a << " ";
+		};
+
+	lmain(
+		echo, 
+		{
+			lfunc1, 
+			lfunc2,
+			lfunc3
+		}
+	);
 
 
 
