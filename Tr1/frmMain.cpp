@@ -32,6 +32,7 @@ DEF_SUM(double);
 #include <unordered_map>
 #include <chrono>
 #include <thread>
+#include <functional>
 
 
 
@@ -1427,8 +1428,6 @@ void MACROS() {
 
 	cout << endl;
 }
-
-
 void MEMORY_1() {
 	SimpleTimer t ("MEMORY_1");
 	using namespace std;	
@@ -1438,6 +1437,30 @@ void MEMORY_1() {
 }
 
 
+
+
+
+
+
+
+
+
+
+using func  = std::function <void(int)>;
+using vlink = std::vector <int>&;
+void lfunc1() {}
+void lmain() {};
+
+void LAMBDA() {
+	using namespace std;
+
+	vector echo{ 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 };
+
+
+
+
+	cout << endl;
+}
 
 
 
@@ -1482,6 +1505,9 @@ void CODE() {
 
 		FACTORIAL();
 		FIZZBUZZ();
+		MACROS();
+
+
 
 		int Ar[] = { 2, 8, 1, 7, 6, 3, 5, 4 };
 		for (auto i = 0; i < AR_SIZE; i++) std::cout << Ar[i] << " ";
@@ -1492,8 +1518,8 @@ void CODE() {
 	THREADS_3();
 
 
-	MACROS();
-	
+	//MACROS();
+	LAMBDA();
 	
 
 
