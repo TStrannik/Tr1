@@ -33,8 +33,7 @@ DEF_SUM(double);
 #include <chrono>
 #include <thread>
 #include <functional>
-
-
+#include <memory>
 
 
 
@@ -1278,7 +1277,103 @@ void HOAR(int arr[]) { HOAR(arr, 0, AR_SIZE - 1); };
 
 #pragma endregion void ALGORITHMS
 
+#pragma region void LAMBDA
+void lfunc1(float a) { if ((int)a % 2 == 0) std::cout << a << " "; }
+void lfunc2(float a) { if ((int)a % 3 == 0) std::cout << a << " "; }
+void lfunc3(float a) { std::cout << a * 2 << " "; }
+void lfunc4(float a) { std::cout << a * 3 << " "; }
 
+using vfunc = std::vector <std::function <void(float)>>;
+using vlink = std::vector <float>&;
+void lmain(vlink V, vfunc F) { for (auto _ : F) { for (auto __ : V) _(__); std::cout << std::endl; } }
+
+void LAMBDA_1() {
+	using namespace std;
+
+
+
+	//vector vec { 9, 10, 11, 12, 13 ,14, 15, 16 ,17, 18 ,19, 20, 21 };
+	vector <float> vec;
+	for (float _ = 9.0f; _ <= 21.0f; _ += 0.5f) vec.push_back(_);
+	for (auto _ : vec) cout << _ << " "; cout << endl;
+
+	vfunc vecf = { lfunc1, lfunc2, lfunc3, lfunc4 };
+	lmain(vec, vecf);
+
+
+
+	cout << endl;
+}
+
+
+
+class Zulu
+{
+public:
+	Zulu() { Msg(); }
+	~Zulu() {}
+
+
+	int a = 11;
+
+	void Msg() { std::cout << "W E L C O M E !" << std::endl; }
+	void Lambda() { 
+		auto f = [this]() {
+			this->Msg();
+		};
+		f();
+
+	}
+
+private:
+
+};
+int d = 15;
+
+void LAMBDA_2() {
+	using namespace std;
+	
+
+
+
+
+
+	int a = 55;
+	int b = 10;
+	int c = 10;
+
+
+			//[&]
+	auto f = [=]() mutable
+	{
+		cout << a << endl;
+		a = 1331;
+		d = 10;
+
+		c = 0;
+
+	};
+
+	f();
+
+
+	auto f2 = []() mutable->int {
+
+		return 0.0f;
+	};
+	auto res = f2();
+
+
+
+
+
+	Zulu Z;	
+	Z.Msg();
+
+
+	cout << endl;
+}
+#pragma endregion 
 
 void MACROS() {
 	using namespace std;
@@ -1438,47 +1533,49 @@ void MEMORY_1() {
 
 
 
+template <typename T> class SmartPointer {
+public:
+	SmartPointer(T* ptr) {		  ptr_ = ptr; }
+	~SmartPointer()		 { delete ptr_;		  }
+
+	T& operator* () { return *ptr_; }
+
+private:
+	T* ptr_;
+	
+};
 
 
+void SMART_POINTER_1() {
+	using namespace std; 
 
+	SmartPointer<int> sp1 = new int(100);
+	*sp1 = 105;
+	cout << *sp1 << endl;
 
-
-
-
-
-using vfunc = std::vector <std::function <void(int)>>;
-using vlink = std::vector <int>&;
-void lfunc1(int a) { if (a % 3 == 0) std::cout << a << " "; }
-void lfunc2(int a) { if (a % 5 == 0) std::cout << a << " "; }
-void lmain(vlink v, vfunc f) {
-	for (auto _ : f) { 
-		for (auto __ : v) _(__);
-		std::cout << std::endl;
-	}
+	cout << endl;
 }
 
-void LAMBDA() {
+void SMART_POINTER_2() {
 	using namespace std;
 
-	vector echo{ 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 };
-	for (auto _ : echo) cout << _ << " "; cout << endl;
 
 
-	int K = 4; cin >> K;
-	auto lfunc3 =
-		[&K](int a) {
-			if (K == 0) return;
-			if (a % K == 0) cout << a << " ";
-		};
+	//unique_ptr<int> p1(new int(5));
+	//unique_ptr<int> p2;
 
-	lmain(
-		echo, 
-		{
-			lfunc1, 
-			lfunc2,
-			lfunc3
-		}
-	);
+	//p2 = move(p1);
+	//p2.swap(p1);
+
+	//int *p = p2.get();
+	//int *p = new int(5);
+	//unique_ptr<int> p3(p);
+
+	//p3.reset();
+	//p3.release();
+
+	shared_ptr<int> p1(new int(5));
+	shared_ptr<int> p2(p1);
 
 
 
@@ -1519,6 +1616,11 @@ void CODE() {
 		THREADS_1();
 		THREADS_2();
 
+		LAMBDA_1();
+		LAMBDA_2();
+
+		SMART_POINTER_1();
+
 
 		DATA_TYPES();
 		SIZEOF_ARRAY();
@@ -1542,8 +1644,10 @@ void CODE() {
 
 
 	//MACROS();
-	LAMBDA();
 	
+	
+	
+	SMART_POINTER_2();
 
 
 	//MEMORY_1();
@@ -1636,6 +1740,10 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 // ( ) OOP: Inheritance
 // ( ) OOP: .... etc
 // 
+// ---------------------------
+// ( ) Smart-pointers: smart, auto, unique, shared, WEAK
+// ---------------------------
+// ( ) Operators overload 
 // 
 // (+) Speed of progran
 // ( ) Threads (lnk WA)
@@ -1652,12 +1760,8 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 // (+) try-catch
 // (+) try-catch, throw, cerr << e.what();
 // (+) Pointers
-// --------------------------
-// ( ) Lambda Functions
-// --------------------------
-// 
-// 
-// ( ) anonimic function
+// (+) Lambda Functions
+// (+) anonimic function
 // ( ) atomic
 //
 // 
