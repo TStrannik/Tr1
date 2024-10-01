@@ -1457,185 +1457,6 @@ void SMART_POINTER_4() {
 #pragma endregion SMART_POINTERS
 
 
-
-
-
-#pragma region OOP
-
-#pragma region 035
-const unsigned short
-RANK_SLAVE			= 0,
-RANK_SMART_ASS		= 1,
-RANK_COLLEGE_BOY	= 2,
-RANK_MASTER			= 3,
-RANK_DUNGEON_MASTER = 4,
-RANK_FULL_MASTER	= 5,
-RANK_GEY_LORD	    = 6;
-
-struct Gey {
-public:
-	Gey() : rank_(RANK_SLAVE) {
-		std::cout << "Constructed(default) " << name << " rank: " << rank_ << std::endl;
-	};
-
-	Gey(Gey& copy) : name(copy.name), rank_(copy.rank_) {
-		std::cout << "Constructed(copy) " << name << " rank: " << rank_ << std::endl;
-	};
-
-	Gey(std::string name) : name(name), rank_(RANK_SLAVE) {
-		std::cout << "Constructed(" << name << ") rank: " << rank_ << std::endl;
-	};
-
-	~Gey() {
-		std::cout << "~Destructed " << this->name << " " << std::endl;
-	};
-
-	Gey& operator=(const Gey& copy) { 
-		std::cout << "Constructed(copy-op)" << std::endl;
-		return *this;
-	};
-
-
-	// ??
-	Gey& operator=(Gey&& copy) noexcept {
-		return *this;
-	}
-	
-
-public: 
-	std::string name = "slave";
-	void setRank(unsigned short rank) { rank_ = rank; }
-	int  getRank() { return rank_; }
-
-private:
-	unsigned short rank_ = RANK_SLAVE;
-
-};
-
-void F_0_3_5() {
-	using namespace std;
-
-
-
-	Gey Billy("Billy");
-	Billy.setRank(RANK_GEY_LORD);
-	cout << Billy.name << " " << Billy.getRank() << endl;
-	cout << endl;
-	//Billy = Billy;
-	
-
-	Gey Van(Billy);
-	Van.name = "Van";
-	cout << Van.name << " " << Van.getRank() << endl;
-	cout << endl;
-
-
-
-	Gey Mark = Van;
-	Mark.setRank(RANK_MASTER);
-	Mark.name = "Mark";
-	cout << Mark.name << " " << Mark.getRank() << endl;
-	cout << endl;
-
-
-
-	cout << endl;
-}
-#pragma endregion 035
-
-
-
-class Animal {
-private:
-	int x_, y_;
-	int* id_;
-
-
-
-public:
-	Animal()					 : x_(0), y_(0) { id_ = new int(0);  }
-	Animal(int id, int x, int y) : x_(x), y_(y) { id_ = new int(id); }
-	Animal(Animal& copy) { copy_fields_(copy); }
-	~Animal() { delete id_; }
-
-	Animal& operator=(Animal& copy) { copy_fields_(copy); return *this;	}
-
-	
-
-public:
-	int get_x() { return x_; } void set_x(int x) { x_ = x; }
-	int get_y() { return y_; } void set_y(int y) { y_ = y; }
-	int get_id() { return *id_; }
-
-	void info() {
-		using namespace std;
-		cout <<
-			"Animal #" << *id_ << endl << 
-			"coordinates: " << 
-			get_x() << ":" << get_y() << endl << 
-			endl;
-	}
-
-
-private:
-	void copy_fields_(Animal& copy) {
-		x_ = copy.get_x(); y_ = copy.get_y();
-		id_ = new int(copy.get_id());
-	}
-
-
-	
-};
-
-
-void OOP_1() {
-	using namespace std;
-
-	unsigned short c = 1;
-
-	Animal Ex1;				Ex1.info();
-	Animal Ex2(c, 10, 20);	Ex2.info();
-	Animal Ex3 = Ex2;		Ex3.info();
-	Animal Ex4(Ex3);		Ex4.info();
-
-	cout << endl;
-
-
-
-
-	unsigned short ctr = 0;
-	vector <Animal*> vAn;
-
-	for (auto ex = ctr; ex <= 4; ex++, ctr++)
-		vAn.push_back(new Animal(ex, 10 * ex, 10 * ex));
-	for (auto ex : vAn) ex->info();
-
-
-
-
-	//// /?? / /? ? // 
-	vAn.emplace_back();
-	for (auto ex : vAn) ex->info();
-
-
-	cout << endl;
-}
-
-
-
-
-
-#pragma endregion OOP
-
-
-
-
-
-
-
-
-
-
 void MACROS() {
 	using namespace std;
 
@@ -1785,12 +1606,192 @@ void MACROS() {
 	cout << endl;
 }
 void MEMORY_1() {
-	SimpleTimer t ("MEMORY_1");
-	using namespace std;	
+	SimpleTimer t("MEMORY_1");
+	using namespace std;
 
 
 
 }
+
+
+
+#pragma region OOP
+
+#pragma region 035
+const unsigned short
+RANK_SLAVE			= 0,
+RANK_SMART_ASS		= 1,
+RANK_COLLEGE_BOY	= 2,
+RANK_MASTER			= 3,
+RANK_DUNGEON_MASTER = 4,
+RANK_FULL_MASTER	= 5,
+RANK_GEY_LORD	    = 6;
+
+struct Gey {
+public:
+	Gey() : rank_(RANK_SLAVE) {
+		std::cout << "Constructed(default) " << name << " rank: " << rank_ << std::endl;
+	};
+
+	Gey(Gey& copy) : name(copy.name), rank_(copy.rank_) {
+		std::cout << "Constructed(copy) " << name << " rank: " << rank_ << std::endl;
+	};
+
+	Gey(std::string name) : name(name), rank_(RANK_SLAVE) {
+		std::cout << "Constructed(" << name << ") rank: " << rank_ << std::endl;
+	};
+
+	~Gey() {
+		std::cout << "~Destructed " << this->name << " " << std::endl;
+	};
+
+	Gey& operator=(const Gey& copy) { 
+		std::cout << "Constructed(copy-op)" << std::endl;
+		return *this;
+	};
+
+
+	// ??
+	Gey& operator=(Gey&& copy) noexcept {
+		return *this;
+	}
+	
+
+public: 
+	std::string name = "slave";
+	void setRank(unsigned short rank) { rank_ = rank; }
+	int  getRank() { return rank_; }
+
+private:
+	unsigned short rank_ = RANK_SLAVE;
+
+};
+
+void F_0_3_5() {
+	using namespace std;
+
+
+
+	Gey Billy("Billy");
+	Billy.setRank(RANK_GEY_LORD);
+	cout << Billy.name << " " << Billy.getRank() << endl;
+	cout << endl;
+	//Billy = Billy;
+	
+
+	Gey Van(Billy);
+	Van.name = "Van";
+	cout << Van.name << " " << Van.getRank() << endl;
+	cout << endl;
+
+
+
+	Gey Mark = Van;
+	Mark.setRank(RANK_MASTER);
+	Mark.name = "Mark";
+	cout << Mark.name << " " << Mark.getRank() << endl;
+	cout << endl;
+
+
+
+	cout << endl;
+}
+#pragma endregion 035
+
+
+
+class Animal {
+private:
+	int x_, y_;
+	int* id_;
+
+
+
+public:
+	Animal()					 : x_(0), y_(0) { id_ = new int(0);  }
+	Animal(int id, int x, int y) : x_(x), y_(y) { id_ = new int(id); }
+	Animal(Animal& copy) { copy_fields_(copy); }
+	~Animal() { std::cout << "~" << *id_ << std::endl;  delete id_; }
+
+	Animal& operator=(Animal& copy) { copy_fields_(copy); return *this;	}
+
+	
+
+public:
+	int get_x() { return x_; } void set_x(int x) { x_ = x; }
+	int get_y() { return y_; } void set_y(int y) { y_ = y; }
+	int get_id() { return *id_; }
+
+	void info() {
+		using namespace std;
+		cout <<
+			"Animal #" << *id_ << endl << 
+			"coordinates: " << 
+			get_x() << ":" << get_y() << endl << 
+			endl;
+	}
+
+
+private:
+	void copy_fields_(Animal& copy) {
+		x_ = copy.get_x(); y_ = copy.get_y();
+		id_ = new int(copy.get_id());
+	}
+
+
+	
+};
+
+
+void OOP_1() {
+	using namespace std;
+
+	/*Animal Ex1;				Ex1.info();
+	Animal Ex2(1, 10, 20);	Ex2.info();
+	Animal Ex3 = Ex2;		Ex3.info();
+	Animal Ex4(Ex3);		Ex4.info();
+	cout << endl;*/
+
+
+
+
+	unsigned short ctr = 0;
+	vector <Animal*> vec;
+
+	for (auto ex = ctr; ex <= 4; ex++, ctr++)
+		vec.push_back(new Animal(ex, 10 * ex, 10 * ex));
+	for (auto ex : vec) ex->info(); cout << endl << endl;
+
+
+
+
+	vec.erase(vec.begin() + 3);
+	for (auto ex : vec) ex->info();	cout << endl << endl;
+
+
+	vec.emplace(vec.begin() + 3, new Animal(3, 100, 100));
+	for (auto ex : vec) ex->info();
+
+
+
+	cout << endl;
+}
+
+
+
+
+
+#pragma endregion OOP
+
+
+
+
+
+
+
+
+
+
 
 
 
