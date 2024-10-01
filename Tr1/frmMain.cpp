@@ -1570,7 +1570,7 @@ public:
 	void info() {
 		using namespace std;
 		cout <<
-			"Animal: " << *id_ << endl << 
+			"Animal #" << *id_ << endl << 
 			"coordinates: " << 
 			get_x() << ":" << get_y() << endl << 
 			endl;
@@ -1597,6 +1597,26 @@ void OOP_1() {
 	Animal Ex2(c, 10, 20);	Ex2.info();
 	Animal Ex3 = Ex2;		Ex3.info();
 	Animal Ex4(Ex3);		Ex4.info();
+
+	cout << endl;
+
+
+
+
+	unsigned short ctr = 0;
+	vector <Animal*> vAn;
+
+	for (auto ex = ctr; ex <= 4; ex++, ctr++)
+		vAn.push_back(new Animal(ex, 10 * ex, 10 * ex));
+	for (auto ex : vAn) ex->info();
+
+
+
+
+	//// /?? / /? ? // 
+	vAn.emplace_back();
+	for (auto ex : vAn) ex->info();
+
 
 	cout << endl;
 }
