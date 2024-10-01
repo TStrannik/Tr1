@@ -1373,7 +1373,111 @@ void LAMBDA_2() {
 
 	cout << endl;
 }
-#pragma endregion 
+#pragma endregion LAMBDA
+
+#pragma region SMART_POINTERS
+template <typename T> class smart_pointer {
+public:
+	smart_pointer(T* ptr) { ptr_ = ptr; }
+	~smart_pointer() { delete ptr_; }
+
+	T& operator* () { return *ptr_; }
+
+private:
+	T* ptr_;
+
+};
+void SMART_POINTER_1() {
+	using namespace std;
+
+	smart_pointer<int> sp1 = new int(100);
+	*sp1 = 105;
+	cout << *sp1 << endl;
+
+	cout << endl;
+}
+
+void SMART_POINTER_2() {
+	using namespace std;
+
+
+
+	//unique_ptr<int> p1(new int(5));
+	//unique_ptr<int> p2;
+
+	//p2 = move(p1);
+	//p2.swap(p1);
+
+	//int *p = p2.get();
+	//int *p = new int(5);
+	//unique_ptr<int> p3(p);
+
+	//p3.reset();
+	//p3.release();
+
+	shared_ptr<int> p1(new int(5));
+	shared_ptr<int> p2(p1);
+
+
+	cout << endl;
+}
+
+struct Actor {
+public:
+	Actor() { std::cout << "Spawn! " << std::endl; };
+	~Actor() { std::cout << "Dead! " << std::endl;  };
+	void DoWork() { std::cout << "Do some job! " << std::endl; }
+private: 
+};
+void run(Actor* ptr) {
+	if (ptr) ptr->DoWork();
+	else std::cout << "An actor was expected! " << std::endl;
+}
+void SMART_POINTER_3() {
+	using namespace std;
+
+
+
+	//auto ptr = make_unique<Actor>();
+	shared_ptr<Actor> ptr = make_shared<Actor>();
+	run(ptr.get());
+	// auto ptr2 = move(ptr);		// for unique
+	auto ptr2 = ptr;
+	run(ptr2.get());
+	run(ptr.get());
+
+
+
+	cout << endl;
+}
+
+void SMART_POINTER_4() {
+	/// https://www.youtube.com/watch?v=sM4i-cNJUJc
+}
+#pragma endregion SMART_POINTERS
+
+
+#pragma region OOP
+void F_0_3_5() {
+	using namespace std;
+
+
+
+	cout << endl;
+}
+#pragma endregion OOP
+
+
+
+
+
+
+
+
+
+
+
+
 
 void MACROS() {
 	using namespace std;
@@ -1533,56 +1637,6 @@ void MEMORY_1() {
 
 
 
-template <typename T> class SmartPointer {
-public:
-	SmartPointer(T* ptr) {		  ptr_ = ptr; }
-	~SmartPointer()		 { delete ptr_;		  }
-
-	T& operator* () { return *ptr_; }
-
-private:
-	T* ptr_;
-	
-};
-
-
-void SMART_POINTER_1() {
-	using namespace std; 
-
-	SmartPointer<int> sp1 = new int(100);
-	*sp1 = 105;
-	cout << *sp1 << endl;
-
-	cout << endl;
-}
-
-void SMART_POINTER_2() {
-	using namespace std;
-
-
-
-	//unique_ptr<int> p1(new int(5));
-	//unique_ptr<int> p2;
-
-	//p2 = move(p1);
-	//p2.swap(p1);
-
-	//int *p = p2.get();
-	//int *p = new int(5);
-	//unique_ptr<int> p3(p);
-
-	//p3.reset();
-	//p3.release();
-
-	shared_ptr<int> p1(new int(5));
-	shared_ptr<int> p2(p1);
-
-
-
-	cout << endl;
-}
-
-
 
 
 
@@ -1620,7 +1674,8 @@ void CODE() {
 		LAMBDA_2();
 
 		SMART_POINTER_1();
-
+		SMART_POINTER_2();
+		SMART_POINTER_3();
 
 		DATA_TYPES();
 		SIZEOF_ARRAY();
@@ -1640,21 +1695,15 @@ void CODE() {
 		HOAR(Ar);
 	}
 
-	THREADS_3();
+	THREADS_3();			// ...
+	SMART_POINTER_4();		// ...
+
+	F_0_3_5();
 
 
 	//MACROS();
-	
-	
-	
-	SMART_POINTER_2();
-
-
 	//MEMORY_1();
-
-
 	//STL_LIST();
-
 	//STL_SET_MAP();
 }
 void APPLICATION_START() {
@@ -1730,26 +1779,31 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 // 
 // 
 // (+) Arithmetic of pointers 
-// (.) Preprocessor directives
+// (...) Preprocessor directives
 // (+) Macros C++
 // (+) Templates <typename T>
 // (+) Variable data types
 // 
-// 
+// ------------------------------------------------
+// ( ) Rule of Zero, Five, Three
+// ------------------------------------------------
 // ( ) OOP: Classes
-// ( ) OOP: Inheritance
-// ( ) OOP: .... etc
+// ( ) OOP: Inheritance: Multiple, Diamond
+// ( ) OOP: Polymorphism: static, dynamic, overloading of funcs, virt methods/tables
+// ( ) OOP: Incapsulation
 // 
-// ---------------------------
-// ( ) Smart-pointers: smart, auto, unique, shared, WEAK
-// ---------------------------
-// ( ) Operators overload 
+
+// (..) Smart-pointers: smart, auto, unique, shared, WEAK
+// ( ) Operators overload   
+// 
+// ( ) Type casts: static_cast, const_cast, dynamic_cast, reinterp_cast 
 // 
 // (+) Speed of progran
 // ( ) Threads (lnk WA)
 // (+) Threads: 
 // (+) Threads: th with paramethers
-// ( ) Threads: 
+// (+) Threads: th with lamda-function
+// ( ) Threads: SimpleCode 1, 2, 3, 4, 5, 6, 7, 8, 9, 10	https://www.youtube.com/watch?v=NawpxG81RRk&list=PLQOaTSbfxUtAc_RpyDiWCHq0YTzLtVSD0
 // 
 // ( ) MEMORY_1 https://www.youtube.com/watch?v=54zVRi3XWB4&t=796s
 // 
@@ -1765,7 +1819,7 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 // ( ) atomic
 //
 // 
-// ( ) ALGORITHMS: HOAR_SORT
+// (...) ALGORITHMS: HOAR_SORT
 // ( ) ALGORITHMS: 
 // 
 // 
@@ -1776,9 +1830,10 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 // ( ) Double bufferized
 // 
 // ( ) Codestyle	 https://habr.com/ru/articles/841552/
+// ( ) Standarts C++ https://www.youtube.com/watch?v=NRjgfzYWSr0
 //
 //
-//
+// ( ) Yandex https://www.youtube.com/watch?v=LvNsartxgrc
 //
 //
 /// BUGS:
