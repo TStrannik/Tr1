@@ -1457,18 +1457,95 @@ void SMART_POINTER_4() {
 #pragma endregion SMART_POINTERS
 
 
+
+
+
 #pragma region OOP
+
+#pragma region 035
+const unsigned short
+RANK_SLAVE			= 0,
+RANK_SMART_ASS		= 1,
+RANK_COLLEGE_BOY	= 2,
+RANK_MASTER			= 3,
+RANK_DUNGEON_MASTER = 4,
+RANK_FULL_MASTER	= 5,
+RANK_GEY_LORD	    = 6;
+
+struct Gey {
+public:
+	Gey() : rank_(RANK_SLAVE) {
+		std::cout << "Constructed(default) " << name << " rank: " << rank_ << std::endl;
+	};
+
+	Gey(Gey& copy) : name(copy.name), rank_(copy.rank_) {
+		std::cout << "Constructed(copy) " << name << " rank: " << rank_ << std::endl;
+	};
+
+	Gey(std::string name) : name(name), rank_(RANK_SLAVE) {
+		std::cout << "Constructed(" << name << ") rank: " << rank_ << std::endl;
+	};
+
+	~Gey() {
+		std::cout << "~Destructed " << this->name << " " << std::endl;
+	};
+
+	Gey& operator=(const Gey& copy) { 
+		std::cout << "Constructed(copy-op)" << std::endl;
+		return *this;
+	};
+
+
+	// ??
+	Gey& operator=(Gey&& copy) noexcept {
+		return *this;
+	}
+	
+
+public: 
+	std::string name = "slave";
+	void setRank(unsigned short rank) { rank_ = rank; }
+	int  getRank() { return rank_; }
+
+private:
+	unsigned short rank_ = RANK_SLAVE;
+
+};
+
 void F_0_3_5() {
 	using namespace std;
 
 
 
+	Gey Billy("Billy");
+	Billy.setRank(RANK_GEY_LORD);
+	cout << Billy.name << " " << Billy.getRank() << endl;
+	cout << endl;
+	Billy = Billy;
+	
+
+	Gey Van(Billy);
+	Van.name = "Van";
+	cout << Van.name << " " << Van.getRank() << endl;
+	cout << endl;
+
+
+
+	Gey Mark = Van;
+	Mark.setRank(RANK_MASTER);
+	Mark.name = "Mark";
+	cout << Mark.name << " " << Mark.getRank() << endl;
+	cout << endl;
+
+
+
 	cout << endl;
 }
+#pragma endregion 035
+
+
+
 #pragma endregion OOP
-
-
-
 
 
 
@@ -1698,7 +1775,7 @@ void CODE() {
 	THREADS_3();			// ...
 	SMART_POINTER_4();		// ...
 
-	F_0_3_5();
+	F_0_3_5(); // )
 
 
 	//MACROS();
@@ -1754,7 +1831,7 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 
 
 /// TODO:
-// 
+
 // (+) MVP
 // (+) GIT Connection
 // (+) GIT Make "Develop" branch
@@ -1776,22 +1853,23 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 // (+) metanint.com Chapter 9. Containers
 // ( ) Hash-tables
 // ( ) Red-black trees
-// 
+
 // 
 // (+) Arithmetic of pointers 
 // (...) Preprocessor directives
 // (+) Macros C++
 // (+) Templates <typename T>
 // (+) Variable data types
-// 
-// ------------------------------------------------
-// ( ) Rule of Zero, Five, Three
-// ------------------------------------------------
+
+
+// ----------------
 // ( ) OOP: Classes
+// ----------------
+// ( ) OOP: Access levels: public, private, protected
 // ( ) OOP: Inheritance: Multiple, Diamond
 // ( ) OOP: Polymorphism: static, dynamic, overloading of funcs, virt methods/tables
 // ( ) OOP: Incapsulation
-// 
+// (..) Rule 0, 3, 5: 3, 5, 0
 
 // (..) Smart-pointers: smart, auto, unique, shared, WEAK
 // ( ) Operators overload   
