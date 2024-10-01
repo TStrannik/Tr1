@@ -1521,7 +1521,7 @@ void F_0_3_5() {
 	Billy.setRank(RANK_GEY_LORD);
 	cout << Billy.name << " " << Billy.getRank() << endl;
 	cout << endl;
-	Billy = Billy;
+	//Billy = Billy;
 	
 
 	Gey Van(Billy);
@@ -1542,6 +1542,66 @@ void F_0_3_5() {
 	cout << endl;
 }
 #pragma endregion 035
+
+
+
+class Animal {
+private:
+	int x_, y_;
+	int* id_;
+
+
+
+public:
+	Animal()					 : x_(0), y_(0) { id_ = new int(0);  }
+	Animal(int id, int x, int y) : x_(x), y_(y) { id_ = new int(id); }
+	Animal(Animal& copy) { copy_fields_(copy); }
+	~Animal() { delete id_; }
+
+	Animal& operator=(Animal& copy) { copy_fields_(copy); return *this;	}
+
+	
+
+public:
+	int get_x() { return x_; } void set_x(int x) { x_ = x; }
+	int get_y() { return y_; } void set_y(int y) { y_ = y; }
+	int get_id() { return *id_; }
+
+	void info() {
+		using namespace std;
+		cout <<
+			"Animal: " << *id_ << endl << 
+			"coordinates: " << 
+			get_x() << ":" << get_y() << endl << 
+			endl;
+	}
+
+
+private:
+	void copy_fields_(Animal& copy) {
+		x_ = copy.get_x(); y_ = copy.get_y();
+		id_ = new int(copy.get_id());
+	}
+
+
+	
+};
+
+
+void OOP_1() {
+	using namespace std;
+
+	unsigned short c = 1;
+
+	Animal Ex1;				Ex1.info();
+	Animal Ex2(c, 10, 20);	Ex2.info();
+	Animal Ex3 = Ex2;		Ex3.info();
+	Animal Ex4(Ex3);		Ex4.info();
+
+	cout << endl;
+}
+
+
 
 
 
@@ -1765,6 +1825,9 @@ void CODE() {
 		MACROS();
 
 
+		F_0_3_5();
+		OOP_1();
+
 
 		int Ar[] = { 2, 8, 1, 7, 6, 3, 5, 4 };
 		for (auto i = 0; i < AR_SIZE; i++) std::cout << Ar[i] << " ";
@@ -1775,8 +1838,8 @@ void CODE() {
 	THREADS_3();			// ...
 	SMART_POINTER_4();		// ...
 
-	F_0_3_5(); // )
 
+	OOP_1();
 
 	//MACROS();
 	//MEMORY_1();
@@ -1862,11 +1925,12 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 // (+) Variable data types
 
 
-// ----------------
-// ( ) OOP: Classes
-// ----------------
-// ( ) OOP: Access levels: public, private, protected
+
+// (+) OOP: Classes
+// (..) OOP: Access levels: public, private, protected
+// ---------------------------------------
 // ( ) OOP: Inheritance: Multiple, Diamond
+// ---------------------------------------
 // ( ) OOP: Polymorphism: static, dynamic, overloading of funcs, virt methods/tables
 // ( ) OOP: Incapsulation
 // (..) Rule 0, 3, 5: 3, 5, 0
