@@ -1706,9 +1706,9 @@ private:
 	int x_, y_;
 
 public:
-	int get_x()  { return x_;   }	void set_x(int x) { x_ = x; }
-	int get_y()  { return y_;   }	void set_y(int y) { y_ = y; }
-	int get_id() { return *id_; }
+	int  get_x()  { return x_;		}	void set_x(int x) { x_ = x; }
+	int  get_y()  { return y_;		}	void set_y(int y) { y_ = y; }
+	int  get_id() { return *id_;	}
 	void remove() { this->~Point(); };
 	void info() {
 		using namespace std;
@@ -1720,12 +1720,12 @@ public:
 	}	
 
 public:
-	Point()							{ set_fields_(0, 0, 0);		}
-	Point(int id, int x, int y)		{ set_fields_(id, x, y);	}
-	Point(Point& copy)				{ copy_fields_(copy);		}
-	~Point()						{ destructor();				}
-	Point& operator = (Point& copy) { return op_equal_c_(copy); }
-	bool operator == (Point& B)		{ return false; }	// TODO ....|
+	Point()							{ set_fields_(0, 0, 0);		 }
+	Point(int id, int x, int y)		{ set_fields_(id, x, y);	 }
+	Point(Point& copy)				{ copy_fields_(copy);		 }
+	~Point()						{ destructor();				 }
+	Point& operator = (Point& copy) { return op_assign_c_(copy); }
+	bool   operator == (Point& B)	{ return op_equal_(B);		 }
 
 private:
 	void set_fields_(int id, int x, int y) {
@@ -1736,12 +1736,16 @@ private:
 		id_ = new int(copy.get_id());
 	}
 	void destructor() { delete id_; }
-	Point& op_equal_c_(Point& copy) { 
+	Point& op_assign_c_(Point& copy) {
 		if (id_ != nullptr) delete id_;
 		id_ = new int(copy.get_id());
 		x_ = copy.get_x(); y_ = copy.get_y();
 		return *this;
-	}	
+	}
+	bool op_equal_(Point& B) {
+		bool cond = (x_ == B.x_) && (y_ == B.y_);
+		if (cond) return true; else return false;
+	}
 };
 
 
@@ -1755,15 +1759,21 @@ void OOP_1() {
 	Point Ex4(Ex1);			
 	Point Ex5; Ex5 = Ex3 = Ex2;	
 
-	Ex1.info();
-	Ex2.info();
-	Ex3.info();
-	Ex4.info();
-	Ex5.info();
+	Ex1.info(); Ex2.info(); Ex3.info(); Ex4.info(); Ex5.info();
 	cout << endl << endl << endl;
 	
 
 
+	Point Ex6(6, 12, 34);
+	Point Ex7(7, 12, 34);
+	Point Ex8(8, 12, 44);
+	cout << boolalpha << (Ex6 == Ex7) << endl;
+	cout << boolalpha << (Ex6 == Ex8) << endl;
+	cout << endl << endl << endl;
+
+
+
+	/*
 	vector <Point*> vec;
 
 
@@ -1782,7 +1792,7 @@ void OOP_1() {
 
 	vec.emplace(vec.begin() + 2, new Point(5, 50, 50));
 	for (auto ex : vec) ex->info();
-
+	*/
 
 
 	cout << endl;
