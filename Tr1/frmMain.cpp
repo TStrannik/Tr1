@@ -1731,6 +1731,8 @@ public:
 			endl;
 	}
 
+	void remove() { this->~Animal(); };
+
 
 private:
 	void copy_fields_(Animal& copy) {
@@ -1758,15 +1760,24 @@ void OOP_1() {
 	unsigned short ctr = 0;
 	vector <Animal*> vec;
 
-	for (auto ex = ctr; ex <= 4; ex++, ctr++)
+
+
+	for (auto ex = ctr; ex <= 10; ex++, ctr++)
 		vec.push_back(new Animal(ex, 10 * ex, 10 * ex));
 	for (auto ex : vec) ex->info(); cout << endl << endl;
 
 
 
+	for (auto i = 2; i <= 5; i++) vec.at(i)->remove();
+	vec.erase(vec.begin() + 2, vec.begin() + 6);
 
-	vec.erase(vec.begin() + 3);
+
 	for (auto ex : vec) ex->info();	cout << endl << endl;
+
+
+
+
+
 
 
 	vec.emplace(vec.begin() + 3, new Animal(3, 100, 100));
