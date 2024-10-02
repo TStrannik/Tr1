@@ -1698,96 +1698,160 @@ void F_0_3_5() {
 }
 #pragma endregion 035
 
+#pragma region OOP_1
 
-
-class Animal {
+class Point {
 private:
-	int x_, y_;
 	int* id_;
-
-
-
-public:
-	Animal()					 : x_(0), y_(0) { id_ = new int(0);  }
-	Animal(int id, int x, int y) : x_(x), y_(y) { id_ = new int(id); }
-	Animal(Animal& copy) { copy_fields_(copy); }
-	~Animal() { std::cout << "~" << *id_ << std::endl;  delete id_; }
-
-	Animal& operator=(Animal& copy) { copy_fields_(copy); return *this;	}
-
-	
+	int x_, y_;
 
 public:
-	int get_x() { return x_; } void set_x(int x) { x_ = x; }
-	int get_y() { return y_; } void set_y(int y) { y_ = y; }
+	int get_x()  { return x_;   }	void set_x(int x) { x_ = x; }
+	int get_y()  { return y_;   }	void set_y(int y) { y_ = y; }
 	int get_id() { return *id_; }
-
+	void remove() { this->~Point(); };
 	void info() {
 		using namespace std;
 		cout <<
-			"Animal #" << *id_ << endl << 
-			"coordinates: " << 
-			get_x() << ":" << get_y() << endl << 
+			"Point #" << *id_ << endl <<
+			"coordinates: " <<
+			get_x() << ":" << get_y() << endl <<
 			endl;
-	}
+	}	
 
-	void remove() { this->~Animal(); };
-
+public:
+	Point()							{ set_fields_(0, 0, 0);		}
+	Point(int id, int x, int y)		{ set_fields_(id, x, y);	}
+	Point(Point& copy)				{ copy_fields_(copy);		}
+	~Point()						{ destructor();				}
+	Point& operator = (Point& copy) { return op_equal_c_(copy); }
+	bool operator == (Point& B)		{ return false; }	// TODO ....|
 
 private:
-	void copy_fields_(Animal& copy) {
+	void set_fields_(int id, int x, int y) {
+		x_ = x; y_ = y; id_ = new int(id);
+	}
+	void copy_fields_(Point& copy) {
 		x_ = copy.get_x(); y_ = copy.get_y();
 		id_ = new int(copy.get_id());
 	}
-
-
-	
+	void destructor() { delete id_; }
+	Point& op_equal_c_(Point& copy) { 
+		if (id_ != nullptr) delete id_;
+		id_ = new int(copy.get_id());
+		x_ = copy.get_x(); y_ = copy.get_y();
+		return *this;
+	}	
 };
+
 
 
 void OOP_1() {
 	using namespace std;
 
-	/*Animal Ex1;				Ex1.info();
-	Animal Ex2(1, 10, 20);	Ex2.info();
-	Animal Ex3 = Ex2;		Ex3.info();
-	Animal Ex4(Ex3);		Ex4.info();
-	cout << endl;*/
+	Point Ex1;				
+	Point Ex2(1, 10, 20);	
+	Point Ex3; Ex3 = Ex2;
+	Point Ex4(Ex1);			
+	Point Ex5; Ex5 = Ex3 = Ex2;	
+
+	Ex1.info();
+	Ex2.info();
+	Ex3.info();
+	Ex4.info();
+	Ex5.info();
+	cout << endl << endl << endl;
+	
+
+
+	vector <Point*> vec;
 
 
 
-
-	unsigned short ctr = 0;
-	vector <Animal*> vec;
-
-
-
-	for (auto ex = ctr; ex <= 10; ex++, ctr++)
-		vec.push_back(new Animal(ex, 10 * ex, 10 * ex));
+	for (auto ex = 0; ex <= 10; ex++)
+		vec.push_back(new Point(ex, 10 * ex, 10 * ex));
 	for (auto ex : vec) ex->info(); cout << endl << endl;
 
 
 
-	for (auto i = 2; i <= 5; i++) vec.at(i)->remove();
+	for (auto i = 2; i < 5; i++) vec.at(i)->remove();
 	vec.erase(vec.begin() + 2, vec.begin() + 6);
-
 	for (auto ex : vec) ex->info();	cout << endl << endl;
 
 
 
-
-
-
-
-	vec.emplace(vec.begin() + 3, new Animal(3, 100, 100));
+	vec.emplace(vec.begin() + 2, new Point(5, 50, 50));
 	for (auto ex : vec) ex->info();
 
 
 
 	cout << endl;
 }
+#pragma endregion OOP_1
+
+#pragma region OOP_2
+class R3 {
+private:
+	int *data_; 
+	int size_;
 
 
+
+public:
+	R3()								  { set_fields_(0);			  			  }
+	R3(int size)						  { set_fields_(size);					  }
+	R3(const R3& copy)					  { copy_fields_(copy);		  			  }
+	~R3() { std::cout << "~(" << this << "\n";					  delete[] data_; }
+	const R3& operator = (const R3& copy) { copy_op_equal_(copy); return *this;   }
+
+	void say_my_name() { std::cout << this << std::endl; }
+
+private:
+	void set_fields_(int size) {
+		data_ = new int[size];
+		size_ = size;
+		for (int i = 0; i < size; i++)
+			data_[i] = i;
+	}
+	void copy_fields_(const R3& copy) {
+		data_ = new int[copy.size_]; 
+		size_ = copy.size_;
+		for (int i = 0; i < copy.size_; i++)
+			data_[i] = copy.data_[i];
+	};
+	void copy_op_equal_(const R3& copy) {
+		size_ = copy.size_;
+
+		if (data_ != nullptr) delete[] data_;
+		data_ = new int[copy.size_];
+
+		for (int i = 0; i < copy.size_; i++)
+			data_[i] = copy.data_[i];
+	}
+};
+void OOP_2() {
+	R3 a(7);
+	R3 b(a);
+	R3 c;
+	R3 d;
+	c = a;
+	d = c = a;
+
+	a.say_my_name();
+	b.say_my_name();
+	c.say_my_name();
+	d.say_my_name();
+
+	std::cout << std::endl;
+}
+
+#pragma endregion OOP_2
+
+#pragma region OOP_3
+void OOP_3() {
+	//
+}
+#pragma endregion OOP_3
 
 
 
@@ -1858,7 +1922,8 @@ void CODE() {
 
 		F_0_3_5();
 		OOP_1();
-
+		OOP_2();
+		OOP_3();
 
 		int Ar[] = { 2, 8, 1, 7, 6, 3, 5, 4 };
 		for (auto i = 0; i < AR_SIZE; i++) std::cout << Ar[i] << " ";
@@ -1869,8 +1934,9 @@ void CODE() {
 	THREADS_3();			// ...
 	SMART_POINTER_4();		// ...
 
-
 	OOP_1();
+	//OOP_2();
+	OOP_3();
 
 	//MACROS();
 	//MEMORY_1();
