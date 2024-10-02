@@ -1706,10 +1706,10 @@ private:
 	int x_, y_; 
 
 public:
-	int  get_x()  { return x_;		}	void set_x(int x) { x_ = x; }
-	int  get_y()  { return y_;		}	void set_y(int y) { y_ = y; }
+	int  get_x()  { return x_;		}	 void set_x(int x) { x_ = x; }
+	int  get_y()  { return y_;		}	 void set_y(int y) { y_ = y; }
 	int  get_id() { return *id_;	}
-	void remove() { this->~Point(); };
+	void remove() { this->~Point(); }
 	void info() {
 		using namespace std;
 		cout <<
@@ -1720,39 +1720,41 @@ public:
 	}	
 
 public:
-	Point()							{ set_fields_(0, 0, 0);		 }
-	Point(int id, int x, int y)		{ set_fields_(id, x, y);	 }
-	Point(Point& copy)				{ copy_fields_(copy);		 }
-	~Point()						{ destructor();				 }
-	Point& operator = (Point& copy) { return op_assign_c_(copy); }
-	bool   operator == (Point& B)	{ return op_equal_(B);		 }
+	Point()							{		 _set_fields (0, 0, 0);	 }
+	Point(int id, int x, int y)		{		 _set_fields (id, x, y); }
+	Point(Point& copy)				{		 _copy_fields(copy);	 }
+	~Point()						{		 _destructor ();		 }
+	Point& operator = (Point& copy) { return _op_assign_c(copy);	 }
+	bool   operator == (Point& B)	{ return _op_equal   (B);		 }
 
 private:
-	void set_fields_(int id, int x, int y) {
+	void   _set_fields(int id, int x, int y) {
 		x_ = x; y_ = y; id_ = new int(id);
 	}
-	void copy_fields_(Point& copy) {
-		x_ = copy.get_x(); y_ = copy.get_y();
+	void   _copy_fields(Point& copy) {
 		id_ = new int(copy.get_id());
+		x_ = copy.get_x(); y_ = copy.get_y();		
 	}
-	void destructor() { delete id_; }
-	Point& op_assign_c_(Point& copy) {
+	void   _destructor() { delete id_; }
+	Point& _op_assign_c(Point& copy) {
 		if (id_ != nullptr) delete id_;
 		id_ = new int(copy.get_id());
 		x_ = copy.get_x(); y_ = copy.get_y();
 		return *this;
 	}
-	bool op_equal_(Point& B) {
+	bool   _op_equal(Point& B) {
 		bool cond = (x_ == B.x_) && (y_ == B.y_);
 		if (cond) return true; else return false;
 	}
 };
 
-
-
+#define UNIT 2
 void OOP_1() {
 	using namespace std;
 
+
+
+#if UNIT == 1
 	Point Ex1;				
 	Point Ex2(1, 10, 20);	
 	Point Ex3; Ex3 = Ex2;
@@ -1761,9 +1763,9 @@ void OOP_1() {
 
 	Ex1.info(); Ex2.info(); Ex3.info(); Ex4.info(); Ex5.info();
 	cout << endl << endl << endl;
-	
 
 
+#elif UNIT == 2
 	Point Ex6(6, 12, 34);
 	Point Ex7(7, 12, 34);
 	Point Ex8(8, 12, 44);
@@ -1772,8 +1774,7 @@ void OOP_1() {
 	cout << endl << endl << endl;
 
 
-
-	/*
+#elif UNIT == 3
 	vector <Point*> vec;
 
 
@@ -1792,8 +1793,7 @@ void OOP_1() {
 
 	vec.emplace(vec.begin() + 2, new Point(5, 50, 50));
 	for (auto ex : vec) ex->info();
-	*/
-
+#endif
 
 	cout << endl;
 }
@@ -1858,9 +1858,87 @@ void OOP_2() {
 #pragma endregion OOP_2
 
 #pragma region OOP_3
+
+struct Animal abstract {
+	std::string _name;// = "Ebuca";
+	unsigned short height;
+	Animal()
+		{ std::cout << " +dA(" << _name << ")" << std::endl; }
+	Animal(std::string name) { 
+		_name = name;
+		std::cout << " +A(" << _name << ")" << std::endl;
+	}
+	~Animal()
+		{ std::cout << " -A(" << _name << ")" << std::endl; }
+
+};
+
+struct Human : virtual public Animal {
+	Human()
+		{ std::cout << " +dHuman(" << _name << ")" << std::endl; };
+	Human(std::string name) 
+		{ _name = name; std::cout << " +Hum(" << _name << ")" << std::endl; }
+	~Human()
+		{ std::cout << " -Hum(" << _name << ")" << std::endl; }
+	void geySex() 
+		{ std::cout << "stick your finger in my ass" << std::endl; };
+};
+
+struct Sobaka : virtual public Animal {
+	Sobaka() 
+		{ std::cout << " +dSobaka(" << _name << ")" << std::endl; };
+	Sobaka(std::string name)
+		{ _name = name; std::cout << " +dog(" << _name << ")" << std::endl; }
+	~Sobaka() 
+		{ std::cout << " -dog(" << _name << ")" << std::endl; }
+	void gavGav()
+		{ std::cout << "aW  AW   aW  au AWw Aw" << std::endl; };
+};
+
+struct Gavka : public Human, public Sobaka {
+	Gavka()
+		{ std::cout << " +dGavka((" << _name << ")" << std::endl; };
+	Gavka(std::string name)
+		{ _name = name; std::cout << " +Gavka(" << _name << ")" << std::endl; }
+	~Gavka()
+		{ std::cout << " -Gavka(" << _name << ")" << std::endl; }
+
+public:
+	//unsigned short height;
+};
+
+
+
+
 void OOP_3() {
-	//
+	using namespace std;
+
+	
+	//Animal A("Ebuca");
+	Human* H = new Human("Boris");				cout << endl;
+	Sobaka *S = new Sobaka("Ovcharka");			cout << endl;
+	Gavka* G = new Gavka("Galek");				cout << endl;
+
+	H->geySex();
+	H->height = 180;
+	//G->height = 185;	// without virtual&virtual
+	G->height = 185;	// after virtual&virtual	
+	cout << endl;
+
+	delete S;		cout << endl;
+	delete G;		cout << endl;
+	delete H;		cout << endl;
+	
+	Human* HH = new Human("Humano");
+		delete HH;
+
+	cout << endl;
 }
+
+
+
+
+
 #pragma endregion OOP_3
 
 
@@ -1944,7 +2022,7 @@ void CODE() {
 	THREADS_3();			// ...
 	SMART_POINTER_4();		// ...
 
-	OOP_1();
+	//OOP_1();
 	//OOP_2();
 	OOP_3();
 
