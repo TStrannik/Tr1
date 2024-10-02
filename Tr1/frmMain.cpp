@@ -1771,7 +1771,6 @@ void OOP_1() {
 	for (auto i = 2; i <= 5; i++) vec.at(i)->remove();
 	vec.erase(vec.begin() + 2, vec.begin() + 6);
 
-
 	for (auto ex : vec) ex->info();	cout << endl << endl;
 
 
