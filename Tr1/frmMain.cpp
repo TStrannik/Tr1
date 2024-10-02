@@ -1703,7 +1703,7 @@ void F_0_3_5() {
 class Point {
 private:
 	int* id_;
-	int x_, y_;
+	int x_, y_; 
 
 public:
 	int  get_x()  { return x_;		}	void set_x(int x) { x_ = x; }
