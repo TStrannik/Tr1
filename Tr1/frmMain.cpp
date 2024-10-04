@@ -2051,16 +2051,14 @@ void OOP_5() {
 
 class C6 {
 public:
-	static int count;
-	static int max_id;
+	static int get_count() { return count_; }
 
 	C6() { 
-		count++; 
-		if (max_id <= count)
-			max_id = count; 
-		id_ = max_id; 
+		count_++; 
+		id_ = max_id_; 
+		max_id_++;
 	}
-	~C6() { count--; }
+	~C6() { count_--; }
 
 
 public:
@@ -2071,11 +2069,13 @@ public:
 
 
 private:
+	static int count_;
+	static int max_id_;
 	int id_;
 
 };
-int C6::count = 0;
-int C6::max_id = 0;
+int C6::count_ = 0;
+int C6::max_id_ = 0;
 
 
 
@@ -2084,12 +2084,20 @@ void OOP_6() {
 
 
 	
-	cout << C6::count << endl;
+	cout << "Counter: " << C6::get_count() << endl;
 
-	C6* Ex0 = new C6;
-	cout << "Counter: " << Ex0->count << endl;
+	
 
-	C6* Ex1 = new C6;
+	vector <C6*> vec;
+	for (auto i = 0; i < 10; i++) vec.push_back(new C6);
+	for (auto i : vec) cout << "ID: " << i->get_id() << " "; cout << endl;
+
+	vec.erase(vec.begin() + 2);
+	vec.erase(vec.begin() + 2);
+
+	for (auto i : vec) cout << "ID: " << i->get_id() << " "; cout << endl;
+
+	/*C6* Ex1 = new C6;
 	cout << "Counter: " << Ex1->count << endl;
 
 	C6* Ex2 = new C6;
@@ -2097,37 +2105,40 @@ void OOP_6() {
 
 	C6* Ex3 = new C6;
 	cout << "Counter: " << Ex3->count << endl;
-	cout << endl << endl;
-
-
-	cout << "ID Ex0: " << Ex0->info() << endl;
-	cout << "ID Ex1: " << Ex1->info() << endl;
-	cout << "ID Ex2: " << Ex2->info() << endl;
-	cout << "ID Ex3: " << Ex3->info() << endl;
-
-
-	delete Ex1;
-	delete Ex2;
-	cout << "Counter: " << Ex2->count << endl;
-	cout << endl << endl;
-
-
-	cout << "ID Ex0: " << Ex0->info() << endl;
-	cout << "ID Ex1: " << Ex1->info() << endl;
-	cout << "ID Ex2: " << Ex2->info() << endl;
-	cout << "ID Ex3: " << Ex3->info() << endl;
-
-	cout << endl << endl;
-
-
 
 	C6* Ex4 = new C6;
 	cout << "Counter: " << Ex4->count << endl;
-	cout << "ID Ex0: " << Ex0->info() << endl;
+	cout << endl << endl;
+
+
 	cout << "ID Ex1: " << Ex1->info() << endl;
 	cout << "ID Ex2: " << Ex2->info() << endl;
 	cout << "ID Ex3: " << Ex3->info() << endl;
 	cout << "ID Ex4: " << Ex4->info() << endl;
+	cout << endl << endl;
+
+	
+	delete Ex2; cout << "Delete Ex2" << endl;
+	delete Ex3; cout << "Delete Ex3" << endl;
+	cout << "Counter: " << Ex1->count << endl;
+	cout << endl << endl;
+
+
+	cout << "ID Ex1: " << Ex1->info() << endl;
+	cout << "ID Ex2: " << Ex2->info() << endl;
+	cout << "ID Ex3: " << Ex3->info() << endl;
+	cout << "ID Ex4: " << Ex4->info() << endl;
+	cout << endl << endl;
+
+
+
+	C6* Ex5 = new C6;
+	cout << "Counter: " << Ex4->count << endl;
+	cout << "ID Ex1: " << Ex1->info() << endl;
+	cout << "ID Ex2: " << Ex2->info() << endl;
+	cout << "ID Ex3: " << Ex3->info() << endl;
+	cout << "ID Ex4: " << Ex4->info() << endl;
+	cout << "ID Ex5: " << Ex5->info() << endl;*/
 
 
 
