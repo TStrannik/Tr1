@@ -1710,13 +1710,15 @@ public:
 	int  get_y()  { return y_;		}	 void set_y(int y) { y_ = y; }
 	int  get_id() { return *id_;	}
 	void remove() { this->~Point(); }
-	void info() {
+	std::string info() {
 		using namespace std;
-		cout <<
-			"Point #" << *id_ << endl <<
-			"coordinates: " <<
-			get_x() << ":" << get_y() << endl <<
-			endl;
+		std::string S =
+			"Point #" + to_string(*id_) + "\n" +
+			"coordinates: " +
+			to_string(get_x()) + ":" + to_string(get_y()) + "\n";
+
+		//cout << S;
+		return S;
 	}	
 
 public:
@@ -1726,6 +1728,8 @@ public:
 	~Point()						{		 _destructor ();		 }
 	Point& operator = (Point& copy) { return _op_assign_c(copy);	 }
 	bool   operator == (Point& B)	{ return _op_equal   (B);		 }
+	bool   operator != (Point& B)	{ return _op_nequal	 (B);		 }
+	Point  operator + (Point& B)	{ return _op_addition(B);		 }
 
 private:
 	void   _set_fields(int id, int x, int y) {
@@ -1737,22 +1741,35 @@ private:
 	}
 	void   _destructor() { delete id_; }
 	Point& _op_assign_c(Point& copy) {
+		/*			K I S S 
+		std::swap(id_, copy.id_);
+		std::swap(x_, copy.x_);
+		std::swap(y_, copy.y_);
+		*/
+
 		if (id_ != nullptr) delete id_;
 		id_ = new int(copy.get_id());
 		x_ = copy.get_x(); y_ = copy.get_y();
 		return *this;
 	}
-	bool   _op_equal(Point& B) {
-		bool cond = (x_ == B.x_) && (y_ == B.y_);
-		if (cond) return true; else return false;
+	bool   _op_equal(Point& B)  { return (x_ == B.x_) && (y_ == B.y_);    }
+	bool   _op_nequal(Point& B) { return !((x_ == B.x_) && (y_ == B.y_)); }
+	Point  _op_addition(Point& B) { 
+		Point temp;
+
+		temp.x_ = x_ + B.x_;
+		temp.y_ = y_ + B.y_;
+
+		return temp;
 	}
+
 };
 
-#define UNIT 2
+
 void OOP_1() {
 	using namespace std;
 
-
+#define UNIT 2
 
 #if UNIT == 1
 	Point Ex1;				
@@ -1769,8 +1786,14 @@ void OOP_1() {
 	Point Ex6(6, 12, 34);
 	Point Ex7(7, 12, 34);
 	Point Ex8(8, 12, 44);
+
 	cout << boolalpha << (Ex6 == Ex7) << endl;
 	cout << boolalpha << (Ex6 == Ex8) << endl;
+	cout << boolalpha << (Ex6 != Ex8) << endl;
+	cout << endl << endl << endl;
+
+
+	cout << (Ex7 + Ex8).info() << endl;
 	cout << endl << endl << endl;
 
 
@@ -1781,18 +1804,18 @@ void OOP_1() {
 
 	for (auto ex = 0; ex <= 10; ex++)
 		vec.push_back(new Point(ex, 10 * ex, 10 * ex));
-	for (auto ex : vec) ex->info(); cout << endl << endl;
+	for (auto ex : vec) cout << ex->info(); cout << endl << endl;
 
 
 
 	for (auto i = 2; i < 5; i++) vec.at(i)->remove();
 	vec.erase(vec.begin() + 2, vec.begin() + 6);
-	for (auto ex : vec) ex->info();	cout << endl << endl;
+	for (auto ex : vec) cout << ex->info();	cout << endl << endl;
 
 
 
 	vec.emplace(vec.begin() + 2, new Point(5, 50, 50));
-	for (auto ex : vec) ex->info();
+	for (auto ex : vec) cout << ex->info();
 #endif
 
 	cout << endl;
@@ -1941,16 +1964,183 @@ void OOP_3() {
 
 #pragma endregion OOP_3
 
+#pragma region OOP_4
+class TEST1 {
+private:
+	int arr[5]{ 5, 44, 4, 987, 69 };
+
+public:
+	int& operator[] (int index) { return arr[index]; }
+
+};
+
+
+
+void OOP_4() {
+	using namespace std;
+
+	TEST1 a;
+
+	cout << a[2] << endl;
+	a[2] = 100;
+	cout << a[2] << endl;
+
+
+	cout << endl;
+}
+#pragma endregion OOP_4
+
+#pragma region OOP_5
+
+class C5_2;				// prototype
+class C5_1 {
+private: 
+	int A_ = 1; int B_ = 2;
+
+	friend void fA(C5_1&);
+	friend void fAB(C5_1&, C5_2& );
+
+
+	//void func() { std::cout << "\n"; }
+
+};
+
+
+class C5_2 {
+private:
+	int A_ = 1;
+
+	friend void fAB(C5_1&, C5_2&);
+
+	//friend void C5_1::func();
+};
+
+
+class C5_3 {
+	friend class C5_1;
+
+	//int C5_1::A_;
+	//int a = A_;
+
+public:
+	//C5_3() { std::cout << a << "\n"; }
+};
+
+
+void fA(C5_1& Class) { Class.A_ = 4; }
+void fAB(C5_1& Class1, C5_2& Class2) { 
+	Class1.A_ = 0;
+	Class1.B_ = 0;
+	Class2.A_ = 0;
+}
+
+
+void OOP_5() {
+	C5_1 Ex1;
+	C5_2 Ex2;
+	fAB(Ex1, Ex2);
+
+	C5_3 Ex3;
+}
+#pragma endregion OOP_5
+
+
+
+#pragma region OOP_6
+
+
+class C6 {
+public:
+	static int count;
+	static int max_id;
+
+	C6() { 
+		count++; 
+		if (max_id <= count)
+			max_id = count; 
+		id_ = max_id; 
+	}
+	~C6() { count--; }
+
+
+public:
+	int get_id() { return id_; }
+	void set_id(int id) { id_ = id; }
+
+	std::string info() { return std::to_string(id_); }
+
+
+private:
+	int id_;
+
+};
+int C6::count = 0;
+int C6::max_id = 0;
+
+
+
+void OOP_6() {
+	using namespace std;
+
+
+	
+	cout << C6::count << endl;
+
+	C6* Ex0 = new C6;
+	cout << "Counter: " << Ex0->count << endl;
+
+	C6* Ex1 = new C6;
+	cout << "Counter: " << Ex1->count << endl;
+
+	C6* Ex2 = new C6;
+	cout << "Counter: " << Ex2->count << endl;
+
+	C6* Ex3 = new C6;
+	cout << "Counter: " << Ex3->count << endl;
+	cout << endl << endl;
+
+
+	cout << "ID Ex0: " << Ex0->info() << endl;
+	cout << "ID Ex1: " << Ex1->info() << endl;
+	cout << "ID Ex2: " << Ex2->info() << endl;
+	cout << "ID Ex3: " << Ex3->info() << endl;
+
+
+	delete Ex1;
+	delete Ex2;
+	cout << "Counter: " << Ex2->count << endl;
+	cout << endl << endl;
+
+
+	cout << "ID Ex0: " << Ex0->info() << endl;
+	cout << "ID Ex1: " << Ex1->info() << endl;
+	cout << "ID Ex2: " << Ex2->info() << endl;
+	cout << "ID Ex3: " << Ex3->info() << endl;
+
+	cout << endl << endl;
+
+
+
+	C6* Ex4 = new C6;
+	cout << "Counter: " << Ex4->count << endl;
+	cout << "ID Ex0: " << Ex0->info() << endl;
+	cout << "ID Ex1: " << Ex1->info() << endl;
+	cout << "ID Ex2: " << Ex2->info() << endl;
+	cout << "ID Ex3: " << Ex3->info() << endl;
+	cout << "ID Ex4: " << Ex4->info() << endl;
+
+
+
+	cout << endl;
+}
+
+#pragma endregion OOP_6
+
+
+
 
 
 #pragma endregion OOP
-
-
-
-
-
-
-
 
 
 
@@ -2012,6 +2202,9 @@ void CODE() {
 		OOP_1();
 		OOP_2();
 		OOP_3();
+		OOP_4();
+		OOP_5();
+		OOP_6();
 
 		int Ar[] = { 2, 8, 1, 7, 6, 3, 5, 4 };
 		for (auto i = 0; i < AR_SIZE; i++) std::cout << Ar[i] << " ";
@@ -2024,7 +2217,10 @@ void CODE() {
 
 	//OOP_1();
 	//OOP_2();
-	OOP_3();
+	//OOP_3();
+	//OOP_4();
+	//OOP_5();
+	OOP_6();
 
 	//MACROS();
 	//MEMORY_1();
@@ -2113,6 +2309,7 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 
 // (+) OOP: Classes
 // (..) OOP: Access levels: public, private, protected
+// (..) OOP: operators overload -(++i i++)
 // ---------------------------------------
 // ( ) OOP: Inheritance: Multiple, Diamond
 // ---------------------------------------
