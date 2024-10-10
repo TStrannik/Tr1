@@ -43,6 +43,7 @@ using namespace System::Windows::Forms;
 
 [STAThreadAttribute]
 
+
 #pragma region void 
 void CONSOLE_EXP() {
 	Console::SetWindowPosition(0, 0);
@@ -252,6 +253,8 @@ void TRY_CATCH() {
 	cout << endl;
 }
 
+template <typename T> void wr(T s) { std::cout << s << std::endl; }
+
 template <typename T>				  T	 tempSum(T a, T b) { return a + b; }
 template <typename T1, typename T2>   T1 tempSum2(T1 a, T2 b) { return a + b; }
 template <typename T1, typename T2> void tempSum3(T1 a, T2 b) { std::cout << a << " " << b << std::endl; }
@@ -387,9 +390,108 @@ void SPEED_OF_PROGRAM() {
 	cout << endl;
 }
 
+#pragma region rvalue
+
+class Array {
+private:
+	int* _data;
+	int  _size;
+
+public:
+	Array(int size) : _size(size) { _data = new int[size]; }
+	Array(const Array& arr) {
+		_size = arr._size;
+		_data = new int[_size];
+		memcpy(_data, arr._data, sizeof(int) * _size);
+	}
+	Array(Array&& arr) {
+			_size = arr._size;
+			_data = arr._data;
+		arr._data = nullptr;
+	}
+	~Array() { wr("-Array"); delete[] _data; }
+
+	Array&	   operator =  (const Array& arr) {
+		if (this == &arr) return *this;
+		_size = arr._size;
+		_data = new int[_size];
+		memcpy(_data, arr._data, sizeof(int) * _size);
+		return *this;
+	}
+	Array&	   operator =  (const Array&& arr) {
+		if (this == &arr) return *this;
+
+		delete[] _data;
+		_size = arr._size;
+		_data = arr._data;
+		_data = nullptr;
+
+		return *this;
+	}
+	int&	   operator [] (const int& i)		{ return _data[i]; }
+	const int& operator [] (const int& i) const { return _data[i]; }
+};
+::Array createBigArray(int size) {
+	::Array a(size);
+	for (int i = 0; i < size; ++i) a[i] = rand();
+	return a;
+}
+void RVALUE_1() {
+	using namespace std;
+	SimpleTimer t("1 million");
+
+	::Array a = createBigArray(1000000);
+
+	cout << endl;
+}
 
 
 
+
+void RVALUE_2() {
+	using namespace std;
+
+
+
+
+	wr("!");
+
+	int* a = new int[1000];
+
+	wr("!!");
+
+	//delete[] a;
+
+
+	if (0) {
+		using namespace std;
+		vector <uint8_t> big_vector(1e9, 0);
+
+		cout << "ready!" << endl;
+		cin.get(); cout << "start" << endl;
+
+		{
+			SimpleTimer t("vector copy");
+			vector <uint8_t> reciever(big_vector);				// Copying
+		}
+		cout << "size of big_vector: " << big_vector.size() << "\n";
+
+		cin.get();
+		{
+			SimpleTimer t("vector move");
+			vector <uint8_t> reciever(move(big_vector));		// Moving
+		}
+		cout << "size of big_vector: " << big_vector.size() << "\n";
+
+		cout << endl << endl;
+	}
+
+
+	cout << endl;
+}
+
+
+#pragma endregion rvalue
 
 #pragma endregion void 
 
@@ -2092,6 +2194,7 @@ void OOP_6() {
 	for (auto i = 0; i < 10; i++) vec.push_back(new C6);
 	for (auto i : vec) cout << "ID: " << i->get_id() << " "; cout << endl;
 
+
 	vec.erase(vec.begin() + 2);
 	vec.erase(vec.begin() + 2);
 
@@ -2183,6 +2286,8 @@ void CODE() {
 		SPEED_OF_PROGRAM();
 
 
+		RVALUE_1();
+		RVALUE_2();
 		POINTERS();
 		POINTERS_ARITH();
 		INLINE(2, 3);
@@ -2231,7 +2336,11 @@ void CODE() {
 	//OOP_3();
 	//OOP_4();
 	//OOP_5();
-	OOP_6();
+	//OOP_6();
+	//RVALUE_1();
+	RVALUE_2();
+
+
 
 	//MACROS();
 	//MEMORY_1();
@@ -2315,16 +2424,20 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 // (+) Macros C++
 // (+) Templates <typename T>
 // (+) Variable data types
+// -------------------------------
+// ( ) Rvalue-links, move-semantic
+// -------------------------------
 
 
 
 // (+) OOP: Classes
-// (..) OOP: Access levels: public, private, protected
+// (+) OOP: Access levels: public, private, protected
 // (..) OOP: operators overload -(++i i++)
-// ---------------------------------------
-// ( ) OOP: Inheritance: Multiple, Diamond
-// ---------------------------------------
+// (+) OOP: Inheritance: Multiple, Diamond
+// (+) OOP: Agregation & composition (delegation);
+// --------------------------------------------------------------------------
 // ( ) OOP: Polymorphism: static, dynamic, overloading of funcs, virt methods/tables
+// --------------------------------------------------------------------------
 // ( ) OOP: Incapsulation
 // (..) Rule 0, 3, 5: 3, 5, 0
 
@@ -2348,6 +2461,7 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 // (+) array without repeat
 // (+) try-catch
 // (+) try-catch, throw, cerr << e.what();
+// ( ) try-catch types & catgories
 // (+) Pointers
 // (+) Lambda Functions
 // (+) anonimic function
@@ -2380,3 +2494,5 @@ int main(array<String^>^ args) {	// int argc, char* argv[]
 /// Vocabulary
 // Токен — это минимальная единица синтаксиса языка программирования.
 // # - директивы препроцессора.
+//
+//
